@@ -68,6 +68,7 @@ a{color:inherit;text-decoration:none}
 <div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Kontakt</h3><p style="{{body}}">E-Mail: <a href="mailto:hello@fiona-tran.com" style="{{linkInline}}">hello@fiona-tran.com</a></p></div>
 </div>
 </section>
+<div aria-hidden="true" style="{{divider}}"></div>
 <section aria-labelledby="priv" style="{{col}}">
 <h2 id="priv" style="{{h1}}">Privacy</h2>
 <div lang="de" style="display: flex; flex-direction: column; gap: 22px">
@@ -85,7 +86,7 @@ a{color:inherit;text-decoration:none}
 </section>
 </div>
 </div>
-<footer style="{{footer}}"><span>© 2026 Fiona Tran</span><span aria-current="page" style="{{footCurrent}}">Imprint</span><a href="#priv" style="{{footLink}}">Privacy</a></footer>
+<footer style="{{footer}}"><span>© 2026 Fiona Tran</span><a href="#imp" style="{{footLink}}">Imprint</a><a href="#priv" style="{{footLink}}">Privacy</a></footer>
 </main>
 <sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
 <nav aria-label="Main navigation" style="{{tabBar}}">
@@ -97,6 +98,18 @@ a{color:inherit;text-decoration:none}
 </template></x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"mobile":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
 class Component extends DCLogic {
+componentDidMount() { this._checkStacked(); }
+componentDidUpdate() { this._checkStacked(); }
+// Prüft, ob die Datenschutz-Spalte unter das Impressum umbricht: zwei Spalten à 360 px + 64 px Abstand passen nicht nebeneinander.
+// An der Breite gemessen, nicht an der Position – die Trennlinie erzwingt selbst einen Umbruch und würde die Messung verfälschen.
+_checkStacked() {
+try {
+const a = document.getElementById('imp');
+if (!a) return;
+const st = a.closest('section').parentElement.clientWidth < 360 + 64 + 360;
+if (st !== !!this.state.stacked) this.setState({ stacked: st });
+} catch (e) {}
+}
 renderVals() {
 const sysDark = (() => { try { const s = window.localStorage.getItem('fiona-theme'); if (s) return s === 'dark'; return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) { return false; } })();
 const dark = this.state.dark ?? (this.props.dark ? true : sysDark);
@@ -129,7 +142,9 @@ wrap: 'width: 100%; max-width: 1240px; box-sizing: border-box; flex: 1; display:
 kicker: 'font: 500 12px/1.4 Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: ' + t.muted,
 cols: 'display: flex; flex-wrap: wrap; gap: 32px 64px; border-top: 1px solid ' + t.line + '; padding-top: 28px',
 col: 'flex: 1 1 360px; max-width: 560px; display: flex; flex-direction: column; gap: 14px',
-h1: 'margin: 0; font: 700 28px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink,
+// Stehen Impressum und Datenschutz untereinander (Handy, schmale Fenster), trennt eine Linie über die volle Breite – so lang wie die Linie über dem Impressum –, mit Luft darüber und darunter (32 px Zeilenabstand + 16 px)
+divider: this.state.stacked ? 'flex: 0 0 100%; height: 0; border-top: 1px solid ' + t.line + '; margin: 16px 0' : 'display: none',
+h1: 'margin: 0; scroll-margin-top: 32px; font: 700 28px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink,
 label: 'font: 600 15px/1.4 Inter, sans-serif; color: ' + t.muted,
 small: 'margin: 0; font: 400 14px/1.5 Inter, sans-serif; color: ' + t.muted,
 body: 'margin: 0; font: 400 16px/1.6 Inter, sans-serif; color: ' + t.ink,
@@ -138,7 +153,6 @@ link: 'display: inline-flex; align-items: center; min-height: 44px; font: 500 16
 tabBar: 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 4px; border-radius: 999px; ' + glass,
 tabNav: pillBase + 'flex: 1; padding: 0 8px; color: ' + t.ink,
 footer: 'display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 16px; font: 400 13px/1.4 Inter, sans-serif; color: ' + t.muted,
-footCurrent: 'display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; color: ' + t.ink,
 footLink: 'display: inline-flex; align-items: center; min-height: 44px; color: ' + t.muted + '; text-decoration: underline; text-underline-offset: 3px'
 };
 }
