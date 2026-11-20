@@ -114,13 +114,14 @@ a{color:inherit;text-decoration:none}
 <div style="{{detailCols}}">
 <div style="display: flex; flex-direction: column; gap: 12px; flex: 2 1 420px; min-width: 0">
 <h1 id="pd-title" style="{{detailTitle}}">{{cur.t}}</h1>
-<p style="{{detailText}}">[A <strong style="{{strong}}">web app</strong> that … – one or two sentences on what the project is and which problem it solves]</p>
-<p style="{{detailText}}">[Your part: what you built yourself, what was tricky and what you learned]</p>
+<sc-if value="{{cur.desc}}" hint-placeholder-val="{{ false }}"><p style="{{detailText}}">{{cur.desc}}</p><p style="{{detailText}}">{{cur.part}}</p></sc-if>
+<sc-if value="{{noDesc}}" hint-placeholder-val="{{ true }}"><p style="{{detailText}}">[A <strong style="{{strong}}">web app</strong> that … – one or two sentences on what the project is and which problem it solves]</p>
+<p style="{{detailText}}">[Your part: what you built yourself, what was tricky and what you learned]</p></sc-if>
 </div>
 <div class="reveal" style="{{factCard}}">
 <div style="{{factRow}}"><span style="{{detailLabel}}">Year</span><span style="{{factVal}}">{{cur.y}}</span></div>
-<div style="{{factRow}}"><span style="{{detailLabel}}">Team</span><span style="{{factVal}}">[Solo / team of 4]</span></div>
-<div style="{{factRow}}"><span style="{{detailLabel}}">My role</span><span style="{{factVal}}">[e.g. Frontend &amp; API]</span></div>
+<div style="{{factRow}}"><span style="{{detailLabel}}">Team</span><span style="{{factVal}}">{{cur.team}}</span></div>
+<div style="{{factRow}}"><span style="{{detailLabel}}">My role</span><span style="{{factVal}}">{{cur.role}}</span></div>
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="{{detailLabel}}">Built with</span>
 <div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{techs}}" as="tc" hint-placeholder-count="3"><span style="{{tc.style}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg><span style="position: relative">{{tc.label}}</span></span></sc-for></div>
@@ -134,8 +135,8 @@ a{color:inherit;text-decoration:none}
 </div>
 </div>
 <div class="reveal" style="{{gallery}}">
-<div style="{{shot}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></div>
-<div style="{{shot}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></div>
+<div style="{{shot1}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></div>
+<div style="{{shot2}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></div>
 </div>
 <button class="reveal" onClick="{{goNext}}" aria-label="Next project: {{nextT}}" style="{{nextCard}}">
 <span style="{{detailLabel}}">Next project</span>
@@ -160,8 +161,8 @@ this._keyH = (e) => { if (e._fionaDone) return; e._fionaDone = true; const tg = 
 try { window.addEventListener('keydown', this._keyH, true); document.addEventListener('keydown', this._keyH, true); } catch (e) {}
 let skip = false;
 try { skip = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) {}
-if (skip || this.props.openDetail) { this.setState({ active: 17 }); return; }
-const from = 10, to = 17, dur = 1500, delay = 250;
+const to = 2 * (this._n || 7) + (this._feat ?? 3), from = to - 7, dur = 1500, delay = 250; // Intro dreht 7 Karten weit bis zum Startprojekt
+if (skip || this.props.openDetail) { this.setState({ active: to }); return; }
 this.setState({ spinning: true, fpos: from });
 const start = performance.now() + delay;
 const ease = (x) => 1 - Math.pow(1 - x, 3);
@@ -192,6 +193,13 @@ shadow: '0 12px 40px rgba(20,20,40,0.08)', cardShadow: '0 24px 50px rgba(20,20,4
 glowA: 'rgba(159,227,201,0.55)', glowB: 'rgba(242,167,195,0.45)', grain: '0.22', blend: 'multiply'
 };
 const P = [
+{ t: 'This website', c: 'Web & DevOps', featured: true, y: '2026', team: 'Solo', role: 'Design, frontend & deployment',
+  desc: 'My portfolio – the page you are looking at. A small static site without a framework: a lightweight custom runtime renders the pages, nginx serves them from a Docker container.',
+  part: 'I built it end to end, from the card wheel and the about folder to the infrastructure. Every push to main builds a multi-arch image, smoke-tests it and rolls it out automatically via GitOps (GitHub Actions → GHCR → Portainer). The tricky parts were smooth animations without a framework and keeping it fast and accessible: dark mode, reduced motion, keyboard navigation.',
+  tech: ['HTML & CSS', 'JavaScript', 'nginx', 'Docker', 'GitHub Actions'],
+  img: '/projects/website-desktop-dark.jpg', shots: ['/projects/website-desktop-light.jpg', '/projects/website-mobile.jpg'],
+  links: [{ label: 'Live site', url: 'https://fiona-tran.com' }, { label: 'Source on GitHub', url: 'https://github.com/fionatrn/portfolio' }],
+  g: 'linear-gradient(180deg, #2A3A33 0%, #1F1E1D 100%)' },
 { t: 'Project 01', c: 'Creative coding', tech: ['[TypeScript]', '[Figma]'], g: 'radial-gradient(circle at 50% 50%, #1A1030 0%, #8E1F5C 42%, #E07AAE 78%, #F2B5D0 100%)' },
 { t: 'Project 02', c: 'Web app', tech: ['[Angular]', '[Supabase]', '[Playwright]'], g: 'linear-gradient(180deg, #4E3F7A 0%, #A0587A 50%, #E2876A 80%, #F5B97A 100%)' },
 { t: 'Project 03', c: 'Design', tech: ['[Figma]', '[Clip Studio Paint]'], g: 'radial-gradient(circle at 50% 55%, #0C1411 0%, #23443A 35%, #5E8F7A 70%, #A8D5C0 100%)' },
@@ -201,6 +209,7 @@ const P = [
 { t: 'Project 07', c: 'Illustration', tech: ['[Clip Studio Paint]', '[Canva]'], g: 'radial-gradient(circle at 50% 50%, #2A2B30 0%, #6E737B 45%, #B8BCC2 78%, #E6E8EB 100%)' }
 ];
 const n = P.length;
+this._n = n; this._feat = P.findIndex((p) => p.featured); if (this._feat < 0) this._feat = Math.floor((n - 1) / 2); // Startprojekt in der Mitte: featured, sonst das mittlere
 const cw = mob ? 96 : 214, ch = mob ? 130 : 288, rad = mob ? 14 : 24, RR = mob ? 360 : 1100, step = (mob ? 21 : 14) * Math.PI / 180, yOff = mob ? -28 : -56;
 // Randverlauf: liegt auf der äußersten sichtbaren Karte und ist genauso schräg wie sie.
 // Innen bleibt die Karte sichtbar, nach außen blendet sie weich aus. Eine Maske pro Seite, beide werden geschnitten.
@@ -231,14 +240,14 @@ enter: () => this.setState({ hover: i }),
 leave: () => this.setState({ hover: null }),
 showOpen: d === 0 && !mob && hov,
 openChip: 'position: absolute; right: 12px; bottom: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.7); color: #0E0E10; font: 500 12px/1.4 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(8px)',
-style: 'position: absolute; left: 50%; top: 50%; width: ' + cw + 'px; height: ' + ch + 'px; margin-left: ' + (-cw / 2) + 'px; margin-top: ' + (-ch / 2) + 'px; transform: translate(' + x + 'px, ' + y + 'px) rotate(' + r + 'deg) scale(' + s + '); opacity: ' + o + '; z-index: ' + (10 - Math.round(ad)) + '; transition: ' + (this.state.noAnim || this.state.spinning ? 'none' : 'transform 0.42s cubic-bezier(0.2, 0.9, 0.25, 1), opacity 0.25s') + '; border: 1px solid ' + t.border + '; padding: 0; border-radius: ' + rad + 'px; overflow: hidden; cursor: pointer; background: ' + p.g + '; box-shadow: ' + (hov ? t.cardShadow.replace('24px 50px', '34px 70px').replace('24px 60px', '34px 80px') : t.cardShadow) + '; pointer-events: ' + (hidden ? 'none' : 'auto'),
+style: 'position: absolute; left: 50%; top: 50%; width: ' + cw + 'px; height: ' + ch + 'px; margin-left: ' + (-cw / 2) + 'px; margin-top: ' + (-ch / 2) + 'px; transform: translate(' + x + 'px, ' + y + 'px) rotate(' + r + 'deg) scale(' + s + '); opacity: ' + o + '; z-index: ' + (10 - Math.round(ad)) + '; transition: ' + (this.state.noAnim || this.state.spinning ? 'none' : 'transform 0.42s cubic-bezier(0.2, 0.9, 0.25, 1), opacity 0.25s') + '; border: 1px solid ' + t.border + '; padding: 0; border-radius: ' + rad + 'px; overflow: hidden; cursor: pointer; background: ' + (p.img ? 'url(' + p.img + ') center / cover no-repeat, ' : '') + p.g + '; box-shadow: ' + (hov ? t.cardShadow.replace('24px 50px', '34px 70px').replace('24px 60px', '34px 80px') : t.cardShadow) + '; pointer-events: ' + (hidden ? 'none' : 'auto'),
 chip: 'position: absolute; left: 12px; bottom: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.7); color: #0E0E10; font: 500 12px/1.4 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(8px)'
 };
 });
 // Detail-Card am Desktop: 45 % der Fensterbreite (ab 1100 px, darunter Bottom-Sheet); Obergrenze erst bei 900 px, damit der Anteil bis ~2000 px gleich bleibt
 const pw = Math.max(480, Math.min(900, Math.round(vw * 0.45)));
 const pi = ((Math.round(posF) % n) + n) % n;
-const cur = { ...P[pi], num: String(pi + 1).padStart(2, '0'), y: P[pi].y || '[Year]', demo: P[pi].demo === undefined ? '#' : P[pi].demo, repo: P[pi].repo === undefined ? '#' : P[pi].repo };
+const cur = { ...P[pi], num: String(pi + 1).padStart(2, '0'), y: P[pi].y || '[Year]', team: P[pi].team || '[Solo / team of 4]', role: P[pi].role || '[e.g. Frontend & API]', demo: P[pi].demo === undefined ? '#' : P[pi].demo, repo: P[pi].repo === undefined ? '#' : P[pi].repo };
 const open = !!(this.state.open ?? (this.props.openDetail ?? false));
 this._go = (k) => go(k);
 const go = (k) => { const a0 = this.state.active ?? 10; if (a0 < n || a0 >= 4 * n) { const na = ((a0 % n) + n) % n + 2 * n; const dl = k - a0; this.setState({ active: na, noAnim: true }); requestAnimationFrame(() => requestAnimationFrame(() => { this.setState({ active: na + dl, noAnim: false }); norm(); })); return; } this.setState({ active: k }); norm(); };
@@ -294,8 +303,8 @@ grabBtn: 'position: absolute; left: 50%; top: -6px; transform: translateX(-50%);
 grabber: 'width: 40px; height: 5px; border-radius: 999px; background: ' + (dark ? 'rgba(255,255,255,0.3)' : 'rgba(14,14,16,0.2)'),
 strong: 'font-weight: 600; color: ' + t.ink,
 catPill: 'font: 500 16px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; color: ' + t.muted + '; margin-bottom: -6px',
-techs: (P[pi].tech || []).map((label, i) => { const CAT = { java: 'mint', kotlin: 'mint', typescript: 'mint', angular: 'mint', aws: 'blue', dynamodb: 'blue', supabase: 'blue', docker: 'blue', jest: 'orange', playwright: 'orange', figma: 'pink', canva: 'pink', gimp: 'pink', 'clip studio paint': 'pink' }; const k = CAT[label.replace(/[\[\]]/g, '').trim().toLowerCase()] || 'lilac'; const G = { mint: ['#7FD6B0', '#A6E6C8', '#CDF3E0', '#E8FBF2', 'rgba(127,214,176,0.55)'], orange: ['#F7A26B', '#FBBE93', '#FDD9BE', '#FFEDE0', 'rgba(247,162,107,0.55)'], pink: ['#F28DB4', '#F7AECB', '#FBCFE0', '#FFE8F1', 'rgba(242,141,180,0.55)'], lilac: ['#AE97E8', '#C6B5F0', '#DDD2F7', '#F0EBFC', 'rgba(174,151,232,0.55)'], blue: ['#7FA8F2', '#A4C2F6', '#C9DBFA', '#E6EFFD', 'rgba(127,168,242,0.55)'], yellow: ['#F2CF5B', '#F7DE8A', '#FBEAB6', '#FFF6DC', 'rgba(242,207,91,0.55)'] }; const g = G[k] || G[['mint', 'orange', 'pink'][i]]; return { label, style: 'position: relative; overflow: hidden; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; font: 500 13px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: #1A1A1E; border: 0; background: radial-gradient(120% 160% at 50% 50%, ' + g[0] + ' 0%, ' + g[1] + ' 40%, ' + g[2] + ' 75%, ' + g[3] + ' 100%); box-shadow: 0 0 14px 1px ' + g[4] + ', inset 0 0 12px rgba(255,255,255,0.35)' }; }),
-hero: 'position: relative; overflow: hidden; flex: none; height: ' + (mob ? 200 : 300) + 'px; border-radius: 24px; background: ' + P[pi].g,
+techs: (P[pi].tech || []).map((label, i) => { const CAT = { java: 'mint', kotlin: 'mint', typescript: 'mint', angular: 'mint', aws: 'blue', dynamodb: 'blue', supabase: 'blue', docker: 'blue', nginx: 'blue', 'github actions': 'orange', javascript: 'mint', 'html & css': 'mint', jest: 'orange', playwright: 'orange', figma: 'pink', canva: 'pink', gimp: 'pink', 'clip studio paint': 'pink' }; const k = CAT[label.replace(/[\[\]]/g, '').trim().toLowerCase()] || 'lilac'; const G = { mint: ['#7FD6B0', '#A6E6C8', '#CDF3E0', '#E8FBF2', 'rgba(127,214,176,0.55)'], orange: ['#F7A26B', '#FBBE93', '#FDD9BE', '#FFEDE0', 'rgba(247,162,107,0.55)'], pink: ['#F28DB4', '#F7AECB', '#FBCFE0', '#FFE8F1', 'rgba(242,141,180,0.55)'], lilac: ['#AE97E8', '#C6B5F0', '#DDD2F7', '#F0EBFC', 'rgba(174,151,232,0.55)'], blue: ['#7FA8F2', '#A4C2F6', '#C9DBFA', '#E6EFFD', 'rgba(127,168,242,0.55)'], yellow: ['#F2CF5B', '#F7DE8A', '#FBEAB6', '#FFF6DC', 'rgba(242,207,91,0.55)'] }; const g = G[k] || G[['mint', 'orange', 'pink'][i]]; return { label, style: 'position: relative; overflow: hidden; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; font: 500 13px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: #1A1A1E; border: 0; background: radial-gradient(120% 160% at 50% 50%, ' + g[0] + ' 0%, ' + g[1] + ' 40%, ' + g[2] + ' 75%, ' + g[3] + ' 100%); box-shadow: 0 0 14px 1px ' + g[4] + ', inset 0 0 12px rgba(255,255,255,0.35)' }; }),
+hero: 'position: relative; overflow: hidden; flex: none; height: ' + (mob ? 200 : 300) + 'px; border-radius: 24px; background: ' + (P[pi].img ? 'url(' + P[pi].img + ') center / cover no-repeat, ' : '') + P[pi].g,
 heroNote: 'position: absolute; left: 20px; bottom: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,0.7); color: #0E0E10; font: 400 14px/1.4 Inter, sans-serif',
 detailCols: 'display: flex; flex-wrap: wrap; gap: 24px',
 detailTitle: 'margin: 0; font: 700 ' + (mob ? 28 : 36) + 'px/1.1 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink,
@@ -305,7 +314,9 @@ factCard: 'flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column;
 factRow: 'display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid ' + (dark ? 'rgba(255,255,255,0.10)' : 'rgba(14,14,16,0.08)'),
 factVal: 'font: 500 16px/1.4 Inter, sans-serif; color: ' + t.ink + '; text-align: right',
 gallery: 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px',
-shot: 'position: relative; overflow: hidden; height: ' + (mob ? 140 : 200) + 'px; border-radius: 20px; background: ' + P[pi].g,
+shot1: 'position: relative; overflow: hidden; height: ' + (mob ? 140 : 200) + 'px; border-radius: 20px; background: ' + (P[pi].shots && P[pi].shots[0] ? 'url(' + P[pi].shots[0] + ') center / cover no-repeat, ' : '') + P[pi].g,
+shot2: 'position: relative; overflow: hidden; height: ' + (mob ? 140 : 200) + 'px; border-radius: 20px; background: ' + (P[pi].shots && P[pi].shots[1] ? 'url(' + P[pi].shots[1] + ') center / cover no-repeat, ' : '') + P[pi].g,
+noDesc: !P[pi].desc,
 nextT: P[(pi + 1) % n].t,
 goNext: () => go(active + 1),
 nextCard: 'flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; margin: 0; padding: 20px 0 4px; border: 0; border-top: 1px solid ' + (dark ? 'rgba(255,255,255,0.10)' : 'rgba(14,14,16,0.08)') + '; border-radius: 0; background: transparent; cursor: pointer; text-align: left',
