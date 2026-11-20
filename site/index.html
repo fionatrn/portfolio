@@ -235,7 +235,8 @@ style: 'position: absolute; left: 50%; top: 50%; width: ' + cw + 'px; height: ' 
 chip: 'position: absolute; left: 12px; bottom: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.7); color: #0E0E10; font: 500 12px/1.4 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(8px)'
 };
 });
-const pw = Math.max(480, Math.min(640, Math.round(vw * 0.44)));
+// Detail-Card am Desktop: 45 % der Fensterbreite (ab 1100 px, darunter Bottom-Sheet); Obergrenze erst bei 900 px, damit der Anteil bis ~2000 px gleich bleibt
+const pw = Math.max(480, Math.min(900, Math.round(vw * 0.45)));
 const pi = ((Math.round(posF) % n) + n) % n;
 const cur = { ...P[pi], num: String(pi + 1).padStart(2, '0'), y: P[pi].y || '[Year]', demo: P[pi].demo === undefined ? '#' : P[pi].demo, repo: P[pi].repo === undefined ? '#' : P[pi].repo };
 const open = !!(this.state.open ?? (this.props.openDetail ?? false));
