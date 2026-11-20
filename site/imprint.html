@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fiona">
 <title>Fiona Tran — Imprint</title>
 <script src="/support.js"></script>
 </head>
@@ -132,7 +136,7 @@ rootStyle: 'position: relative; min-height: 100vh; min-height: 100dvh; overflow:
 glowA: 'position: absolute; width: 900px; height: 900px; left: -220px; top: -260px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowA + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
 glowB: 'position: absolute; width: 1000px; height: 1000px; right: -260px; bottom: -380px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowB + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
 grainStyle: 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: ' + t.grain + '; mix-blend-mode: ' + t.blend + '; pointer-events: none',
-headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? '56px 20px 8px' : '28px ' + side + 'px'),
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + side + 'px'),
 navStyle: 'display: flex; gap: 4px; padding: 4px; border-radius: 999px; ' + glass,
 pill: pillBase + 'color: ' + t.ink,
 pillActive: pillBase + 'background: ' + t.ink + '; color: ' + t.bg,
