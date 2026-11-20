@@ -30,12 +30,12 @@
   color-scheme: light;
 }
 [data-theme="dark"] {
-  --bg: #1F1E1D; --ink: #F2F2F4; --muted: #A4A7AF; --surface: rgba(255,255,255,0.07); --line: rgba(255,255,255,0.10);
+  --bg: #141416; --ink: #F2F2F4; --muted: #A4A7AF; --surface: rgba(255,255,255,0.07); --line: rgba(255,255,255,0.10);
   --section-shadow: 0 16px 32px rgba(0,0,0,0.22);
-  --page: radial-gradient(90% 72% at 4% -2%, rgba(126,160,142,0.48) 0%, rgba(126,160,142,0.2) 45%, rgba(126,160,142,0) 100%), radial-gradient(85% 62% at 40% 118%, rgba(154,115,133,0.5) 0%, rgba(154,115,133,0.22) 50%, rgba(154,115,133,0) 100%), #1F1E1D;
+  --page: radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416;
   --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%);
   --glass-shadow: inset 0 0.5px 0 rgba(255,255,255,0.14), inset 0 0 14px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.22);
-  --grain: 0.22;
+  --grain: 0.08;
   color-scheme: dark;
 }
 @media (max-width: 999px) { :root { --pad: 24px; --sec-pad: 32px; } }
@@ -97,6 +97,8 @@ section.card { display: flex; flex-direction: column; gap: 28px; padding: var(--
 /* Farben */
 .swatches { display: grid; grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr)); gap: 20px; }
 .swatches.four { --cols: 4; }
+.swatches.two { --cols: 2; max-width: 50%; }
+@media (max-width: 999px) { .swatches.four.two { --cols: 2; max-width: none; } }
 @media (max-width: 999px) { .swatches, .swatches.four { --cols: 3; } }
 @media (max-width: 759px) { .swatches, .swatches.four { --cols: 2; gap: 16px 12px; } .chip { height: 72px; border-radius: 16px; } }
 .swatch { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
@@ -106,7 +108,7 @@ section.card { display: flex; flex-direction: column; gap: 28px; padding: var(--
 .bg-tile { position: relative; overflow: hidden; height: 180px; border-radius: 24px; display: flex; align-items: flex-end; padding: 20px; }
 .bg-tile span { position: relative; font: 600 15px/1.3 Inter, sans-serif; }
 .bg-light { background: radial-gradient(60% 70% at 0% 0%, rgba(159,227,201,0.55) 0%, rgba(159,227,201,0) 65%), radial-gradient(60% 70% at 100% 100%, rgba(242,167,195,0.45) 0%, rgba(242,167,195,0) 65%), #E9E9EC; color: #0E0E10; }
-.bg-dark { background: radial-gradient(90% 72% at 4% -2%, rgba(126,160,142,0.48) 0%, rgba(126,160,142,0.2) 45%, rgba(126,160,142,0) 100%), radial-gradient(85% 62% at 40% 118%, rgba(154,115,133,0.5) 0%, rgba(154,115,133,0.22) 50%, rgba(154,115,133,0) 100%), #1F1E1D; color: #F2F2F4; }
+.bg-dark { background: radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416; color: #F2F2F4; }
 .grain { position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: overlay; pointer-events: none; }
 
 /* Widgets */
@@ -138,7 +140,7 @@ section.card { display: flex; flex-direction: column; gap: 28px; padding: var(--
 @media (max-width: 759px) { .stage { padding: 22px 18px; gap: 18px; } }
 .stage h3 { margin: 0; font: 700 20px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; }
 .stage.light { --s-ink: #0E0E10; --s-muted: #55585F; --s-on-ink: #E9E9EC; --s-glass: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.16) 100%); --s-glass-shadow: inset 0 0.5px 0 rgba(255,255,255,0.55), inset 0 0 14px rgba(255,255,255,0.2), 0 12px 40px rgba(20,20,40,0.08); --s-card: #FFFFFF; --s-card-border: 1px solid rgba(14,14,16,0.04); --s-card-shadow: 0 1px 2px rgba(20,20,40,0.05), 0 6px 18px rgba(20,20,40,0.06); --s-row: #0E0E10; --s-row-ink: #E9E9EC; --s-row-shadow: none; background: radial-gradient(60% 70% at 0% 0%, rgba(159,227,201,0.55) 0%, rgba(159,227,201,0) 65%), radial-gradient(60% 70% at 100% 100%, rgba(242,167,195,0.45) 0%, rgba(242,167,195,0) 65%), #E9E9EC; color: #0E0E10; }
-.stage.dark { --s-ink: #F2F2F4; --s-muted: #A4A7AF; --s-on-ink: #1F1E1D; --s-glass: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%); --s-glass-shadow: inset 0 0.5px 0 rgba(255,255,255,0.14), inset 0 0 14px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.22); --s-card: rgba(255,255,255,0.08); --s-card-border: 1px solid rgba(255,255,255,0.10); --s-card-shadow: 0 1px 2px rgba(20,20,40,0.2), 0 6px 18px rgba(20,20,40,0.18); --s-row: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%); --s-row-ink: #F2F2F4; --s-row-shadow: inset 0 0.5px 0 rgba(255,255,255,0.14), inset 0 0 14px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.22); background: radial-gradient(90% 72% at 4% -2%, rgba(126,160,142,0.48) 0%, rgba(126,160,142,0.2) 45%, rgba(126,160,142,0) 100%), radial-gradient(85% 62% at 40% 118%, rgba(154,115,133,0.5) 0%, rgba(154,115,133,0.22) 50%, rgba(154,115,133,0) 100%), #1F1E1D; color: #F2F2F4; }
+.stage.dark { --s-ink: #F2F2F4; --s-muted: #A4A7AF; --s-on-ink: #141416; --s-glass: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%); --s-glass-shadow: inset 0 0.5px 0 rgba(255,255,255,0.14), inset 0 0 14px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.22); --s-card: rgba(255,255,255,0.08); --s-card-border: 1px solid rgba(255,255,255,0.10); --s-card-shadow: 0 1px 2px rgba(20,20,40,0.2), 0 6px 18px rgba(20,20,40,0.18); --s-row: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%); --s-row-ink: #F2F2F4; --s-row-shadow: inset 0 0.5px 0 rgba(255,255,255,0.14), inset 0 0 14px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.22); background: radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416; color: #F2F2F4; }
 .stage .label { color: var(--s-muted); }
 .s-glass { background: var(--s-glass); box-shadow: var(--s-glass-shadow); -webkit-backdrop-filter: blur(20px) saturate(190%); backdrop-filter: blur(20px) saturate(190%); }
 .s-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -196,7 +198,7 @@ section.card { display: flex; flex-direction: column; gap: 28px; padding: var(--
 .logo-tile { display: flex; align-items: center; justify-content: center; height: 180px; border-radius: 24px; padding: 20px; }
 .logo-tile svg.mark { height: 48px; width: auto; max-width: 100%; }
 .lt-white { background: #FFFFFF; color: #0E0E10; box-shadow: inset 0 0 0 1px var(--line); }
-.lt-dark { background: #1F1E1D; color: #F2F2F4; }
+.lt-dark { background: #141416; color: #F2F2F4; }
 @media (max-width: 999px) { .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); } .logos .lt-fav { grid-column: 1 / -1; } }
 @media (max-width: 759px) { .logos { grid-template-columns: minmax(0, 1fr); } .logo-tile { height: 140px; } .logo-tile svg.mark { height: 36px; } }
 </style>
@@ -232,23 +234,21 @@ section.card { display: flex; flex-direction: column; gap: 28px; padding: var(--
     </div>
     <span class="label">Dark mode</span>
     <div class="swatches">
-      <div class="swatch"><div class="chip" style="background: #1F1E1D"></div><div class="swatch-text"><span class="name">Background</span><span class="mono">#1F1E1D</span><span class="note">Page, dark mode</span></div></div>
-      <div class="swatch"><div class="chip" style="background: #262624"></div><div class="swatch-text"><span class="name">Panel</span><span class="mono">#262624</span><span class="note">Project detail</span></div></div>
+      <div class="swatch"><div class="chip" style="background: #141416"></div><div class="swatch-text"><span class="name">Background</span><span class="mono">#141416</span><span class="note">Page, dark mode</span></div></div>
+      <div class="swatch"><div class="chip" style="background: #1E1E21"></div><div class="swatch-text"><span class="name">Panel</span><span class="mono">#1E1E21</span><span class="note">Project detail</span></div></div>
       <div class="swatch"><div class="chip" style="background: #F2F2F4"></div><div class="swatch-text"><span class="name">Ink</span><span class="mono">#F2F2F4</span><span class="note">Text, active pills</span></div></div>
       <div class="swatch"><div class="chip" style="background: #A4A7AF"></div><div class="swatch-text"><span class="name">Muted</span><span class="mono">#A4A7AF</span><span class="note">Labels, secondary text</span></div></div>
-      <div class="swatch"><div class="chip" style="background: linear-gradient(rgba(255,255,255,0.07), rgba(255,255,255,0.07)), #1F1E1D"></div><div class="swatch-text"><span class="name">Surface</span><span class="mono">rgba(255,255,255,0.07)</span><span class="note">Folder sheet, cards</span></div></div>
+      <div class="swatch"><div class="chip" style="background: linear-gradient(rgba(255,255,255,0.07), rgba(255,255,255,0.07)), #141416"></div><div class="swatch-text"><span class="name">Surface</span><span class="mono">rgba(255,255,255,0.07)</span><span class="note">Folder sheet, cards</span></div></div>
     </div>
     <span class="label">Accents</span>
-    <div class="swatches four">
-      <div class="swatch"><div class="chip" style="background: #9FE3C9"></div><div class="swatch-text"><span class="name">Mint</span><span class="mono">#9FE3C9</span><span class="note">Glow top left, favicon</span></div></div>
-      <div class="swatch"><div class="chip" style="background: #F2A7C3"></div><div class="swatch-text"><span class="name">Rosé</span><span class="mono">#F2A7C3</span><span class="note">Glow bottom right, favicon</span></div></div>
-      <div class="swatch"><div class="chip" style="background: rgb(126,160,142)"></div><div class="swatch-text"><span class="name">Sage</span><span class="mono">rgba(126,160,142,0.48)</span><span class="note">Dark-mode gradient, top</span></div></div>
-      <div class="swatch"><div class="chip" style="background: rgb(154,115,133)"></div><div class="swatch-text"><span class="name">Mauve</span><span class="mono">rgba(154,115,133,0.5)</span><span class="note">Dark-mode gradient, bottom</span></div></div>
+    <div class="swatches four two">
+      <div class="swatch"><div class="chip" style="background: #9FE3C9"></div><div class="swatch-text"><span class="name">Mint</span><span class="mono">#9FE3C9</span><span class="note">Glow top left (light 55 %, dark 22 %), favicon</span></div></div>
+      <div class="swatch"><div class="chip" style="background: #F2A7C3"></div><div class="swatch-text"><span class="name">Rosé</span><span class="mono">#F2A7C3</span><span class="note">Glow bottom right (light 45 %, dark 18 %), favicon</span></div></div>
     </div>
     <span class="label">Backgrounds</span>
     <div class="backgrounds">
       <div class="bg-tile bg-light"><span>Page background, light – mint and rosé glow</span></div>
-      <div class="bg-tile bg-dark"><svg class="grain" aria-hidden="true" style="opacity: 0.22"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Page background, dark – sage top, mauve bottom, grain</span></div>
+      <div class="bg-tile bg-dark"><svg class="grain" aria-hidden="true" style="opacity: 0.08"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Page background, dark – mint and rosé glow, light grain</span></div>
     </div>
   </section>
 
@@ -305,7 +305,7 @@ section.card { display: flex; flex-direction: column; gap: 28px; padding: var(--
         <div class="s-tabs s-glass"><span class="s-pill on">Profile</span><span class="s-pill">Tech &amp; tools</span><span class="s-pill">CV</span><span class="s-pill">Contact</span></div>
       </div>
       <div class="stage dark">
-        <svg class="grain" aria-hidden="true" style="opacity: 0.22"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg>
+        <svg class="grain" aria-hidden="true" style="opacity: 0.08"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg>
         <h3 style="position: relative">Dark mode</h3>
         <span class="label" style="position: relative">Navigation · theme toggle</span>
         <div class="s-row" style="position: relative"><div class="s-nav s-glass"><span class="s-pill on">Work</span><span class="s-pill">About</span></div><span class="s-icon s-glass" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg></span></div>

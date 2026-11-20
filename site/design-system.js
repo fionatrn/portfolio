@@ -16,7 +16,7 @@
   // Safari (iPhone) färbt Statusleiste und Adressleiste nach theme-color
   function syncThemeColor() {
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', root.getAttribute('data-theme') === 'dark' ? '#1F1E1D' : '#E9E9EC');
+    if (meta) meta.setAttribute('content', root.getAttribute('data-theme') === 'dark' ? '#141416' : '#E9E9EC');
   }
   syncThemeColor();
 
