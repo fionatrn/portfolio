@@ -26,6 +26,14 @@ template and the component script of `Main.dc.html` / `Ordner.dc.html` / `Imprin
 into `index.html` / `about.html` / `imprint.html`. Links to `*.dc.html` are rewritten to
 the clean URLs automatically.
 
+Event handlers are written as `data-on-click="{{…}}"` instead of the canvas's
+`onClick="{{…}}"`: the browser reports every `on…` attribute as a CSP violation
+(`script-src-attr`), even inside `<template>`. `support.js` understands both, so pasted
+canvas markup still works – rename the attributes to keep the console clean.
+
+`support.js` is cached for 5 minutes, so the pages load it as `/support.js?v=N`. When
+`support.js` changes in a way the pages depend on, bump `v` in all three pages.
+
 ## Run locally
 
 Run one of the two from the project root. Both commands work in Windows PowerShell 5.1

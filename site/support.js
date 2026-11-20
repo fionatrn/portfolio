@@ -87,9 +87,14 @@
     for (var j = 0; j < at.length; j++) {
       var name = at[j].name, val = at[j].value;
       if (name.indexOf('hint-') === 0) continue;
-      if (name.length > 2 && name.slice(0, 2) === 'on') {
+      // Ereignisse: "data-on-click" (bevorzugt) oder "onClick" (Canvas-Format).
+      // Die Seiten nutzen data-on-*, weil der Browser bei on*-Attributen schon
+      // beim Einlesen des Templates eine CSP-Warnung meldet (script-src-attr).
+      var evName = name.indexOf('data-on-') === 0 ? name.slice(8)
+        : (name.length > 2 && name.slice(0, 2) === 'on' ? name.slice(2) : null);
+      if (evName) {
         var fn = evalText(val, scope);
-        if (typeof fn === 'function') vn.on[name.slice(2).toLowerCase()] = fn;
+        if (typeof fn === 'function') vn.on[evName.toLowerCase()] = fn;
         continue;
       }
       var res = val.indexOf('{{') >= 0 ? evalText(val, scope) : val;
