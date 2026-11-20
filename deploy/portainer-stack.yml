@@ -15,7 +15,7 @@
 
 services:
   web:
-    image: ghcr.io/fionatrn/portfolio:sha-9182131
+    image: ghcr.io/fionatrn/portfolio:sha-ab1f970
     container_name: fiona-portfolio
     restart: unless-stopped
     ports:
