@@ -198,7 +198,8 @@ const P = [
   desc: 'The page you are looking at. A small static site without a framework: a lightweight custom runtime renders the pages, nginx serves them from a Docker container.',
   part: 'I built it end to end, from the card wheel and the about folder to the infrastructure. Every push to main builds a multi-arch image, smoke-tests it and rolls it out automatically via GitOps (GitHub Actions → GHCR → Portainer). The tricky parts were smooth animations without a framework and keeping it fast and accessible: dark mode, reduced motion, keyboard navigation.',
   tech: ['HTML & CSS', 'JavaScript', 'nginx', 'Docker', 'GitHub Actions'],
-  img: '/projects/website-hero-dark.webp', imgDark: '/projects/website-hero-light.webp', // Kontrast: im Light Mode der dunkle Screenshot, im Dark Mode der helle shots: ['/projects/website-branding.webp', '/projects/website-components.jpg'],
+  // Kontrast: im Light Mode der dunkle Screenshot, im Dark Mode der helle
+  img: '/projects/website-hero-dark.webp', imgDark: '/projects/website-hero-light.webp', shots: ['/projects/website-branding.webp', '/projects/website-components.jpg'],
   links: [{ label: 'Design system', url: '/design-system' }, { label: 'Source on GitHub', url: 'https://github.com/fionatrn/portfolio' }],
   g: 'linear-gradient(180deg, #2A3A33 0%, #1F1E1D 100%)' },
 { t: 'Project 01', c: 'Creative coding', tech: ['[TypeScript]', '[Figma]'], g: 'radial-gradient(circle at 50% 50%, #1A1030 0%, #8E1F5C 42%, #E07AAE 78%, #F2B5D0 100%)' },
