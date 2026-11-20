@@ -71,7 +71,7 @@ jobs:
           IMAGE="$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')"
           docker run -d --name smoke -p 8080:8080 "$IMAGE"
           for i in $(seq 1 20); do curl -fsS http://localhost:8080/healthz && break; sleep 1; done
-          for path in / /about /imprint /support.js /favicon.svg; do
+          for path in / /about /imprint /design-system /design-system.js /support.js /favicon.svg; do
             code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:8080$path")
             echo "$path -> $code"
             [ "$code" = "200" ] || { docker logs smoke; exit 1; }
