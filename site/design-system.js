@@ -13,6 +13,13 @@
   try { sysDark = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) {}
   root.setAttribute('data-theme', stored === 'dark' || stored === 'light' ? stored : (sysDark ? 'dark' : 'light'));
 
+  // Safari (iPhone) färbt Statusleiste und Adressleiste nach theme-color
+  function syncThemeColor() {
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', root.getAttribute('data-theme') === 'dark' ? '#1F1E1D' : '#E9E9EC');
+  }
+  syncThemeColor();
+
   function ready() {
     var btn = document.getElementById('theme-toggle');
     if (!btn) return;
@@ -26,6 +33,7 @@
       root.setAttribute('data-theme', dark ? 'dark' : 'light');
       try { window.localStorage.setItem('fiona-theme', dark ? 'dark' : 'light'); } catch (e) {}
       sync();
+      syncThemeColor();
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready);

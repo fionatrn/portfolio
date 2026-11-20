@@ -238,6 +238,23 @@
     if (!comp.state) comp.state = {};
     if (!comp.props) comp.props = props;
 
+    // Seitenfarbe auf <html>/<body> und theme-color übertragen. Safari (iPhone)
+    // färbt damit die Bereiche hinter Statusleiste und Adressleiste sowie das
+    // Überscrollen – sonst bleiben sie weiß. Gelesen wird die Grundfarbe des
+    // obersten Elements (letzte Ebene von "background"), nur bei Änderung.
+    var lastBg = '';
+    function syncPageColor() {
+      var first = mount.firstElementChild;
+      var bg = first && first.style ? first.style.backgroundColor : '';
+      if (!bg || bg === lastBg) return;
+      lastBg = bg;
+      document.documentElement.style.backgroundColor = bg;
+      document.body.style.backgroundColor = bg;
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (!meta) { meta = document.createElement('meta'); meta.name = 'theme-color'; document.head.appendChild(meta); }
+      meta.content = bg;
+    }
+
     var rendering = false, again = false, mounted = false;
     function render() {
       if (rendering) { again = true; return; }
@@ -250,6 +267,7 @@
         patchKids(mount, kids);
       } while (again);
       rendering = false;
+      syncPageColor();
       if (mounted && comp.componentDidUpdate) comp.componentDidUpdate();
     }
     comp.__render = render;
