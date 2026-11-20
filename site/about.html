@@ -147,12 +147,8 @@ a{color:inherit;text-decoration:none}
 </sc-if>
 <div style="{{aboutGrid}}">
 <div class="reveal rise" style="{{photoCard}}">
-<svg aria-hidden="true" viewBox="0 0 200 240" preserveAspectRatio="xMidYMax meet" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 82%; opacity: 0.55">
-<circle cx="100" cy="92" r="42" fill="{{t.silhouette}}"></circle>
-<path d="M18 240 C24 176 62 150 100 150 C138 150 176 176 182 240 Z" fill="{{t.silhouette}}"></path>
-</svg>
+<img src="/images/portrait.jpg" alt="Portrait of Fiona Tran" width="1382" height="1024" decoding="async" style="{{photoImg}}">
 <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
-<span style="{{photoNote}}">[Your photo]</span>
 <span class="reveal pop" style="{{lab1}}">Full-stack dev ★</span>
 <span class="reveal pop" style="{{lab2}}">UI/UX enthusiast ★</span>
 <span class="reveal pop" style="{{lab3}}">Creative coder ★</span>
@@ -372,11 +368,12 @@ mTab: 'display: flex; flex-direction: column; padding: 14px 20px 10px; border-ra
 mTabBg: 'display: flex; flex-direction: column; padding: 14px 20px 10px; border-radius: ' + R + 'px ' + R + 'px 0 0; background: #FFFFFF',
 aboutGrid: (mob ? 'box-sizing: border-box; padding: 20px 22px 32px; ' : 'flex: 1 1 auto; ') + 'display: flex; flex-wrap: wrap; gap: ' + (mob ? 16 : 24) + 'px; align-items: stretch',
 photoCard: 'position: relative; overflow: hidden; flex: 1 1 ' + (mob ? '100%' : '380px') + '; min-height: ' + (mob ? 300 : cmp ? 360 : 520) + 'px; border-radius: 24px; background: ' + t.photo,
-photoNote: 'position: absolute; left: 50%; top: 18px; transform: translateX(-50%); font: 400 14px/1.4 Inter, sans-serif; color: ' + t.muted,
-lab1: lab(mob ? 'left: 14px; top: 64px' : 'left: 24px; top: 88px'),
-lab2: lab(mob ? 'right: 14px; top: 110px' : cmp ? 'right: 24px; top: 130px' : 'right: 24px; top: 150px'),
-lab3: lab(mob ? 'left: 14px; bottom: 76px' : cmp ? 'left: 32px; bottom: 110px' : 'left: 32px; bottom: 150px'),
-lab4: lab(mob ? 'right: 14px; bottom: 28px' : cmp ? 'right: 32px; bottom: 50px' : 'right: 32px; bottom: 70px'),
+photoImg: 'position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; filter: ' + (dark ? 'brightness(0.92)' : 'none'),
+// Handy: Etiketten in die Ecken, damit sie das Gesicht im Foto nicht verdecken
+lab1: lab(mob ? 'left: 12px; top: 12px' : 'left: 24px; top: 88px'),
+lab2: lab(mob ? 'right: 12px; top: 12px' : cmp ? 'right: 24px; top: 130px' : 'right: 24px; top: 150px'),
+lab3: lab(mob ? 'left: 12px; bottom: 12px' : cmp ? 'left: 32px; bottom: 110px' : 'left: 32px; bottom: 150px'),
+lab4: lab(mob ? 'right: 12px; bottom: 12px' : cmp ? 'right: 32px; bottom: 50px' : 'right: 32px; bottom: 70px'),
 helloSmall: archive ? 'margin: 0; font: 700 ' + (mob ? 30 : 40) + 'px/1.15 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink : 'margin: 0; font: ' + hf.w + ' ' + Math.round((mob ? hf.m : hf.d) * 0.82) + 'px/1.05 "' + hfName + '", cursive; color: ' + t.ink,
 h2: 'margin: 0; font: 700 ' + (mob ? 22 : 26) + 'px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.01em; color: ' + t.ink,
 bio: 'margin: 0; max-width: 560px; font: 400 ' + (mob ? 15 : 17) + 'px/1.55 Inter, sans-serif; color: ' + t.muted,
