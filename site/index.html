@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiona Tran — Portfolio</title>
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc><template>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://fiona-tran.com/">
+<meta name="description" content="Portfolio of Fiona Tran – full-stack developer and computer science student.">
+<meta property="og:title" content="Fiona Tran – Portfolio">
+<meta property="og:description" content="From database to details.">
+<meta property="og:image" content="https://fiona-tran.com/og-image.png">
+<meta property="og:url" content="https://fiona-tran.com">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+.hov{transition:transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)}
+.hov:hover{transform:scale(1.05)}
+.hov:active{transform:scale(0.97)}
+.hovS{transition:transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)}
+.hovS:hover{transform:scale(1.02)}
+.hovS:active{transform:scale(0.98)}
+@keyframes fReveal{from{opacity:0;transform:translateY(28px) scale(0.97)}to{opacity:1;transform:none}}
+@keyframes fShrink{from{opacity:1;transform:none}to{opacity:0.45;transform:scale(0.92)}}
+@media (prefers-reduced-motion: no-preference){@supports (animation-timeline: view()){.reveal{animation:fReveal linear both;animation-timeline:view();animation-range:entry 5% entry 60%}.hero-shrink{animation:fShrink linear both;animation-timeline:view();animation-range:exit 0% exit 100%;transform-origin:50% 100%}}}
+</style>
+</helmet>
+<div onKeyDown="{{onKey}}" style="{{rootStyle}}">
+<svg aria-hidden="true" width="0" height="0" style="position: absolute">
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter>
+</svg>
+<div aria-hidden="true" style="{{glowA}}"></div>
+<div aria-hidden="true" style="{{glowB}}"></div>
+<svg aria-hidden="true" style="{{bgGrain}}"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg>
+
+<header style="{{headerStyle}}">
+<a href="Main.dc.html" aria-label="fiona – home" style="display: flex; align-items: center; min-height: 44px">
+<svg role="img" aria-label="fiona" height="{{logoH}}" viewBox="-12 78 764 124" xmlns="http://www.w3.org/2000/svg">
+<g fill="none" stroke="{{t.ink}}" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+<path d="M10 190 V120 A30 30 0 0 1 40 90 H190"></path>
+<path d="M10 130 H140"></path>
+<path d="M190 130 V190"></path>
+<g transform="translate(90 0)">
+<rect x="150" y="130" width="130" height="60" rx="30"></rect>
+<path d="M330 190 V160 A30 30 0 0 1 360 130 H430 A30 30 0 0 1 460 160 V190"></path>
+<path d="M640 130 V190 H540 A30 30 0 0 1 510 160 A30 30 0 0 1 540 130 Z"></path>
+</g>
+</g>
+</svg>
+</a>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Main navigation" style="{{navStyle}}">
+<a class="hov" href="Main.dc.html" aria-current="page" style="{{pillActive}}">Work</a>
+<a class="hov" href="Ordner.dc.html" style="{{pill}}">About</a>
+</nav>
+</sc-if>
+<button class="hov" onClick="{{toggleDark}}" aria-label="{{darkLabel}}" style="{{iconBtn}}">
+<sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+</sc-if>
+<sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+</sc-if>
+</button>
+</header>
+
+<main onClick="{{bgClick}}" style="{{mainStyle}}">
+<h1 style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap">Projects</h1>
+
+<div tabindex="0" data-wheel="1" onClick="{{bgClick}}" onWheel="{{onWheel}}" onTouchStart="{{onTouchStart}}" onTouchMove="{{onTouchMove}}" onTouchEnd="{{onTouchEnd}}" onTouchCancel="{{onTouchEnd}}" aria-label="Projects – use the arrow keys, scroll, swipe or select a card. Enter opens the centre project." style="{{wheelStyle}}">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="7">
+<button tabindex="{{c.tabi}}" aria-hidden="{{c.ah}}" onClick="{{c.pick}}" onMouseEnter="{{c.enter}}" onMouseLeave="{{c.leave}}" aria-label="{{c.label}}" style="{{c.style}}">
+<svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg>
+<sc-if value="{{c.showOpen}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="{{c.openChip}}">Open ↗</span></sc-if>
+</button>
+</sc-for>
+</div>
+
+<button class="hov" onClick="{{openCur}}" aria-label="Open {{cur.t}}" style="{{infoStyle}}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; text-align: center">
+<span style="{{metaStyle}}">{{cur.y}} · {{cur.c}}</span>
+<span style="{{titleStyle}}">{{cur.t}}</span>
+</div>
+</button>
+</main>
+<footer style="{{footer}}"><span>© 2026 Fiona Tran</span><a href="Imprint.dc.html" style="{{footLink}}">Imprint</a><a href="Imprint.dc.html#priv" style="{{footLink}}">Privacy</a></footer>
+
+
+<sc-if value="{{isOpen}}" hint-placeholder-val="{{ false }}">
+<div style="{{detailWrap}}">
+<div aria-hidden="true" onClick="{{close}}" style="{{backdrop}}"></div>
+<div role="dialog" aria-modal="{{modal}}" aria-labelledby="pd-title" style="{{detailInner}}">
+<div style="{{sheetTop}}">
+<sc-if value="{{sheetMode}}" hint-placeholder-val="{{ false }}"><button onClick="{{toggleSheet}}" aria-label="{{sheetLabel}}" style="{{grabBtn}}"><span aria-hidden="true" style="{{grabber}}"></span></button></sc-if>
+<button onClick="{{close}}" aria-label="Close project" style="{{iconBtn}}">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
+</div>
+<div class="hero-shrink" style="{{hero}}">
+<svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg>
+
+</div>
+<div style="{{detailCols}}">
+<div style="display: flex; flex-direction: column; gap: 12px; flex: 2 1 420px; min-width: 0">
+<h1 id="pd-title" style="{{detailTitle}}">{{cur.t}}</h1>
+<p style="{{detailText}}">[A <strong style="{{strong}}">web app</strong> that … – one or two sentences on what the project is and which problem it solves]</p>
+<p style="{{detailText}}">[Your part: what you built yourself, what was tricky and what you learned]</p>
+</div>
+<div class="reveal" style="{{factCard}}">
+<div style="{{factRow}}"><span style="{{detailLabel}}">Year</span><span style="{{factVal}}">{{cur.y}}</span></div>
+<div style="{{factRow}}"><span style="{{detailLabel}}">Team</span><span style="{{factVal}}">[Solo / team of 4]</span></div>
+<div style="{{factRow}}"><span style="{{detailLabel}}">My role</span><span style="{{factVal}}">[e.g. Frontend &amp; API]</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="{{detailLabel}}">Built with</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{techs}}" as="tc" hint-placeholder-count="3"><span style="{{tc.style}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg><span style="position: relative">{{tc.label}}</span></span></sc-for></div>
+</div>
+<sc-if value="{{hasLinks}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="{{detailLabel}}">Links</span>
+<sc-for list="{{links}}" as="lk" hint-placeholder-count="2"><a class="hovS" href="{{lk.url}}" target="_blank" rel="noopener" style="{{linkRow}}"><span>{{lk.label}}</span><span aria-hidden="true">↗</span></a></sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+<div class="reveal" style="{{gallery}}">
+<div style="{{shot}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></div>
+<div style="{{shot}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></div>
+</div>
+<button class="reveal" onClick="{{goNext}}" aria-label="Next project: {{nextT}}" style="{{nextCard}}">
+<span style="{{detailLabel}}">Next project</span>
+<span style="{{nextTitle}}">{{nextT}} <span aria-hidden="true">→</span></span>
+</button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<nav aria-label="Main navigation" style="{{tabBar}}">
+<a href="Main.dc.html" aria-current="page" style="{{tabActive}}">Work</a>
+<a href="Ordner.dc.html" style="{{tab}}">About</a>
+</nav>
+</sc-if>
+</div>
+</template></x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"mobile":{"editor":"boolean","default":false},"openDetail":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+componentDidMount() {
+try { this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); } catch (e) {}
+this._keyH = (e) => { if (e._fionaDone) return; e._fionaDone = true; const tg = e.target; if (tg && tg.closest && (tg.closest('input, textarea, [contenteditable]') || tg.closest('[role=dialog]'))) return; const k = e.key; if (k === 'ArrowRight' || k === 'ArrowLeft') { if (this.state.open && this._sheet) return; e.preventDefault(); if (this._go) this._go((this.state.active ?? 10) + (k === 'ArrowRight' ? 1 : -1)); } else if (k === 'Escape' && this.state.open) { this.setState({ open: false, sheetFull: false }); } };
+try { window.addEventListener('keydown', this._keyH, true); document.addEventListener('keydown', this._keyH, true); } catch (e) {}
+let skip = false;
+try { skip = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) {}
+if (skip || this.props.openDetail) { this.setState({ active: 17 }); return; }
+const from = 10, to = 17, dur = 1500, delay = 250;
+this.setState({ spinning: true, fpos: from });
+const start = performance.now() + delay;
+const ease = (x) => 1 - Math.pow(1 - x, 3);
+const tick = (now) => { if (this._introStop) return; const p = Math.min(1, Math.max(0, (now - start) / dur)); if (p < 1) { this.setState({ fpos: from + (to - from) * ease(p) }); requestAnimationFrame(tick); } else { this.setState({ active: to, fpos: null, spinning: false }); } };
+requestAnimationFrame(tick);
+}
+renderVals() {
+const sysDark = (() => { try { const s = window.localStorage.getItem('fiona-theme'); if (s) return s === 'dark'; return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) { return false; } })();
+const dark = this.state.dark ?? (this.props.dark ? true : sysDark);
+const vw = Number(this.props.vw) || (typeof window !== 'undefined' && window.innerWidth) || 1440;
+const vh = Number(this.props.vh) || (typeof window !== 'undefined' && window.innerHeight) || 900;
+const mob = !!this.props.mobile || vw < 760 || (!this.props.vw && vh < 500);
+const cmp = !mob && vw < 1000;
+const sheetMode = mob || vw < 1100;
+this._sheet = sheetMode;
+const active = this.state.active ?? 10;
+const t = dark ? {
+bg: '#1F1E1D', ink: '#F2F2F4', muted: '#A4A7AF',
+glass: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.12)',
+shadow: '0 12px 40px rgba(0,0,0,0.22)', cardShadow: '0 24px 60px rgba(0,0,0,0.32)',
+glowA: 'rgba(0,0,0,0)', glowB: 'rgba(0,0,0,0)', grain: '0.16', blend: 'screen'
+} : {
+bg: '#E9E9EC', ink: '#0E0E10', muted: '#55585F',
+glass: 'rgba(255,255,255,0.55)', border: 'rgba(255,255,255,0.85)',
+shadow: '0 12px 40px rgba(20,20,40,0.08)', cardShadow: '0 24px 50px rgba(20,20,40,0.16)',
+glowA: 'rgba(159,227,201,0.55)', glowB: 'rgba(242,167,195,0.45)', grain: '0.22', blend: 'multiply'
+};
+const P = [
+{ t: 'Project 01', c: 'Creative coding', tech: ['[TypeScript]', '[Figma]'], g: 'radial-gradient(circle at 50% 50%, #1A1030 0%, #8E1F5C 42%, #E07AAE 78%, #F2B5D0 100%)' },
+{ t: 'Project 02', c: 'Web app', tech: ['[Angular]', '[Supabase]', '[Playwright]'], g: 'linear-gradient(180deg, #4E3F7A 0%, #A0587A 50%, #E2876A 80%, #F5B97A 100%)' },
+{ t: 'Project 03', c: 'Design', tech: ['[Figma]', '[Clip Studio Paint]'], g: 'radial-gradient(circle at 50% 55%, #0C1411 0%, #23443A 35%, #5E8F7A 70%, #A8D5C0 100%)' },
+{ t: 'Project 04', c: 'Art', tech: ['[Clip Studio Paint]', '[GIMP]'], g: 'radial-gradient(circle at 70% 64%, #3A44D8 0%, #3A44D8 15%, rgba(58,68,216,0) 40%), linear-gradient(180deg, #B4482A 0%, #D4683A 100%)' },
+{ t: 'Project 05', c: 'Full-stack', tech: ['[Kotlin]', '[AWS]', '[DynamoDB]', '[Jest]'], g: 'radial-gradient(circle at 50% 50%, #070A20 0%, #1B2A7A 38%, #3450C8 72%, #8EA2F0 100%)' },
+{ t: 'Project 06', c: 'Cybersecurity', tech: ['[Java]', '[Docker]'], g: 'linear-gradient(180deg, #E0457B 0%, #F07A3A 55%, #FFD36E 100%)' },
+{ t: 'Project 07', c: 'Illustration', tech: ['[Clip Studio Paint]', '[Canva]'], g: 'radial-gradient(circle at 50% 50%, #2A2B30 0%, #6E737B 45%, #B8BCC2 78%, #E6E8EB 100%)' }
+];
+const n = P.length;
+const cw = mob ? 96 : 214, ch = mob ? 130 : 288, rad = mob ? 14 : 24, RR = mob ? 360 : 1100, step = (mob ? 21 : 14) * Math.PI / 180, yOff = mob ? -28 : -56;
+const norm = () => { clearTimeout(this._norm); this._norm = setTimeout(() => { const a = this.state.active ?? 10; if (a < 2 * n || a >= 3 * n) { this.setState({ active: ((a % n) + n) % n + 2 * n, noAnim: true }); setTimeout(() => this.setState({ noAnim: false }), 60); } }, 650); };
+const posF = this.state.fpos ?? active;
+const CARDS = [...P, ...P, ...P, ...P, ...P];
+const cards = CARDS.map((p, i) => {
+const d = i - posF, ad = Math.abs(d), lim = mob ? 2 : 3, hidden = ad > lim + 0.5;
+const hov = d === 0 && this.state.hover === i;
+const a = Math.max(-4, Math.min(4, d)) * step, x = RR * Math.sin(a), y = yOff + RR * (1 - Math.cos(a)) - (hov ? 10 : 0), r = a * 180 / Math.PI, s = Math.max(0.6, 1 - ad * 0.08) + Math.max(0, 1 - ad) * (mob ? 0.14 : 0.06) + (hov ? 0.03 : 0), o = ad <= lim ? 1 - ad * 0.15 : Math.max(0, (lim + 0.5 - ad) / 0.5) * (1 - lim * 0.15);
+return {
+num: String((i % n) + 1).padStart(2, '0'), tabi: hidden ? '-1' : '0', ah: hidden ? 'true' : 'false', label: (d === 0 ? 'Open ' : 'Show ') + p.t,
+pick: () => { if (Date.now() - (this._dragEnd || 0) < 350) return; if (d === 0) this.setState({ open: true }); else { this.setState({ active: i }); norm(); } },
+enter: () => this.setState({ hover: i }),
+leave: () => this.setState({ hover: null }),
+showOpen: d === 0 && !mob && hov,
+openChip: 'position: absolute; right: 12px; bottom: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.7); color: #0E0E10; font: 500 12px/1.4 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(8px)',
+style: 'position: absolute; left: 50%; top: 50%; width: ' + cw + 'px; height: ' + ch + 'px; margin-left: ' + (-cw / 2) + 'px; margin-top: ' + (-ch / 2) + 'px; transform: translate(' + x + 'px, ' + y + 'px) rotate(' + r + 'deg) scale(' + s + '); opacity: ' + o + '; z-index: ' + (10 - Math.round(ad)) + '; transition: ' + (this.state.noAnim || this.state.spinning ? 'none' : 'transform 0.42s cubic-bezier(0.2, 0.9, 0.25, 1), opacity 0.25s') + '; border: 1px solid ' + t.border + '; padding: 0; border-radius: ' + rad + 'px; overflow: hidden; cursor: pointer; background: ' + p.g + '; box-shadow: ' + (hov ? t.cardShadow.replace('24px 50px', '34px 70px').replace('24px 60px', '34px 80px') : t.cardShadow) + '; pointer-events: ' + (hidden ? 'none' : 'auto'),
+chip: 'position: absolute; left: 12px; bottom: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.7); color: #0E0E10; font: 500 12px/1.4 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(8px)'
+};
+});
+const pw = Math.max(480, Math.min(640, Math.round(vw * 0.44)));
+const pi = ((Math.round(posF) % n) + n) % n;
+const cur = { ...P[pi], num: String(pi + 1).padStart(2, '0'), y: P[pi].y || '[Year]', demo: P[pi].demo === undefined ? '#' : P[pi].demo, repo: P[pi].repo === undefined ? '#' : P[pi].repo };
+const open = !!(this.state.open ?? (this.props.openDetail ?? false));
+this._go = (k) => go(k);
+const go = (k) => { const a0 = this.state.active ?? 10; if (a0 < n || a0 >= 4 * n) { const na = ((a0 % n) + n) % n + 2 * n; const dl = k - a0; this.setState({ active: na, noAnim: true }); requestAnimationFrame(() => requestAnimationFrame(() => { this.setState({ active: na + dl, noAnim: false }); norm(); })); return; } this.setState({ active: k }); norm(); };
+const glass = 'background: ' + (dark ? 'linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.16) 100%)') + '; border: 0; box-shadow: inset 0 0.5px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.55') + '), inset 0 0 14px rgba(255,255,255,' + (dark ? '0.04' : '0.2') + '), ' + t.shadow + '; backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%)';
+const pillBase = 'display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; ';
+return {
+t, cur, cards, count: String(n).padStart(2, '0'), isOpen: open, close: () => this.setState({ open: false, sheetFull: false }),
+modal: sheetMode ? 'true' : 'false',
+bgClick: (e) => { if (open && !sheetMode && e.target === e.currentTarget) this.setState({ open: false }); },
+toggleSheet: () => this.setState({ sheetFull: !this.state.sheetFull }),
+sheetLabel: this.state.sheetFull ? 'Collapse project details' : 'Expand project details',
+desktop: !mob, mobile: mob, isDark: dark, isLight: !dark,
+darkLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+toggleDark: () => { try { window.localStorage.setItem('fiona-theme', dark ? 'light' : 'dark'); } catch (e) {} this.setState({ dark: !dark }); },
+onKey: (e) => { const k = e.key; const inDialog = e.target && e.target.closest && e.target.closest('[role=dialog]'); if (k === 'Escape' && open) { this.setState({ open: false, sheetFull: false }); return; } if (inDialog || (open && sheetMode)) return; if (k === 'ArrowRight' || k === 'ArrowLeft') { return; } else if (k === 'Enter' && e.target && e.target.dataset && e.target.dataset.wheel) { this.setState({ open: true }); } },
+onTouchStart: (e) => { const p = e.touches && e.touches[0]; if (!p) return; if (this._raf) cancelAnimationFrame(this._raf); this._raf = null; this._introStop = true; const now = Date.now(); this._tx = p.clientX; this._base = this.state.fpos ?? (this.state.active ?? 10); this._moved = false; this._smp = [[p.clientX, now], [p.clientX, now]]; if (this.state.fpos != null) this.setState({ active: Math.round(this._base), spinning: true }); },
+onTouchMove: (e) => { const p = e.touches && e.touches[0]; if (this._tx == null || !p) return; const dx = p.clientX - this._tx; if (!this._moved && Math.abs(dx) < 8) return; this._moved = true; const unit = mob ? 110 : 190; this._smp = [this._smp[1], [p.clientX, Date.now()]]; this.setState({ spinning: true, fpos: this._base - dx / unit }); },
+onTouchEnd: (e) => { if (this._tx == null) return; this._tx = null; const cur = this.state.fpos; if (!this._moved || cur == null) { if (this.state.spinning) this.setState({ spinning: false, fpos: null }); return; } this._dragEnd = Date.now(); const unit = mob ? 110 : 190; const [a, b] = this._smp; const v = (b[0] - a[0]) / Math.max(8, b[1] - a[1]); const fresh = Date.now() - b[1] < 80 ? v : 0; let target = Math.round(cur - fresh * 260 / unit); target = Math.max(Math.round(cur) - 6, Math.min(Math.round(cur) + 6, target)); const from = cur, dist = Math.abs(target - from), dur = Math.min(900, 260 + dist * 110); const st = performance.now(); const ease = (x) => 1 - Math.pow(1 - x, 3); const tick = (now) => { const q = Math.min(1, (now - st) / dur); if (q < 1) { this.setState({ fpos: from + (target - from) * ease(q) }); this._raf = requestAnimationFrame(tick); } else { this._raf = null; this.setState({ active: target, fpos: null, spinning: false }); norm(); } }; this._raf = requestAnimationFrame(tick); },
+onWheel: (e) => { const v = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX; if (!v) return; const now = Date.now(); clearTimeout(this._wIdle); this._wIdle = setTimeout(() => { this._wTot = 0; this._wSteps = 0; this._wLast = 0; }, 160); const av = Math.abs(v); const last = this._wLast || 0; this._wLast = av; const tot0 = this._wTot || 0; if ((tot0 !== 0 && Math.sign(v) !== Math.sign(tot0)) || (av > 6 && av > last * 1.8 && now - (this._wLastStep || 0) > 120 && (this._wSteps || 0) > 0)) { this._wTot = 0; this._wSteps = 0; } this._wTot = (this._wTot || 0) + v; const at = Math.abs(this._wTot); const target = at < 30 ? 0 : at < 900 ? 1 : Math.min(6, 2 + Math.floor((at - 900) / 220)); if ((this._wSteps || 0) < target && now - (this._wLastStep || 0) >= 90) { this._wSteps = (this._wSteps || 0) + 1; this._wLastStep = now; go((this.state.active ?? 10) + (this._wTot > 0 ? 1 : -1)); } },
+logoH: mob ? 16 : 30,
+bgGrain: dark ? 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.22; mix-blend-mode: overlay; pointer-events: none' : 'display: none',
+rootStyle: 'position: relative; min-height: 100vh; overflow: hidden; background: ' + (dark ? 'radial-gradient(90% 72% at 4% -2%, rgba(126,160,142,0.48) 0%, rgba(126,160,142,0.2) 45%, rgba(126,160,142,0) 100%), radial-gradient(85% 62% at 40% 118%, rgba(154,115,133,0.5) 0%, rgba(154,115,133,0.22) 50%, rgba(154,115,133,0) 100%), #1F1E1D' : t.bg) + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column; transition: background 0.4s',
+glowA: 'position: absolute; width: ' + (mob ? 420 : 900) + 'px; height: ' + (mob ? 420 : 900) + 'px; left: -' + (mob ? 160 : 220) + 'px; top: -' + (mob ? 120 : 260) + 'px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowA + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
+glowB: 'position: absolute; width: ' + (mob ? 460 : 1000) + 'px; height: ' + (mob ? 460 : 1000) + 'px; right: -' + (mob ? 200 : 260) + 'px; bottom: -' + (mob ? 160 : 380) + 'px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowB + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
+grainStyle: 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: ' + t.grain + '; mix-blend-mode: ' + t.blend + '; pointer-events: none',
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? '56px 20px 8px' : '28px ' + (cmp ? 24 : 48) + 'px'),
+navStyle: 'display: flex; gap: 4px; padding: 4px; border-radius: 999px; ' + glass,
+pillActive: pillBase + 'background: ' + t.ink + '; color: ' + t.bg,
+pill: pillBase + 'color: ' + t.ink,
+iconBtn: 'display: inline-flex; align-items: center; justify-content: center; justify-self: end; flex: none; width: 44px; height: 44px; padding: 0; border-radius: 999px; cursor: pointer; color: ' + t.ink + '; ' + glass,
+mainStyle: 'position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: ' + (mob ? 18 : 24) + 'px; padding: ' + (mob ? '0 20px 16px' : '0 ' + (cmp ? 24 : 48) + 'px 24px') + '; transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1)' + (open && !sheetMode ? '; transform: translateX(-' + Math.round((pw + 32) / 2) + 'px) scale(0.88)' : ''),
+kicker: 'margin: 0; font: 400 15px/1.4 Inter, sans-serif; color: ' + t.muted,
+wheelStyle: 'position: relative; width: 100%; touch-action: pan-y; height: ' + (mob ? 260 : 460) + 'px',
+openCur: () => this.setState({ open: true }),
+links: (P[pi].links || [{ label: 'Live demo', url: '#' }, { label: 'GitHub', url: '#' }]),
+hasLinks: (P[pi].links || [1]).length > 0,
+linkRow: 'display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 18px; border-radius: 16px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; ' + (dark ? 'color: ' + t.ink + '; ' + glass : 'color: ' + t.bg + '; background: ' + t.ink),
+infoStyle: 'display: flex; align-items: center; justify-content: center; cursor: pointer; font: inherit; color: inherit; padding: ' + (mob ? '10px 24px' : '12px 32px') + '; border-radius: 999px; ' + glass,
+metaStyle: 'font: 500 12px/1.4 Inter, sans-serif; letter-spacing: 0.06em; color: ' + t.muted,
+titleStyle: 'font: 700 ' + (mob ? 20 : 24) + 'px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.01em; color: ' + t.ink + '; min-width: ' + (mob ? 150 : 220) + 'px',
+ctaStyle: 'display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; border-radius: 999px; background: ' + t.ink + '; color: ' + t.bg + '; font: 500 15px/1 Inter, sans-serif',
+tabBar: 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 4px; border-radius: 999px; ' + glass,
+tabActive: pillBase + 'flex: 1; padding: 0 8px; background: ' + t.ink + '; color: ' + t.bg,
+tab: pillBase + 'flex: 1; padding: 0 8px; color: ' + t.ink,
+sheetMode,
+detailWrap: 'position: absolute; inset: 0; z-index: 60' + (sheetMode ? '' : '; pointer-events: none'),
+backdrop: sheetMode ? 'position: absolute; inset: 0; background: rgba(10,10,14,' + (dark ? '0.5' : '0.22') + '); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px)' : 'display: none',
+detailInner: 'position: absolute; box-sizing: border-box; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background: ' + (dark ? '#262624' : '#F4F4F6') + '; box-shadow: 0 -10px 60px rgba(0,0,0,' + (dark ? '0.3' : '0.18') + '); ' + (sheetMode ? 'left: 0; right: 0; bottom: 0; margin: 0 auto; max-width: 760px; height: ' + (this.state.sheetFull ? '92%' : '62%') + '; border-radius: 28px 28px 0 0; padding: 8px 16px 40px; transition: height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1)' : 'top: 16px; right: 16px; bottom: 16px; width: min(' + pw + 'px, calc(100% - 32px)); border-radius: 32px; padding: 20px 28px 32px; pointer-events: auto'),
+sheetTop: 'position: relative; flex: none; display: flex; justify-content: flex-end; align-items: center; min-height: 44px',
+grabBtn: 'position: absolute; left: 50%; top: -6px; transform: translateX(-50%); width: 96px; height: 36px; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center',
+grabber: 'width: 40px; height: 5px; border-radius: 999px; background: ' + (dark ? 'rgba(255,255,255,0.3)' : 'rgba(14,14,16,0.2)'),
+strong: 'font-weight: 600; color: ' + t.ink,
+catPill: 'font: 500 16px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; color: ' + t.muted + '; margin-bottom: -6px',
+techs: (P[pi].tech || []).map((label, i) => { const CAT = { java: 'mint', kotlin: 'mint', typescript: 'mint', angular: 'mint', aws: 'blue', dynamodb: 'blue', supabase: 'blue', docker: 'blue', jest: 'orange', playwright: 'orange', figma: 'pink', canva: 'pink', gimp: 'pink', 'clip studio paint': 'pink' }; const k = CAT[label.replace(/[\[\]]/g, '').trim().toLowerCase()] || 'lilac'; const G = { mint: ['#7FD6B0', '#A6E6C8', '#CDF3E0', '#E8FBF2', 'rgba(127,214,176,0.55)'], orange: ['#F7A26B', '#FBBE93', '#FDD9BE', '#FFEDE0', 'rgba(247,162,107,0.55)'], pink: ['#F28DB4', '#F7AECB', '#FBCFE0', '#FFE8F1', 'rgba(242,141,180,0.55)'], lilac: ['#AE97E8', '#C6B5F0', '#DDD2F7', '#F0EBFC', 'rgba(174,151,232,0.55)'], blue: ['#7FA8F2', '#A4C2F6', '#C9DBFA', '#E6EFFD', 'rgba(127,168,242,0.55)'], yellow: ['#F2CF5B', '#F7DE8A', '#FBEAB6', '#FFF6DC', 'rgba(242,207,91,0.55)'] }; const g = G[k] || G[['mint', 'orange', 'pink'][i]]; return { label, style: 'position: relative; overflow: hidden; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; font: 500 13px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: #1A1A1E; border: 0; background: radial-gradient(120% 160% at 50% 50%, ' + g[0] + ' 0%, ' + g[1] + ' 40%, ' + g[2] + ' 75%, ' + g[3] + ' 100%); box-shadow: 0 0 14px 1px ' + g[4] + ', inset 0 0 12px rgba(255,255,255,0.35)' }; }),
+hero: 'position: relative; overflow: hidden; flex: none; height: ' + (mob ? 200 : 300) + 'px; border-radius: 24px; background: ' + P[pi].g,
+heroNote: 'position: absolute; left: 20px; bottom: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,0.7); color: #0E0E10; font: 400 14px/1.4 Inter, sans-serif',
+detailCols: 'display: flex; flex-wrap: wrap; gap: 24px',
+detailTitle: 'margin: 0; font: 700 ' + (mob ? 28 : 36) + 'px/1.1 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink,
+detailText: 'margin: 0; max-width: 620px; font: 400 ' + (mob ? 16 : 18) + 'px/1.6 Inter, sans-serif; color: ' + t.muted,
+detailLabel: 'font: 600 15px/1.4 Inter, sans-serif; color: ' + t.muted,
+factCard: 'flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 16px',
+factRow: 'display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid ' + (dark ? 'rgba(255,255,255,0.10)' : 'rgba(14,14,16,0.08)'),
+factVal: 'font: 500 16px/1.4 Inter, sans-serif; color: ' + t.ink + '; text-align: right',
+gallery: 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px',
+shot: 'position: relative; overflow: hidden; height: ' + (mob ? 140 : 200) + 'px; border-radius: 20px; background: ' + P[pi].g,
+nextT: P[(pi + 1) % n].t,
+goNext: () => go(active + 1),
+nextCard: 'flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; margin: 0; padding: 20px 0 4px; border: 0; border-top: 1px solid ' + (dark ? 'rgba(255,255,255,0.10)' : 'rgba(14,14,16,0.08)') + '; border-radius: 0; background: transparent; cursor: pointer; text-align: left',
+nextTitle: 'font: 700 ' + (mob ? 22 : 26) + 'px/1.15 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink,
+chip: 'display: inline-flex; align-items: center; min-height: 34px; padding: 0 14px; border-radius: 999px; font: 500 14px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: ' + t.ink + '; ' + glass,
+solidBtn: 'flex: 1 1 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 0 20px; border-radius: 20px; background: ' + t.ink + '; color: ' + t.bg + '; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif',
+ghostBtn: 'flex: 0 1 220px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 0 20px; border-radius: 20px; color: ' + t.ink + '; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; ' + glass,
+footer: 'position: relative; z-index: 10; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 16px; padding: ' + (mob ? '0 20px 104px' : '0 48px 24px') + '; font: 400 13px/1.4 Inter, sans-serif; color: ' + t.muted,
+footLink: 'display: inline-flex; align-items: center; min-height: 44px; color: ' + t.muted + '; text-decoration: underline; text-underline-offset: 3px'
+};
+}
+}
+</script>
+</body>
+</html>

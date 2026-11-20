@@ -1,0 +1,37 @@
+# Portainer-Stack für fiona-tran.com
+#
+# In Portainer: Stacks → Add stack → "Repository"
+#   Repository URL:  https://github.com/<owner>/<repo>
+#   Reference:       refs/heads/main
+#   Compose path:    deploy/portainer-stack.yml
+#   GitOps updates:  an, Mechanismus "Polling" (z. B. 5m)
+#
+# Die Pipeline trägt nach jedem Build das neue Image-Tag (sha-…) unten ein
+# und committet die Datei. Portainer sieht den neuen Commit und deployt
+# automatisch die neue Version. Zurückrollen = Commit in deploy/ reverten.
+#
+# Variablen (in Portainer unter "Environment variables" setzbar):
+#   HOST_PORT  Port auf dem Server, Standard 8080
+
+services:
+  web:
+    image: ghcr.io/fionatrn/portfolio:latest
+    container_name: fiona-portfolio
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiona Tran — Imprint</title>
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc><template>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="Portfolio of Fiona Tran – full-stack developer and computer science student.">
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<svg aria-hidden="true" width="0" height="0" style="position: absolute">
+<filter id="grainI"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter>
+</svg>
+<div aria-hidden="true" style="{{glowA}}"></div>
+<div aria-hidden="true" style="{{glowB}}"></div>
+<svg aria-hidden="true" style="{{bgGrain}}"><rect width="100%" height="100%" filter="url(#grainI)"></rect></svg>
+
+<header style="{{headerStyle}}">
+<a href="Main.dc.html" aria-label="fiona – home" style="display: flex; align-items: center; min-height: 44px">
+<svg role="img" aria-label="fiona" height="{{logoH}}" viewBox="-12 78 764 124" xmlns="http://www.w3.org/2000/svg">
+<g fill="none" stroke="{{t.ink}}" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+<path d="M10 190 V120 A30 30 0 0 1 40 90 H190"></path>
+<path d="M10 130 H140"></path>
+<path d="M190 130 V190"></path>
+<g transform="translate(90 0)">
+<rect x="150" y="130" width="130" height="60" rx="30"></rect>
+<path d="M330 190 V160 A30 30 0 0 1 360 130 H430 A30 30 0 0 1 460 160 V190"></path>
+<path d="M640 130 V190 H540 A30 30 0 0 1 510 160 A30 30 0 0 1 540 130 Z"></path>
+</g>
+</g>
+</svg>
+</a>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Main navigation" style="{{navStyle}}">
+<a href="Main.dc.html" style="{{pill}}">Work</a>
+<a href="Ordner.dc.html" style="{{pill}}">About</a>
+</nav>
+</sc-if>
+<button onClick="{{toggleDark}}" aria-label="{{darkLabel}}" style="{{iconBtn}}">
+<sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+</sc-if>
+<sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+</sc-if>
+</button>
+</header>
+
+<main style="{{mainStyle}}">
+<div style="{{wrap}}">
+<div style="{{cols}}">
+<section aria-labelledby="imp" style="{{col}}">
+<h1 id="imp" style="{{h1}}">Imprint</h1>
+<div lang="de" style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Angaben gemäß § 5 DDG und § 18 Abs. 1 MStV</h3><p style="{{body}}">Fiona Tran<br>Langedammstraße 13<br>38100 Braunschweig<br>Deutschland</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Kontakt</h3><p style="{{body}}">E-Mail: <a href="mailto:hello@fiona-tran.com" style="{{linkInline}}">hello@fiona-tran.com</a></p></div>
+</div>
+</section>
+<section aria-labelledby="priv" style="{{col}}">
+<h2 id="priv" style="{{h1}}">Privacy</h2>
+<div lang="de" style="display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Verantwortliche</h3><p style="{{body}}">Fiona Tran – Anschrift und Kontakt siehe Impressum.</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Hosting und Server-Logfiles</h3><p style="{{body}}">Diese Website wird von Ende Solutions (Linus Ende), Kattowitzer Straße 9, 38440 Wolfsburg, gehostet. Mit dem Hoster besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Der eingehende Datenverkehr wird über einen Server der Hetzner Online GmbH, Industriestraße 25, 91710 Gunzenhausen, weitergeleitet. Beim Aufruf der Seite werden automatisch Ihre IP-Adresse sowie Datum und Uhrzeit des Zugriffs verarbeitet, um die Seite auszuliefern und den sicheren Betrieb zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Die Logfiles werden nach 6 Monaten automatisch gelöscht.</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Cloudflare</h3><p style="{{body}}">Zur Auslieferung der Seite und zum Schutz vor Angriffen wird Cloudflare (Cloudflare, Inc., USA) eingesetzt. Dabei werden Verbindungsdaten wie Ihre IP-Adresse verarbeitet, auch in den USA. Cloudflare ist unter dem EU-US Data Privacy Framework zertifiziert (Angemessenheitsbeschluss der EU-Kommission vom 10. Juli 2023). Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Schriftarten (Google Fonts)</h3><p style="{{body}}">Diese Website lädt Schriftarten von Google Fonts, einem Dienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Dabei wird Ihre IP-Adresse an Google übermittelt; eine Übermittlung in die USA ist möglich. Google ist unter dem EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (einheitliche Darstellung der Website). Weitere Informationen: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="{{linkInline}}">policies.google.com/privacy</a></p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Speicherung im Browser</h3><p style="{{body}}">Ihre Auswahl zwischen hellem und dunklem Design wird ausschließlich lokal in Ihrem Browser (Local Storage) gespeichert und nicht an mich übertragen. Das ist für diese Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Sie können den Eintrag jederzeit über die Einstellungen Ihres Browsers löschen.</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Kontakt per E-Mail</h3><p style="{{body}}">Wenn Sie mir eine E-Mail schreiben, verarbeite ich Ihre Angaben nur, um Ihre Anfrage zu beantworten (Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO), und lösche sie, sobald sie dafür nicht mehr benötigt werden.</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Links zu anderen Plattformen</h3><p style="{{body}}">Die Verweise auf GitHub, LinkedIn, Pinterest und Instagram sind einfache Links. Daten werden erst übertragen, wenn Sie einen Link anklicken; ab dann gilt die Datenschutzerklärung der jeweiligen Plattform.</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Keine Cookies, kein Tracking</h3><p style="{{body}}">Diese Website setzt keine Cookies und nutzt keine Analyse- oder Tracking-Dienste.</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Ihre Rechte</h3><p style="{{body}}">Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Datenübertragbarkeit sowie das Recht, Verarbeitungen auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO zu widersprechen. Wenden Sie sich dazu an hello@fiona-tran.com. Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für den Datenschutz Niedersachsen.</p></div>
+<p style="{{small}}">Stand: November 2026</p>
+</div>
+</section>
+</div>
+</div>
+<footer style="{{footer}}"><span>© 2026 Fiona Tran</span><span aria-current="page" style="{{footCurrent}}">Imprint</span><a href="#priv" style="{{footLink}}">Privacy</a></footer>
+</main>
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<nav aria-label="Main navigation" style="{{tabBar}}">
+<a href="Main.dc.html" style="{{tabNav}}">Work</a>
+<a href="Ordner.dc.html" style="{{tabNav}}">About</a>
+</nav>
+</sc-if>
+</div>
+</template></x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"mobile":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+renderVals() {
+const sysDark = (() => { try { const s = window.localStorage.getItem('fiona-theme'); if (s) return s === 'dark'; return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) { return false; } })();
+const dark = this.state.dark ?? (this.props.dark ? true : sysDark);
+if (!this._rs && typeof window !== 'undefined') { try { this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); } catch (e) {} }
+const vw = Number(this.props.vw) || (typeof window !== 'undefined' && window.innerWidth) || 1440;
+const vh = Number(this.props.vh) || (typeof window !== 'undefined' && window.innerHeight) || 900;
+const mob = !!this.props.mobile || vw < 760 || (!this.props.vw && vh < 500);
+const cmp = !mob && vw < 1000;
+const side = mob ? 20 : cmp ? 24 : 48;
+const t = dark ? { bg: '#1F1E1D', ink: '#F2F2F4', muted: '#A4A7AF', glass: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.12)', shadow: '0 12px 40px rgba(0,0,0,0.22)', glowA: 'rgba(0,0,0,0)', glowB: 'rgba(0,0,0,0)', grain: '0.16', blend: 'screen', line: 'rgba(255,255,255,0.14)' }
+: { bg: '#E9E9EC', ink: '#0E0E10', muted: '#55585F', glass: 'rgba(255,255,255,0.55)', border: 'rgba(255,255,255,0.85)', shadow: '0 12px 40px rgba(20,20,40,0.08)', glowA: 'rgba(159,227,201,0.55)', glowB: 'rgba(242,167,195,0.45)', grain: '0.22', blend: 'multiply', line: 'rgba(14,14,16,0.14)' };
+const glass = 'background: ' + (dark ? 'linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.16) 100%)') + '; border: 0; box-shadow: inset 0 0.5px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.55') + '), inset 0 0 14px rgba(255,255,255,' + (dark ? '0.04' : '0.2') + '), ' + t.shadow + '; backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%)';
+const pillBase = 'display: inline-flex; align-items: center; justify-content: center; flex: none; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; border: 0; cursor: pointer; ';
+return {
+t, desktop: !mob, mobile: mob, isDark: dark, isLight: !dark, logoH: mob ? 16 : 30,
+darkLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+toggleDark: () => { try { window.localStorage.setItem('fiona-theme', dark ? 'light' : 'dark'); } catch (e) {} this.setState({ dark: !dark }); },
+bgGrain: dark ? 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.22; mix-blend-mode: overlay; pointer-events: none' : 'display: none',
+rootStyle: 'position: relative; min-height: 100vh; overflow: hidden; background: ' + (dark ? 'radial-gradient(90% 72% at 4% -2%, rgba(126,160,142,0.48) 0%, rgba(126,160,142,0.2) 45%, rgba(126,160,142,0) 100%), radial-gradient(85% 62% at 40% 118%, rgba(154,115,133,0.5) 0%, rgba(154,115,133,0.22) 50%, rgba(154,115,133,0) 100%), #1F1E1D' : t.bg) + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column; transition: background 0.4s',
+glowA: 'position: absolute; width: 900px; height: 900px; left: -220px; top: -260px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowA + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
+glowB: 'position: absolute; width: 1000px; height: 1000px; right: -260px; bottom: -380px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowB + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
+grainStyle: 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: ' + t.grain + '; mix-blend-mode: ' + t.blend + '; pointer-events: none',
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? '56px 20px 8px' : '28px ' + side + 'px'),
+navStyle: 'display: flex; gap: 4px; padding: 4px; border-radius: 999px; ' + glass,
+pill: pillBase + 'color: ' + t.ink,
+pillActive: pillBase + 'background: ' + t.ink + '; color: ' + t.bg,
+iconBtn: 'display: inline-flex; align-items: center; justify-content: center; justify-self: end; flex: none; width: 44px; height: 44px; padding: 0; border-radius: 999px; cursor: pointer; ' + glass,
+mainStyle: 'position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 8px ' + side + 'px ' + (mob ? '120px' : '24px'),
+wrap: 'width: 100%; max-width: 1240px; box-sizing: border-box; flex: 1; display: flex; flex-direction: column; gap: 20px; padding: ' + (mob ? '16px 0 24px' : '40px clamp(0px, 2vw, 28px) 24px'),
+kicker: 'font: 500 12px/1.4 Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: ' + t.muted,
+cols: 'display: flex; flex-wrap: wrap; gap: 32px 64px; border-top: 1px solid ' + t.line + '; padding-top: 28px',
+col: 'flex: 1 1 360px; max-width: 560px; display: flex; flex-direction: column; gap: 14px',
+h1: 'margin: 0; font: 700 28px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink,
+label: 'font: 600 15px/1.4 Inter, sans-serif; color: ' + t.muted,
+small: 'margin: 0; font: 400 14px/1.5 Inter, sans-serif; color: ' + t.muted,
+body: 'margin: 0; font: 400 16px/1.6 Inter, sans-serif; color: ' + t.ink,
+linkInline: 'color: ' + t.ink + '; text-decoration: underline; text-underline-offset: 3px',
+link: 'display: inline-flex; align-items: center; min-height: 44px; font: 500 16px/1.4 Inter, sans-serif; color: ' + t.ink + '; text-decoration: underline; text-underline-offset: 3px',
+tabBar: 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 4px; border-radius: 999px; ' + glass,
+tabNav: pillBase + 'flex: 1; padding: 0 8px; color: ' + t.ink,
+footer: 'display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 16px; font: 400 13px/1.4 Inter, sans-serif; color: ' + t.muted,
+footCurrent: 'display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; color: ' + t.ink,
+footLink: 'display: inline-flex; align-items: center; min-height: 44px; color: ' + t.muted + '; text-decoration: underline; text-underline-offset: 3px'
+};
+}
+}
+</script>
+</body>
+</html>

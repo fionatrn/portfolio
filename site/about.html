@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiona Tran — About</title>
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc><template>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://fiona-tran.com/about">
+<meta name="description" content="Portfolio of Fiona Tran – full-stack developer and computer science student.">
+<meta property="og:title" content="Fiona Tran – Portfolio">
+<meta property="og:description" content="From database to details.">
+<meta property="og:image" content="https://fiona-tran.com/og-image.png">
+<meta property="og:url" content="https://fiona-tran.com/about">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+.hov{transition:transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)}
+.hov:hover{transform:scale(1.05)}
+.hov:active{transform:scale(0.97)}
+.js-anim .reveal{transition:opacity 0.6s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)}
+.js-anim .reveal:not(.in){opacity:0;transform:translateY(28px) scale(0.97)}
+.js-anim .reveal.tiltL:not(.in){transform:translateX(-56px) rotate(-8deg) scale(0.94)}
+.js-anim .reveal.tiltR:not(.in){transform:translateX(56px) rotate(8deg) scale(0.94)}
+.js-anim .reveal.rise:not(.in){transform:translateY(64px) rotate(-3deg)}
+.js-anim .reveal.pop{transition:opacity 0.35s ease 0.12s, transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s}
+.js-anim .reveal.pop:not(.in){transform:scale(0.4) rotate(-8deg)}
+.js-anim .reveal:nth-child(2){transition-delay:0.08s}
+.js-anim .reveal:nth-child(3){transition-delay:0.16s}
+.js-anim .reveal:nth-child(4){transition-delay:0.24s}
+@media (min-width: 701px){.js-anim .reveal.tiltL:not(.in){transform:translateX(-32px) rotate(-5deg) scale(0.96)}.js-anim .reveal.tiltR:not(.in){transform:translateX(32px) rotate(5deg) scale(0.96)}}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+<svg aria-hidden="true" width="0" height="0" style="position: absolute">
+<filter id="grainO"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter>
+</svg>
+<div aria-hidden="true" style="{{glowA}}"></div>
+<div aria-hidden="true" style="{{glowB}}"></div>
+<svg aria-hidden="true" style="{{bgGrain}}"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+
+<header style="{{headerStyle}}">
+<a href="Main.dc.html" aria-label="fiona – home" style="display: flex; align-items: center; min-height: 44px">
+<svg role="img" aria-label="fiona" height="{{logoH}}" viewBox="-12 78 764 124" xmlns="http://www.w3.org/2000/svg">
+<g fill="none" stroke="{{t.ink}}" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+<path d="M10 190 V120 A30 30 0 0 1 40 90 H190"></path>
+<path d="M10 130 H140"></path>
+<path d="M190 130 V190"></path>
+<g transform="translate(90 0)">
+<rect x="150" y="130" width="130" height="60" rx="30"></rect>
+<path d="M330 190 V160 A30 30 0 0 1 360 130 H430 A30 30 0 0 1 460 160 V190"></path>
+<path d="M640 130 V190 H540 A30 30 0 0 1 510 160 A30 30 0 0 1 540 130 Z"></path>
+</g>
+</g>
+</svg>
+</a>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Main navigation" style="{{navStyle}}">
+<a class="hov" href="Main.dc.html" style="{{pill}}">Work</a>
+<a class="hov" href="Ordner.dc.html" aria-current="page" style="{{pillActive}}">About</a>
+</nav>
+</sc-if>
+<button class="hov" onClick="{{toggleDark}}" aria-label="{{darkLabel}}" style="{{iconBtn}}">
+<sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+</sc-if>
+<sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+</sc-if>
+</button>
+</header>
+
+<main style="{{mainStyle}}">
+<section aria-label="fiona's file" style="{{folderWrap}}">
+<div style="{{bodyGrid}}">
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="{{bgLayer}}">
+<div style="display: flex; align-items: flex-end; min-height: 56px">
+<div style="{{bgTab}}"><span style="{{tabTitle}}; visibility: hidden">Fiona Tran</span></div>
+<div style="{{bgConn}}"></div>
+</div>
+<div style="{{bgSheet}}"></div>
+</div>
+</sc-if>
+<div style="{{fgLayer}}">
+<div style="{{folderTop}}">
+<div style="display: flex; align-items: flex-end">
+<div style="{{folderTab}}">
+<span style="{{tabTitle}}">Fiona Tran</span>
+</div>
+<div aria-hidden="true" style="{{connector}}"></div>
+</div>
+<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
+<div role="tablist" aria-label="Sections" style="{{tabsOnFrame}}">
+<span aria-hidden="true" style="{{tabInd}}"></span>
+<sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4">
+<button role="tab" aria-selected="{{tb.sel}}" onClick="{{tb.pick}}" style="{{tb.styleFrame}}">{{tb.label}}</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<div data-sheet="1" style="{{sheet}}">
+
+<sc-if value="{{showAbout}}" hint-placeholder-val="{{ true }}">
+<div data-panel="about" style="{{aboutWrap}}">
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<div aria-hidden="true" style="{{mBlur}}">
+<div style="display: flex; align-items: flex-end"><div style="{{mBlurTab}}"><span style="{{tabTitle}}; visibility: hidden">Fiona Tran</span></div></div>
+<div style="{{mBlurSheet}}"></div>
+</div>
+</sc-if>
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<div aria-hidden="true" style="{{mShadow}}"><div style="{{mBg}}">
+<div style="display: flex; align-items: flex-end"><div style="{{mTabBg}}"><span style="{{tabTitle}}; visibility: hidden">Fiona Tran</span></div><div style="{{bgConn}}"></div></div>
+<div style="{{bgSheet}}"></div>
+</div></div>
+</sc-if>
+<div style="{{aboutFg}}">
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: flex-end"><div style="{{mTab}}"><span style="{{tabTitle}}">Fiona Tran</span></div></div>
+</sc-if>
+<div style="{{aboutGrid}}">
+<div class="reveal rise" style="{{photoCard}}">
+<svg aria-hidden="true" viewBox="0 0 200 240" preserveAspectRatio="xMidYMax meet" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 82%; opacity: 0.55">
+<circle cx="100" cy="92" r="42" fill="{{t.silhouette}}"></circle>
+<path d="M18 240 C24 176 62 150 100 150 C138 150 176 176 182 240 Z" fill="{{t.silhouette}}"></path>
+</svg>
+<svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<span style="{{photoNote}}">[Your photo]</span>
+<span class="reveal pop" style="{{lab1}}">Full-stack dev ★</span>
+<span class="reveal pop" style="{{lab2}}">UI/UX enthusiast ★</span>
+<span class="reveal pop" style="{{lab3}}">Creative coder ★</span>
+<span class="reveal pop" style="{{lab4}}">Violinist ★</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 440px; min-width: 0">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 class="reveal pop" style="{{helloH1}}">Hi, I'm Fiona!</h1>
+</div>
+<div style="{{widgetGrid}}">
+<div class="reveal tiltL" style="{{wAbout}}">
+<svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<span style="{{wBigOn}}">From database to details.</span>
+<ul style="{{list}}">
+<li style="{{liW}}">B.Sc. Computer Science at Ostfalia, 5th semester</li>
+<li style="{{liW}}">Dual student at Volkswagen AG, working as a full-stack developer</li>
+<li style="{{liW}}">Based in Braunschweig, Germany</li>
+</ul>
+</div>
+<div class="reveal tiltL" style="{{wFocus}}">
+<svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<span style="{{wLabelW}}">Currently into</span>
+<div style="position: relative; display: flex; flex-direction: column; gap: 10px">
+<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #7CF0B8"></span>Cybersecurity</span>
+<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #FF8AC0"></span>Design</span>
+<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #B9A6FF"></span>Creative coding</span>
+</div>
+</div>
+<div class="reveal tiltR" style="{{wYears}}">
+<svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<svg role="img" aria-label="{{yearsAria}}" viewBox="{{yearsVB}}" style="{{yearsSvg}}"><path d="{{yearsD}}" fill="rgba(255,236,244,0.92)"></path></svg>
+<span aria-hidden="true" style="{{yearsCap}}">{{yearsLabel}}</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showTools}}" hint-placeholder-val="{{ false }}">
+<div data-panel="tools" style="{{secTools}}">
+<h2 style="{{h2}}">Tech &amp; tools</h2>
+<div style="{{toolsGrid}}">
+<div class="reveal tiltL" style="{{wDev}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<span style="{{wLabelW}}">Development</span><div style="{{chips}}"><span style="{{chipW}}">Java</span><span style="{{chipW}}">Kotlin</span><span style="{{chipW}}">TypeScript</span><span style="{{chipW}}">Angular</span></div></div>
+<div class="reveal tiltR" style="{{wCloud}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<span style="{{wLabelW}}">Backend &amp; cloud</span><div style="{{chips}}"><span style="{{chipW}}">AWS</span><span style="{{chipW}}">DynamoDB</span><span style="{{chipW}}">Supabase</span><span style="{{chipW}}">Docker</span></div></div>
+<div class="reveal tiltL" style="{{wTest}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<span style="{{wLabelW}}">Testing</span><div style="{{chips}}"><span style="{{chipW}}">Jest</span><span style="{{chipW}}">Playwright</span></div></div>
+<div class="reveal tiltR" style="{{wDesign}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<span style="{{wLabelW}}">Design</span><div style="{{chips}}"><span style="{{chipW}}">Figma</span><span style="{{chipW}}">Canva</span><span style="{{chipW}}">GIMP</span><span style="{{chipW}}">Clip Studio Paint</span></div></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showCv}}" hint-placeholder-val="{{ false }}">
+<div data-panel="cv" style="{{secCv}}">
+<h2 style="{{h2}}">CV</h2>
+<span style="{{wLabel}}">Experience</span>
+<div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">Aug 2024 – today</span><span style="{{cvWhat}}">Dual student – full-stack development, Volkswagen AG, Wolfsburg</span></div>
+<div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">Jul 2024</span><span style="{{cvWhat}}">IT internship, Wiewelhove, Ibbenbüren</span></div>
+<span style="{{wLabel}}; margin-top: {{cvGap}}px">Education</span>
+<div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">2024 – today</span><span style="{{cvWhat}}">B.Sc. Computer Science (dual), Ostfalia University of Applied Sciences, Wolfenbüttel</span></div>
+<div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">2015 – 2024</span><span style="{{cvWhat}}">Abitur, Gymnasium Oesede, Georgsmarienhütte · 1.1</span></div>
+<span style="{{wLabel}}; margin-top: {{cvGap}}px">Languages</span>
+<div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">German</span><span style="{{cvWhat}}">Native</span></div>
+<div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">English</span><span style="{{cvWhat}}">Fluent</span></div>
+<a class="hov" href="#" style="{{ctaStyle}}">Download CV (PDF)</a>
+</div>
+</sc-if>
+
+<sc-if value="{{showContact}}" hint-placeholder-val="{{ false }}">
+<div data-panel="contact" style="{{secContact}}">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="{{helloSmall}}">Contact me</h2>
+<p style="{{bio}}">Want to work together or just say hi? I'd love to hear from you.</p>
+</div>
+<a class="hov" href="mailto:hello@fiona-tran.com" style="{{ctaStyle}}; margin-top: 24px">hello@fiona-tran.com</a>
+<div style="display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 56px">
+<span style="{{wLabel}}">Elsewhere</span>
+<div style="{{socialGrid}}">
+<a class="hov" href="https://github.com/fionatrn" target="_blank" rel="noopener" style="{{social}}"><span aria-hidden="true" style="width: 16px; height: 16px; flex: none; background: currentColor; -webkit-mask: url(/icons/github.svg) center / contain no-repeat; mask: url(/icons/github.svg) center / contain no-repeat"></span>GitHub<span aria-hidden="true">↗</span></a>
+<a class="hov" href="https://www.linkedin.com/in/fiona-tran-b79a19436/" target="_blank" rel="noopener" style="{{social}}"><span aria-hidden="true" style="width: 17px; height: 16px; flex: none; background: currentColor; -webkit-mask: url(/icons/linkedin-black.png) center / contain no-repeat; mask: url(/icons/linkedin-black.png) center / contain no-repeat"></span>LinkedIn<span aria-hidden="true">↗</span></a>
+<a class="hov" href="https://pinterest.com/fionasmemories" target="_blank" rel="noopener" style="{{social}}"><span aria-hidden="true" style="width: 16px; height: 16px; flex: none; background: currentColor; -webkit-mask: url(/icons/pinterest.svg) center / contain no-repeat; mask: url(/icons/pinterest.svg) center / contain no-repeat"></span>Pinterest<span aria-hidden="true">↗</span></a>
+<a class="hov" href="https://instagram.com/fionasmemories" target="_blank" rel="noopener" style="{{social}}"><span aria-hidden="true" style="width: 16px; height: 16px; flex: none; background: currentColor; -webkit-mask: url(/icons/instagram.svg) center / contain no-repeat; mask: url(/icons/instagram.svg) center / contain no-repeat"></span>Instagram<span aria-hidden="true">↗</span></a>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+</section>
+<footer style="{{footer}}"><span>© 2026 Fiona Tran</span><a href="Imprint.dc.html" style="{{footLink}}">Imprint</a><a href="Imprint.dc.html#priv" style="{{footLink}}">Privacy</a></footer>
+</main>
+
+<sc-if value="{{mobile}}" hint-placeholder-val="{{ false }}">
+<nav aria-label="Main navigation" style="{{tabBar}}">
+<a href="Main.dc.html" style="{{tabNav}}">Work</a>
+<a href="Ordner.dc.html" aria-current="page" style="{{tabNavActive}}">About</a>
+</nav>
+</sc-if>
+</div>
+</template></x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"metric":{"editor":"enum","options":["commits","years"],"default":"years"},"commits":{"editor":"number","default":248},"devSince":{"editor":"number","default":2023},"dark":{"editor":"boolean","default":false},"mobile":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+componentDidMount() { this._anim(); }
+componentDidUpdate() { this._anim(); }
+_anim() {
+try {
+if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+this._seen = this._seen || new WeakSet();
+document.documentElement.classList.add('js-anim');
+if (!this._io) this._io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); this._seen.add(e.target); this._io.unobserve(e.target); } }), { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach((el) => { if (this._seen.has(el)) el.classList.add('in'); else if (!el.dataset.obs) { el.dataset.obs = '1'; this._io.observe(el); } });
+const tb = this.state.tab ?? 'about';
+if (this._lastTab !== undefined && this._lastTab !== tb) { const els = document.querySelectorAll('[data-panel="' + tb + '"] .reveal'); els.forEach((el) => { el.classList.remove('in'); void el.offsetWidth; }); requestAnimationFrame(() => requestAnimationFrame(() => els.forEach((el) => { el.classList.add('in'); this._seen.add(el); }))); }
+this._lastTab = tb;
+} catch (err) {}
+}
+renderVals() {
+const sysDark = (() => { try { const s = window.localStorage.getItem('fiona-theme'); if (s) return s === 'dark'; return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) { return false; } })();
+const dark = this.state.dark ?? (this.props.dark ? true : sysDark);
+if (!this._rs && typeof window !== 'undefined') { try { this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); } catch (e) {} }
+const vw = Number(this.props.vw) || (typeof window !== 'undefined' && window.innerWidth) || 1440;
+const vh = Number(this.props.vh) || (typeof window !== 'undefined' && window.innerHeight) || 900;
+const mob = !!this.props.mobile || vw < 760 || (!this.props.vw && vh < 500);
+const cmp = !mob && vw < 1000;
+const tw = cmp ? 106 : 128;
+const tab = this.state.tab ?? 'about';
+const archive = false;
+const hfName = 'Pinyon Script';
+const hf = { d: 72, m: 48, w: 400 };
+const t = dark ? {
+bg: '#1F1E1D', ink: '#F2F2F4', muted: '#A4A7AF',
+frame: 'rgba(255,255,255,0.06)', frameInk: '#E6E7EA', sheet: 'rgba(255,255,255,0.07)',
+glass: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.12)', inner: 'rgba(255,255,255,0.05)',
+shadow: '0 12px 40px rgba(0,0,0,0.22)', glowA: 'rgba(0,0,0,0)', glowB: 'rgba(0,0,0,0)', grain: '0.16', blend: 'screen',
+photo: 'radial-gradient(70% 55% at 50% 30%, #3A3C42 0%, rgba(58,60,66,0) 70%), linear-gradient(180deg, #24262B 0%, #141518 100%)', silhouette: '#5A5D64'
+} : {
+bg: '#E9E9EC', ink: '#0E0E10', muted: '#55585F',
+frame: 'rgba(255,255,255,0.35)', frameInk: '#0E0E10', sheet: 'rgba(255,255,255,0.6)',
+glass: 'rgba(255,255,255,0.55)', border: 'rgba(255,255,255,0.85)', inner: 'rgba(255,255,255,0.6)',
+shadow: '0 12px 40px rgba(20,20,40,0.10)', glowA: 'rgba(159,227,201,0.55)', glowB: 'rgba(242,167,195,0.45)', grain: '0.22', blend: 'multiply',
+photo: 'radial-gradient(70% 55% at 50% 30%, #EDEDEF 0%, rgba(237,237,239,0) 70%), linear-gradient(180deg, #CFD1D5 0%, #A9ACB2 100%)', silhouette: '#8E9198'
+};
+const glass = 'background: ' + (dark ? 'linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.16) 100%)') + '; border: 0; box-shadow: inset 0 0.5px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.55') + '), inset 0 0 14px rgba(255,255,255,' + (dark ? '0.04' : '0.2') + '), ' + t.shadow + '; backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%)';
+const pillBase = 'display: inline-flex; align-items: center; justify-content: center; flex: none; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; border: 0; cursor: pointer; ';
+const R = mob ? 24 : 32;
+const color = (bg, glow) => 'position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 22px; border-radius: 28px; color: #FFFFFF; background: ' + bg + '; box-shadow: 0 0 28px 2px ' + glow + ', inset 0 0 24px rgba(255,255,255,0.14); filter: saturate(0.78) brightness(1.04); ';
+const metric = this.props.metric ?? 'commits';
+const yr = new Date().getFullYear();
+const since = Number(this.props.devSince ?? 2023);
+const yN = metric === 'years' ? String(Math.max(0, yr - since)) : String(Math.max(0, Math.round(Number(this.props.commits ?? 248))));
+const DG = { '0': ['01110', '10001', '10011', '10101', '11001', '10001', '01110'], '1': ['00100', '01100', '00100', '00100', '00100', '00100', '01110'], '2': ['01110', '10001', '00001', '00010', '00100', '01000', '11111'], '3': ['11111', '00010', '00100', '00010', '00001', '10001', '01110'], '4': ['00010', '00110', '01010', '10010', '11111', '00010', '00010'], '5': ['11111', '10000', '11110', '00001', '00001', '10001', '01110'], '6': ['00110', '01000', '10000', '11110', '10001', '10001', '01110'], '7': ['11111', '00001', '00010', '00100', '01000', '01000', '01000'], '8': ['01110', '10001', '10001', '01110', '10001', '10001', '01110'], '9': ['01110', '10001', '10001', '01111', '00001', '00010', '01100'] };
+let yD = '';
+yN.split('').forEach((ch, i) => { (DG[ch] || DG['0']).forEach((row, r) => row.split('').forEach((b, c) => { if (b === '1') { const cx = i * 62 + c * 10 + 5, cy = r * 10 + 5; yD += 'M' + (cx - 3.6) + ' ' + cy + 'a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0 -7.2 0'; } })); });
+const T = [['about', 'Profile'], ['tools', 'Tech & tools'], ['cv', 'CV'], ['contact', 'Contact']];
+const tabs = T.map(([k, l]) => ({ label: l, sel: tab === k ? 'true' : 'false', pick: (e) => { this.setState({ tab: k, tabFrom: tab }); if (mob && e && e.currentTarget && e.currentTarget.closest) { const s = e.currentTarget.closest('[data-sheet]'); if (s && s.getBoundingClientRect().top < 0) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
+styleFrame: pillBase + 'position: relative; z-index: 1; width: ' + tw + 'px; padding: 0; background: transparent; font-size: ' + (cmp ? 14 : 15) + 'px; transition: color 0.3s; color: ' + (tab === k ? t.bg : t.frameInk) }));
+const card = (rad) => mob ? 'box-sizing: border-box; padding: 28px 22px 32px; border-radius: ' + rad + '; background: ' + t.sheet + '; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.9') + ')' + (dark ? '' : ', 0 16px 32px rgba(20,20,40,0.10)') + '; ' : '';
+const pv = (k) => mob ? '' : '; grid-area: 1 / 1; min-width: 0; ' + (tab === k ? 'visibility: visible; opacity: 1' : 'visibility: hidden; opacity: 0; pointer-events: none');
+const lab = (pos) => 'position: absolute; ' + pos + '; padding: 6px 12px; border-radius: 999px; background: ' + (dark ? 'rgba(10,10,12,0.6)' : 'rgba(255,255,255,0.75)') + '; color: ' + t.ink + '; font: 500 13px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(10px)';
+return {
+t, tabs, yearsD: yD, yearsNum: yN,
+yearsLabel: metric === 'years' ? 'Years building software' : 'Commits in ' + yr,
+yearsAria: metric === 'years' ? yN + ' years building software' : yN + ' commits on GitHub in ' + yr, yearsVB: '0 0 ' + (yN.length * 62 - 12) + ' 70',
+yearsSvg: 'position: relative; display: block; align-self: center; height: ' + (mob ? 56 : 76) + 'px; width: auto; margin: auto 0',
+yearsCap: 'position: relative; align-self: center; text-align: center; font: 700 15px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; color: rgba(74,10,16,0.88)',
+wYears: color('linear-gradient(180deg, #4A0A10 0%, #8E1A1A 30%, #D2501F 62%, #F59A5E 82%, #FFF1E6 100%)', 'rgba(210,80,31,0.45)') + (mob ? 'padding: 16px; border-radius: 24px; ' : '') + 'justify-content: space-between',
+helloH1: archive ? 'margin: 0 0 4px; line-height: 0; color: ' + t.ink : 'margin: 0; font: ' + hf.w + ' ' + (mob ? hf.m : hf.d) + 'px/1.2 "' + hfName + '", ' + (hfName === 'M PLUS Rounded 1c' ? 'sans-serif; letter-spacing: -0.03em' : 'cursive') + '; text-align: center; display: block; width: 100%; box-sizing: border-box; padding: 0 6px; white-space: nowrap; color: ' + t.ink,
+desktop: !mob, mobile: mob, isDark: dark, isLight: !dark,
+showAbout: true, showTools: true, showCv: true, showContact: true,
+darkLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+toggleDark: () => { try { window.localStorage.setItem('fiona-theme', dark ? 'light' : 'dark'); } catch (e) {} this.setState({ dark: !dark }); },
+logoH: mob ? 16 : 30,
+bgGrain: dark ? 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.22; mix-blend-mode: overlay; pointer-events: none' : 'display: none',
+rootStyle: 'position: relative; min-height: 100vh; overflow: hidden; overflow: clip; background: ' + (dark ? 'radial-gradient(90% 72% at 4% -2%, rgba(126,160,142,0.48) 0%, rgba(126,160,142,0.2) 45%, rgba(126,160,142,0) 100%), radial-gradient(85% 62% at 40% 118%, rgba(154,115,133,0.5) 0%, rgba(154,115,133,0.22) 50%, rgba(154,115,133,0) 100%), #1F1E1D' : t.bg) + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column; transition: background 0.4s',
+glowA: 'position: absolute; width: ' + (mob ? 420 : 900) + 'px; height: ' + (mob ? 420 : 900) + 'px; left: -' + (mob ? 160 : 220) + 'px; top: -' + (mob ? 120 : 260) + 'px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowA + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
+glowB: 'position: absolute; width: ' + (mob ? 460 : 1000) + 'px; height: ' + (mob ? 460 : 1000) + 'px; right: -' + (mob ? 200 : 260) + 'px; bottom: -' + (mob ? 160 : 380) + 'px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowB + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? '56px 20px 8px' : '28px ' + (cmp ? 24 : 48) + 'px'),
+navStyle: 'display: flex; gap: 4px; padding: 4px; border-radius: 999px; ' + glass,
+pillActive: pillBase + 'background: ' + t.ink + '; color: ' + t.bg,
+pill: pillBase + 'color: ' + t.ink,
+iconBtn: 'display: inline-flex; align-items: center; justify-content: center; justify-self: end; flex: none; width: 44px; height: 44px; padding: 0; border-radius: 999px; cursor: pointer; ' + glass,
+mainStyle: 'position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; align-items: center; gap: ' + (mob ? 12 : 20) + 'px; padding: ' + (mob ? '24px 12px 120px' : cmp ? '32px 24px 24px' : '40px 48px 24px'),
+folderWrap: 'width: 100%; max-width: 1240px; box-sizing: border-box; display: flex; flex-direction: column; padding: ' + (mob ? '8px' : '12px') + '; border-radius: ' + (R + (mob ? 8 : 12)) + 'px; background: ' + t.frame + '; box-shadow: 0 30px 80px rgba(10,10,20,' + (dark ? '0.36' : '0.22') + ')' + (!mob ? '; background: ' + (dark ? 'linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.18) 100%)') + '; backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%); border: 0; box-shadow: inset 0 0.5px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.55') + '), inset 0 0 14px rgba(255,255,255,' + (dark ? '0.04' : '0.2') + '), 0 30px 80px rgba(' + (dark ? '0,0,0,0.3' : '20,20,40,0.14') + ')' : '') + (mob ? '; padding: 0; background: transparent; box-shadow: none' : ''),
+folderTop: mob ? 'display: none' : 'display: flex; align-items: flex-end; justify-content: space-between; gap: 12px',
+folderTab: 'display: flex; flex-direction: column; gap: 2px; padding: ' + (mob ? '14px 20px 10px' : cmp ? '16px 22px 12px' : '18px 28px 12px') + '; background: ' + (mob ? t.sheet : 'transparent') + '; border-radius: ' + R + 'px ' + R + 'px 0 0' + (mob ? '; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.9') + ')' : ''),
+connector: 'width: ' + R + 'px; height: ' + R + 'px; background: radial-gradient(circle at 100% 0%, rgba(0,0,0,0) ' + (R - 0.5) + 'px, ' + (mob ? t.sheet : 'transparent') + ' ' + R + 'px)',
+bodyGrid: 'display: grid; grid-template-columns: minmax(0, 1fr)',
+fgLayer: 'grid-area: 1 / 1; position: relative; min-width: 0; display: flex; flex-direction: column',
+bgLayer: 'grid-area: 1 / 1; display: flex; flex-direction: column; pointer-events: none; opacity: ' + (dark ? 0.07 : 0.6),
+bgTab: 'display: flex; flex-direction: column; padding: ' + (cmp ? '16px 22px 12px' : '18px 28px 12px') + '; background: #FFFFFF; border-radius: ' + R + 'px ' + R + 'px 0 0',
+bgConn: 'width: ' + R + 'px; height: ' + R + 'px; background: radial-gradient(circle at 100% 0%, rgba(255,255,255,0) ' + (R - 0.5) + 'px, #FFFFFF ' + R + 'px)',
+bgSheet: 'flex: 1; margin-top: -1px; background: #FFFFFF; border-radius: 0 ' + R + 'px ' + R + 'px ' + R + 'px',
+tabTitle: 'font: 700 ' + (mob ? 22 : cmp ? 24 : 28) + 'px/1.1 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink,
+tabsOnFrame: 'position: relative; display: flex; gap: 4px; padding: 0 4px 12px',
+tabInd: (() => { const ti = Math.max(0, T.findIndex(([k]) => k === tab)); const fi = Math.max(0, T.findIndex(([k]) => k === (this.state.tabFrom ?? tab))); const toRight = ti > fi; const fast = '0.34s cubic-bezier(0.2, 0.8, 0.2, 1)', slow = '0.42s cubic-bezier(0.2, 0.8, 0.2, 1)'; return 'position: absolute; top: 0; height: 44px; left: ' + (4 + ti * (tw + 4)) + 'px; right: ' + (3 * tw + 16 - ti * (tw + 4)) + 'px; border-radius: 999px; background: ' + t.ink + '; transition: left ' + (toRight ? slow : fast) + ', right ' + (toRight ? fast : slow); })(),
+sheet: mob ? 'display: flex; flex-direction: column; gap: 56px' : 'min-height: 660px; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; padding: 28px; background: transparent; border-radius: 0 ' + R + 'px ' + R + 'px ' + R + 'px',
+secTools: card('28px') + 'display: flex; flex-direction: column; gap: 16px' + pv('tools'),
+secCv: card('28px') + 'display: flex; flex-direction: column; gap: ' + (mob ? 6 : 12) + 'px' + pv('cv'),
+secContact: card('28px') + 'display: flex; flex-direction: column; align-items: flex-start; gap: 0' + pv('contact'),
+cvGap: mob ? 28 : 24,
+aboutWrap: mob ? 'display: grid; grid-template-columns: minmax(0, 1fr)' : 'display: flex; flex-direction: column; align-self: stretch' + pv('about'),
+aboutFg: mob ? 'grid-area: 1 / 1; position: relative; min-width: 0; display: flex; flex-direction: column' : 'display: contents',
+mShadow: 'grid-area: 1 / 1; display: flex; flex-direction: column; pointer-events: none' + (dark ? '' : '; filter: drop-shadow(0 16px 24px rgba(20,20,40,0.10))'),
+mBlur: 'grid-area: 1 / 1; display: flex; flex-direction: column; pointer-events: none',
+mBlurTab: 'display: flex; flex-direction: column; padding: 14px 20px 10px; border-radius: ' + R + 'px ' + R + 'px 0 0; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.9') + ')',
+mBlurSheet: 'flex: 1; border-radius: 0 ' + R + 'px ' + R + 'px ' + R + 'px; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%)',
+mBg: 'flex: 1; display: flex; flex-direction: column; opacity: ' + (dark ? 0.07 : 0.6),
+mTab: 'display: flex; flex-direction: column; padding: 14px 20px 10px; border-radius: ' + R + 'px ' + R + 'px 0 0; background: transparent',
+mTabBg: 'display: flex; flex-direction: column; padding: 14px 20px 10px; border-radius: ' + R + 'px ' + R + 'px 0 0; background: #FFFFFF',
+aboutGrid: (mob ? 'box-sizing: border-box; padding: 20px 22px 32px; ' : 'flex: 1 1 auto; ') + 'display: flex; flex-wrap: wrap; gap: ' + (mob ? 16 : 24) + 'px; align-items: stretch',
+photoCard: 'position: relative; overflow: hidden; flex: 1 1 ' + (mob ? '100%' : '380px') + '; min-height: ' + (mob ? 300 : cmp ? 360 : 520) + 'px; border-radius: 24px; background: ' + t.photo,
+photoNote: 'position: absolute; left: 50%; top: 18px; transform: translateX(-50%); font: 400 14px/1.4 Inter, sans-serif; color: ' + t.muted,
+lab1: lab(mob ? 'left: 14px; top: 64px' : 'left: 24px; top: 88px'),
+lab2: lab(mob ? 'right: 14px; top: 110px' : cmp ? 'right: 24px; top: 130px' : 'right: 24px; top: 150px'),
+lab3: lab(mob ? 'left: 14px; bottom: 76px' : cmp ? 'left: 32px; bottom: 110px' : 'left: 32px; bottom: 150px'),
+lab4: lab(mob ? 'right: 14px; bottom: 28px' : cmp ? 'right: 32px; bottom: 50px' : 'right: 32px; bottom: 70px'),
+helloSmall: archive ? 'margin: 0; font: 700 ' + (mob ? 30 : 40) + 'px/1.15 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink : 'margin: 0; font: ' + hf.w + ' ' + Math.round((mob ? hf.m : hf.d) * 0.82) + 'px/1.05 "' + hfName + '", cursive; color: ' + t.ink,
+h2: 'margin: 0; font: 700 ' + (mob ? 22 : 26) + 'px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.01em; color: ' + t.ink,
+bio: 'margin: 0; max-width: 560px; font: 400 ' + (mob ? 15 : 17) + 'px/1.55 Inter, sans-serif; color: ' + t.muted,
+widgetGrid: (mob ? '' : 'flex: 1 1 auto; grid-template-rows: minmax(0, 1.15fr) minmax(0, 1fr); ') + 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: ' + (mob ? 12 : 16) + 'px',
+toolsGrid: 'display: grid; grid-template-columns: repeat(' + (mob ? 1 : 2) + ', minmax(0, 1fr)); gap: ' + (mob ? 12 : 16) + 'px',
+wAbout: color('linear-gradient(180deg, #4E3F7A 0%, #8E4F78 55%, #B4545A 100%)', 'rgba(142,79,120,0.45)') + 'grid-column: 1 / -1' + (mob ? '' : '; justify-content: flex-start; gap: 20px; padding: 28px 28px 30px'),
+wFocus: color('radial-gradient(circle at 50% 55%, #0C1411 0%, #1F4034 38%, #3F7A62 72%, #5E9A80 100%)', 'rgba(63,122,98,0.45)') + (mob ? 'padding: 16px; border-radius: 24px' : ''),
+focusRowW: 'display: flex; align-items: center; gap: ' + (mob ? 8 : 10) + 'px; font: 500 ' + (mob ? 14 : 16) + 'px/1.3 Inter, sans-serif; color: #FFFFFF',
+wDev: color('radial-gradient(circle at 50% 55%, #0C1411 0%, #23443A 40%, #4F7D69 75%, #6E9A86 100%)', 'rgba(79,125,105,0.45)'),
+wCloud: color('linear-gradient(180deg, #0B4F5C 0%, #157F91 45%, #3FAFC6 78%, #8FD6E8 93%, #DDF4FA 100%)', 'rgba(30,154,174,0.45)'),
+wTest: color('radial-gradient(circle at 74% 66%, #3A44D8 0%, #3A44D8 16%, rgba(58,68,216,0) 42%), linear-gradient(180deg, #B4482A 0%, #C2552F 100%)', 'rgba(194,85,47,0.45)'),
+wDesign: color('radial-gradient(circle at 50% 50%, #3A0B26 0%, #8E1F5C 38%, #B24F86 72%, #C86A9C 100%)', 'rgba(178,79,134,0.45)'),
+wLabel: 'font: 600 15px/1.4 Inter, sans-serif; color: ' + t.muted,
+wLabelW: 'position: relative; font: 600 15px/1.4 Inter, sans-serif; color: rgba(255,255,255,0.92)',
+liW: 'position: relative; font: 500 ' + (mob ? 16 : 17) + 'px/1.5 Inter, sans-serif; color: #FFFFFF',
+chipW: 'position: relative; display: inline-flex; align-items: center; min-height: 34px; padding: 0 14px; border-radius: 999px; font: 500 14px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: #FFFFFF; border: 0; background: linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.08) 100%); box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.45), inset 0 0 10px rgba(255,255,255,0.12); backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%)',
+wBigOn: 'position: relative; font: 700 ' + (mob ? 18 : 30) + 'px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.01em; color: #FFFFFF',
+list: 'margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: ' + (mob ? 6 : 10) + 'px',
+chips: 'display: flex; flex-wrap: wrap; gap: 6px',
+cvRow: mob ? 'display: flex; flex-direction: column; gap: 4px; padding: 14px 0; border-bottom: 1px solid ' + (dark ? 'rgba(255,255,255,0.10)' : 'rgba(14,14,16,0.08)') : 'display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; padding: 14px 20px; border-radius: 18px; background: ' + (dark ? 'rgba(255,255,255,0.08)' : '#FFFFFF') + '; border: 1px solid ' + (dark ? 'rgba(255,255,255,0.10)' : 'rgba(14,14,16,0.04)') + '; box-shadow: 0 1px 2px rgba(20,20,40,' + (dark ? '0.2' : '0.05') + '), 0 6px 18px rgba(20,20,40,' + (dark ? '0.18' : '0.06') + ')',
+cvYear: (mob ? '' : 'min-width: 140px; ') + 'font: 500 ' + (mob ? 13 : 14) + 'px/1.4 Inter, sans-serif; color: ' + t.muted,
+cvWhat: 'font: 500 ' + (mob ? 16 : 17) + 'px/1.4 Inter, sans-serif; color: ' + t.ink,
+ctaStyle: 'display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; min-height: 48px; padding: 0 28px; border-radius: 999px; background: ' + t.ink + '; color: ' + t.bg + '; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif',
+socialGrid: 'display: flex; flex-wrap: wrap; gap: 10px',
+social: 'display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: ' + t.ink + '; background: ' + (dark ? 'rgba(255,255,255,0.08)' : '#FFFFFF') + '; border: 1px solid ' + (dark ? 'rgba(255,255,255,0.10)' : 'rgba(14,14,16,0.04)') + '; box-shadow: 0 1px 2px rgba(20,20,40,' + (dark ? '0.2' : '0.05') + '), 0 6px 18px rgba(20,20,40,' + (dark ? '0.18' : '0.06') + ')',
+footer: 'margin-top: ' + (mob ? '32px' : 'auto') + '; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 16px; font: 400 13px/1.4 Inter, sans-serif; color: ' + t.muted,
+footLink: 'display: inline-flex; align-items: center; min-height: 44px; color: ' + t.muted + '; text-decoration: underline; text-underline-offset: 3px',
+tabBar: 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 4px; border-radius: 999px; ' + glass,
+tabNavActive: pillBase + 'flex: 1; padding: 0 8px; background: ' + t.ink + '; color: ' + t.bg,
+tabNav: pillBase + 'flex: 1; padding: 0 8px; color: ' + t.ink
+};
+}
+}
+</script>
+</body>
+</html>
