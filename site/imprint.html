@@ -8,15 +8,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Fiona">
 <title>Fiona Tran — Imprint</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="Portfolio of Fiona Tran – full-stack developer and computer science student.">
+<meta name="robots" content="noindex">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script src="/support.js?v=2"></script>
 </head>
 <body>
 <x-dc><template>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta name="description" content="Portfolio of Fiona Tran – full-stack developer and computer science student.">
-<meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
@@ -144,7 +145,7 @@ iconBtn: 'display: inline-flex; align-items: center; justify-content: center; ju
 mainStyle: 'position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 8px ' + side + 'px ' + (mob ? '120px' : '24px'),
 wrap: 'width: 100%; max-width: 1240px; box-sizing: border-box; flex: 1; display: flex; flex-direction: column; gap: 20px; padding: ' + (mob ? '16px 0 24px' : '40px clamp(0px, 2vw, 28px) 24px'),
 kicker: 'font: 500 12px/1.4 Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: ' + t.muted,
-cols: 'display: flex; flex-wrap: wrap; gap: 32px 64px; border-top: 1px solid ' + t.line + '; padding-top: 28px',
+cols: 'display: flex; flex-wrap: wrap; gap: 32px 64px; border-top: 1px solid ' + t.line + '; padding-top: 48px', // gleicher Abstand wie unter der Trennlinie vor Privacy
 col: 'flex: 1 1 360px; max-width: 560px; display: flex; flex-direction: column; gap: 14px',
 // Stehen Impressum und Datenschutz untereinander (Handy, schmale Fenster), trennt eine Linie über die volle Breite – so lang wie die Linie über dem Impressum –, mit Luft darüber und darunter (32 px Zeilenabstand + 16 px)
 divider: this.state.stacked ? 'flex: 0 0 100%; height: 0; border-top: 1px solid ' + t.line + '; margin: 16px 0' : 'display: none',
