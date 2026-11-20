@@ -25,10 +25,20 @@ the clean URLs automatically.
 
 ## Run locally
 
-```bash
-cd site && python3 -m http.server 8000      # quick preview
-# or the real container:
-docker build -t fiona-portfolio . && docker run --rm -p 8080:8080 fiona-portfolio
+Run one of the two from the project root. Both commands work in Windows PowerShell 5.1
+and PowerShell 7.
+
+**The real container** (same as on the server) → http://localhost:8080, stop with `Ctrl+C`:
+
+```shell
+docker build -t fiona-portfolio .; if ($?) { docker run --rm -p 8080:8080 fiona-portfolio }
+```
+
+**Quick preview without Docker** → http://localhost:8000. Clean URLs such as `/about`
+only work in the container, because nginx resolves them:
+
+```shell
+python -m http.server 8000 --directory site
 ```
 
 ## Pipeline
