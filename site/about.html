@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=38"></script>
+<script src="/paper.js?v=40"></script>
 <script src="/support.js?v=3"></script>
 </head>
 <body>
@@ -452,7 +452,10 @@ mainStyle: V.mainStyle + '; min-height: 0' + (short ? '; gap: 12px; padding: 4px
 folderWrap: V.folderWrap + '; flex: 1 1 auto; min-height: 0',
 bodyGrid: V.bodyGrid + '; flex: 1 1 auto; min-height: 0; grid-template-rows: minmax(0, 1fr)',
 fgLayer: V.fgLayer + '; min-height: 0',
-sheet: V.sheet + '; flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; grid-auto-rows: minmax(100%, auto)' + (short ? '; padding: 20px' : ''),
+// Zeile mindestens so hoch wie die Mappe, bei langem Inhalt (CV) so hoch wie der Inhalt. minmax(100%, auto) blieb in
+// Chrome bei 100 % stehen: der CV ragte aus der Zeile, und der Innenabstand unten fehlte beim Scrollen.
+// minmax(max-content, 100%) ergibt das Größere von beidem.
+sheet: V.sheet + '; flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; grid-auto-rows: minmax(max-content, 100%)' + (short ? '; padding: 20px' : ''),
 photoCard: V.photoCard + '; min-height: ' + (short ? 280 : 360) + 'px',
 // Kacheln nie kleiner als ihr Inhalt, damit kein Text abgeschnitten wird
 widgetGrid: V.widgetGrid + '; grid-template-rows: minmax(min-content, 1.15fr) minmax(min-content, 1fr)'
