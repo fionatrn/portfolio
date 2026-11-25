@@ -153,7 +153,8 @@
       langCode: de ? 'DE' : 'EN',
       langLabel: de ? 'Sprache: Deutsch. Auf Englisch umstellen' : 'Language: English. Switch to German',
       toggleLang: function () { var nx = de ? 'en' : 'de'; P.saveLang(nx); comp.setState({ lang: nx }); },
-      langBtn: O.langBtn, langInk: O.ink, langW: O.iconW, langSize: mob ? 22 : 26,
+      // Globus am Desktop so groß wie das Schließen-X der Projektansicht (32px), am Handy 22px
+      langBtn: O.langBtn, langInk: O.ink, langW: O.iconW, langSize: mob ? 22 : 32,
       // Die Versalien stehen rechnerisch schon mittig zum Globus, wirken neben der runden Form aber zu hoch:
       // eine sechzehntel Schriftgröße (1px bei 16px) tiefer sitzen sie optisch auf seiner Äquatorlinie
       langText: 'position: relative; top: 0.0625em'
