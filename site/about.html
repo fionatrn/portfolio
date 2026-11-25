@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=14"></script>
+<script src="/paper.js?v=18"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
@@ -87,8 +87,11 @@ a{color:inherit;text-decoration:none}
 </nav>
 </sc-if>
 <button class="hov" data-on-click="{{toggleDark}}" aria-label="{{darkLabel}}" style="{{iconBtn}}">
-<sc-if value="{{isPaper}}" hint-placeholder-val="{{ false }}">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+<sc-if value="{{isOutline}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{paperIconInk}}" stroke-width="{{paperIconW}}" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+</sc-if>
+<sc-if value="{{isPaperOnly}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{paperIconInk}}" stroke-width="{{paperIconW}}" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5" stroke-dasharray="1.6 2.2"></circle></svg>
 </sc-if>
 <sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
@@ -276,11 +279,15 @@ const tb = this.state.tab ?? 'about';
 // Tab-Wechsel: Startzustand ohne Transition setzen (sonst läuft erst ein Ausblenden an, das gleich wieder umkehrt und die Animation verschluckt), dann einblenden
 if (this._lastTab !== undefined && this._lastTab !== tb) { const els = document.querySelectorAll('[data-panel="' + tb + '"] .reveal'); els.forEach((el) => { el.classList.add('no-tr'); el.classList.remove('in'); }); void document.body.offsetWidth; els.forEach((el) => el.classList.remove('no-tr')); void document.body.offsetWidth; requestAnimationFrame(() => requestAnimationFrame(() => els.forEach((el) => { el.classList.add('in'); this._seen.add(el); }))); }
 this._lastTab = tb;
+// Desktop: die Mappe scrollt nur, wenn der aktive Reiter wirklich höher ist als sie. So erzeugen die
+// Einblend-Animationen (verschobene Elemente) keine kurz aufblitzenden Scrollleisten.
+const sh = document.querySelector('[data-sheet]');
+if (sh && window.innerWidth >= 760 && window.innerHeight >= 500) { const p = sh.querySelector('[data-panel="' + tb + '"]'); const cs = getComputedStyle(sh); const avail = sh.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom); sh.style.overflowY = p && p.offsetHeight > avail + 1 ? 'auto' : 'hidden'; }
 } catch (err) {}
 }
 renderVals() {
 const theme = this.state.theme ?? PAPER.theme(this.props); // light → dark → paper
-const dark = theme === 'dark', paper = theme === 'paper';
+const dark = theme === 'dark', paper = PAPER.isPaper(theme), outline = theme === 'outline'; // outline = Paper mit Outline-Label und filigraner Navigation
 if (!this._rs && typeof window !== 'undefined') { try { this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); } catch (e) {} }
 const vw = Number(this.props.vw) || (typeof window !== 'undefined' && window.innerWidth) || 1440;
 const vh = Number(this.props.vh) || (typeof window !== 'undefined' && window.innerHeight) || 900;
@@ -319,8 +326,8 @@ const T = [['about', 'Profile'], ['tools', 'Tech & tools'], ['cv', 'CV'], ['cont
 const tabs = T.map(([k, l]) => ({ label: l, sel: tab === k ? 'true' : 'false', pick: (e) => { this.setState({ tab: k, tabFrom: tab }); if (mob && e && e.currentTarget && e.currentTarget.closest) { const s = e.currentTarget.closest('[data-sheet]'); if (s && s.getBoundingClientRect().top < 0) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
 styleFrame: pillBase + 'position: relative; z-index: 1; width: ' + tw + 'px; padding: 0; background: transparent; font-size: ' + (cmp ? 14 : 15) + 'px; transition: color 0.3s; color: ' + (tab === k ? t.bg : t.frameInk) }));
 const card = (rad) => mob ? 'box-sizing: border-box; padding: 28px 22px 32px; border-radius: ' + rad + '; background: ' + t.sheet + '; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.9') + ')' + (dark ? '' : ', 0 16px 32px rgba(20,20,40,0.10)') + '; ' : '';
-const pv = (k) => mob ? '' : '; grid-area: 1 / 1; min-width: 0; ' + (tab === k ? 'visibility: visible; opacity: 1' : 'visibility: hidden; opacity: 0; pointer-events: none');
-const lab = (pos) => 'position: absolute; ' + pos + '; padding: 6px 12px; border-radius: 999px; background: ' + (dark ? 'rgba(10,10,12,0.6)' : 'rgba(255,255,255,0.75)') + '; color: ' + t.ink + '; font: 500 13px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(10px)';
+const pv = (k) => mob ? '' : '; grid-area: 1 / 1; min-width: 0; ' + (tab === k ? 'visibility: visible; opacity: 1' : 'visibility: hidden; opacity: 0; pointer-events: none; height: 0; overflow: hidden'); // versteckte Reiter zählen nicht zur Höhe
+const lab = (pos) => 'cursor: default; user-select: none; -webkit-user-select: none; position: absolute; ' + pos + '; padding: 6px 12px; border-radius: 999px; background: ' + (dark ? 'rgba(10,10,12,0.6)' : 'rgba(255,255,255,0.75)') + '; color: ' + t.ink + '; font: 500 13px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(10px)';
 const V = {
 t, tabs, yearsD: yD, yearsNum: yN,
 yearsLabel: metric === 'years' ? 'Years building software' : 'Commits in ' + yr,
@@ -329,12 +336,12 @@ yearsSvg: 'position: relative; display: block; align-self: center; height: ' + (
 yearsCap: 'position: relative; align-self: center; text-align: center; font: 700 15px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; color: rgba(74,10,16,0.88)',
 wYears: color('linear-gradient(180deg, #4A0A10 0%, #8E1A1A 30%, #D2501F 62%, #F59A5E 82%, #FFF1E6 100%)', 'rgba(210,80,31,0.45)') + (mob ? 'padding: 16px; border-radius: 24px; ' : '') + 'justify-content: space-between',
 helloH1: archive ? 'margin: 0 0 4px; line-height: 0; color: ' + t.ink : 'margin: 0; font: ' + hf.w + ' ' + (mob ? hf.m : hf.d) + 'px/1.2 "' + hfName + '", ' + (hfName === 'M PLUS Rounded 1c' ? 'sans-serif; letter-spacing: -0.03em' : 'cursive') + '; text-align: center; display: block; width: 100%; box-sizing: border-box; padding: 0 6px; white-space: nowrap; color: ' + t.ink,
-desktop: !mob, mobile: mob, isDark: dark, isLight: theme === 'light', isPaper: paper,
+desktop: !mob, mobile: mob, isDark: dark, isLight: theme === 'light', isPaper: paper, isOutline: outline, isPaperOnly: paper && !outline,
 dot1: '#7CF0B8', dot2: '#FF8AC0', dot3: '#B9A6FF', yearsFill: 'rgba(255,236,244,0.92)',
 showAbout: true, showTools: true, showCv: true, showContact: true,
 darkLabel: PAPER.labelFor(theme),
 toggleDark: () => { const nx = PAPER.next(theme); PAPER.save(nx); this.setState({ theme: nx }); },
-logoH: mob ? 16 : 30,
+logoH: mob ? 16 : 30, paperIconInk: t.ink, paperIconW: '1.8',
 logoInk: t.ink,
 bgGrain: dark ? 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.08; mix-blend-mode: overlay; pointer-events: none' : 'display: none',
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + (dark ? 'radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416' : t.bg) + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column; transition: background 0.4s',
@@ -396,7 +403,7 @@ wDesign: color('radial-gradient(circle at 50% 50%, #3A0B26 0%, #8E1F5C 38%, #B24
 wLabel: 'font: 600 15px/1.4 Inter, sans-serif; color: ' + t.muted,
 wLabelW: 'position: relative; font: 600 15px/1.4 Inter, sans-serif; color: rgba(255,255,255,0.92)',
 liW: 'position: relative; font: 500 ' + (mob ? 16 : 17) + 'px/1.5 Inter, sans-serif; color: #FFFFFF',
-chipW: 'position: relative; display: inline-flex; align-items: center; min-height: 34px; padding: 0 14px; border-radius: 999px; font: 500 14px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: #FFFFFF; border: 0; background: linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.08) 100%); box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.45), inset 0 0 10px rgba(255,255,255,0.12); backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%)',
+chipW: 'cursor: default; user-select: none; -webkit-user-select: none; position: relative; display: inline-flex; align-items: center; min-height: 34px; padding: 0 14px; border-radius: 999px; font: 500 14px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: #FFFFFF; border: 0; background: linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.08) 100%); box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.45), inset 0 0 10px rgba(255,255,255,0.12); backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%)',
 wBigOn: 'position: relative; font: 700 ' + (mob ? 18 : 30) + 'px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.01em; color: #FFFFFF',
 list: 'margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: ' + (mob ? 6 : 10) + 'px',
 chips: 'display: flex; flex-wrap: wrap; gap: 6px',
@@ -414,6 +421,7 @@ tabNav: pillBase + 'flex: 1; padding: 0 8px; color: ' + t.ink
 };
 // Paper (Spike): Greige-Mappe, Blatt mit Schneidemarken, Oliv-Lime-Rosa-Verlauf, Büroklammer am Foto, Pergament-Etiketten
 if (paper) {
+const O = outline ? PAPER.outlineUi('light') : null;
 const C = PAPER.c, F = PAPER.f, noBlur = '; backdrop-filter: none; -webkit-backdrop-filter: none';
 const card = (bg, fg) => '; border-radius: 18px; color: ' + fg + '; background: ' + bg + '; box-shadow: none; filter: none';
 const plab = '; padding: 7px 14px; border-radius: 999px; ' + PAPER.vellum + '; color: ' + C.ink + '; font: 500 13px/1.2 ' + F.text;
@@ -424,25 +432,27 @@ bgGrain: PAPER.grain,
 rootStyle: V.rootStyle + '; background: ' + PAPER.horizon + ', ' + PAPER.rootBg,
 // Logo hell, wenn der Verlauf oben im dunklen Oliv beginnt
 logoInk: C.paper,
-navStyle: PAPER.nav,
-pillActive: PAPER.pill + '; ' + PAPER.pillActive,
-pill: PAPER.pill,
-iconBtn: PAPER.iconBtn,
-tabBar: PAPER.tabBar,
-tabNavActive: PAPER.tabBtn + '; ' + PAPER.tabBtnActive,
-tabNav: PAPER.tabBtn,
+// Outline-Theme: filigrane Navigation mit heller Haarlinie auf dem Oliv, Tab-Leiste am Handy in Walnuss
+navStyle: O ? O.nav : PAPER.nav,
+pillActive: O ? O.pillActive : PAPER.pill + '; ' + PAPER.pillActive,
+pill: O ? O.pill : PAPER.pill,
+iconBtn: O ? O.iconBtn : PAPER.iconBtn,
+paperIconInk: O ? O.iconInk : t.ink, paperIconW: O ? O.iconW : '1.8',
+tabBar: O ? O.tabBar : PAPER.tabBar,
+tabNavActive: O ? O.tabBtnActive : PAPER.tabBtn + '; ' + PAPER.tabBtnActive,
+tabNav: O ? O.tabBtn : PAPER.tabBtn,
 folderWrap: mob ? V.folderWrap : V.folderWrap + '; background: ' + C.sand + noBlur + '; box-shadow: ' + PAPER.lift,
 bgLayer: V.bgLayer + '; opacity: 1',
 mBg: V.mBg + '; opacity: 1',
 bgTab: V.bgTab + '; background: ' + C.paper,
 mTabBg: V.mTabBg + '; background: ' + C.paper,
 bgConn: V.bgConn.replace('rgba(255,255,255,0)', 'rgba(250,248,244,0)').replace('#FFFFFF', C.paper),
-bgSheet: V.bgSheet + '; background: ' + PAPER.crop(16, 16, 'rgba(108,20,59,0.35)') + ', ' + C.paper,
-tabTitle: 'font: 400 ' + (mob ? 30 : 34) + 'px/1.05 ' + F.display + '; letter-spacing: 0.02em; color: ' + C.wine,
+bgSheet: V.bgSheet + '; background: ' + C.paper,
+tabTitle: 'font: 400 ' + (mob ? 30 : 34) + 'px/1.05 ' + F.display + '; letter-spacing: 0.02em; color: ' + C.olive, // Name auf dem Reiter in Oliv
 tabInd: V.tabInd + '; background: ' + C.wine,
 tabs: V.tabs.map((x) => ({ ...x, styleFrame: x.styleFrame + '; font: 500 15px/1 ' + F.text + '; color: ' + (x.sel === 'true' ? C.pink : C.ink) })),
 helloH1: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.hero + '; letter-spacing: 0.01em; text-align: center; color: ' + C.wine,
-helloSmall: 'margin: 0; font: 400 ' + (mob ? 44 : 60) + 'px/1.05 ' + F.hero + '; letter-spacing: 0.01em; color: ' + C.wine,
+helloSmall: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.hero + '; letter-spacing: 0.01em; color: ' + C.wine, // so groß wie „Hi, I'm Fiona!“
 photoCard: V.photoCard + '; overflow: visible; border-radius: 20px',
 photoImg: V.photoImg + '; border-radius: 20px',
 photoClip: PAPER.clip(mob ? 'left: 50%; top: -18px; margin-left: -10px' : 'left: 36px; top: -22px', mob ? 58 : 72, -8),
@@ -460,16 +470,66 @@ wYears: V.wYears + card(PAPER.bloom, C.wine),
 yearsFill: C.wine,
 yearsCap: 'position: relative; align-self: center; text-align: center; font: 500 14px/1.3 ' + F.text + '; color: ' + C.wine,
 wDev: V.wDev + card(C.lime, C.oliveInk), wCloud: V.wCloud + card('#D3DCE0', C.ink), wTest: V.wTest + card(C.pink, C.wine), wDesign: V.wDesign + card(C.olive, '#FFFFFF'),
-chipW: 'position: relative; display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: 999px; background: ' + C.paper + '; color: ' + C.ink + '; font: 500 14px/1 ' + F.text + '; box-shadow: 0 1px 2px rgba(60,40,45,0.10)' + noBlur,
+chipW: 'cursor: default; user-select: none; -webkit-user-select: none; position: relative; display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: 999px; background: ' + C.paper + '; color: ' + C.ink + '; font: 500 14px/1 ' + F.text + '; box-shadow: 0 1px 2px rgba(60,40,45,0.10)' + noBlur,
 h2: 'margin: 0; font: 400 ' + (mob ? 36 : 44) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
 wLabel: PAPER.fine + '; font-size: 11px; color: ' + C.muted,
 cvRow: mob ? V.cvRow + '; border-bottom: 1px solid ' + C.line : V.cvRow + '; border: 0; border-radius: 14px; background: #F2EEE8; box-shadow: none',
 cvYear: V.cvYear + '; color: ' + C.muted + '; font-variant-numeric: tabular-nums',
 cvWhat: V.cvWhat + '; color: ' + C.ink,
 bio: V.bio + '; color: ' + C.muted,
-ctaStyle: PAPER.button,
+// Abstand über dem Button größer als zwischen den CV-Abschnitten (Kontakt setzt seinen eigenen margin-top)
+ctaStyle: PAPER.button + '; margin-top: ' + (mob ? 32 : 44) + 'px',
 social: 'display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: ' + C.paper + '; color: ' + C.ink + '; font: 500 15px/1 ' + F.text + '; border: 1px solid ' + C.line + '; box-shadow: none',
 secTools: mcard(V.secTools), secCv: mcard(V.secCv), secContact: mcard(V.secContact)
+});
+}
+// Desktop: die Seite schließt mit dem Fenster ab. Die Mappe füllt die Höhe zwischen Kopfzeile und
+// Footer; ist ein Reiter länger, scrollt er in der Mappe statt der ganzen Seite. Bei niedrigen
+// Fenstern (Laptop) werden Kopfzeile und Ränder schmaler. Unter 600 px Höhe scrollt die Seite normal.
+if (!mob) {
+const short = vh < 860, side = cmp ? 24 : 48;
+Object.assign(V, {
+rootStyle: V.rootStyle + '; height: max(100dvh, 600px)',
+headerStyle: V.headerStyle + (short ? '; padding: 16px ' + side + 'px' : ''),
+mainStyle: V.mainStyle + '; min-height: 0' + (short ? '; gap: 12px; padding: 4px ' + side + 'px 8px' : ''),
+folderWrap: V.folderWrap + '; flex: 1 1 auto; min-height: 0',
+bodyGrid: V.bodyGrid + '; flex: 1 1 auto; min-height: 0; grid-template-rows: minmax(0, 1fr)',
+fgLayer: V.fgLayer + '; min-height: 0',
+sheet: V.sheet + '; flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; grid-auto-rows: minmax(100%, auto)' + (short ? '; padding: 20px' : ''),
+photoCard: V.photoCard + '; min-height: ' + (short ? 280 : 360) + 'px',
+// Kacheln nie kleiner als ihr Inhalt, damit kein Text abgeschnitten wird
+widgetGrid: V.widgetGrid + '; grid-template-rows: minmax(min-content, 1.15fr) minmax(min-content, 1fr)'
+});
+// CV kompakter, solange das Fenster nicht sehr hoch ist (weniger Scrollen in der Mappe)
+if (vh < 1000) Object.assign(V, {
+cvRow: V.cvRow + '; padding-top: 10px; padding-bottom: 10px',
+secCv: V.secCv + '; gap: 8px',
+cvGap: 16,
+ctaStyle: V.ctaStyle + '; margin-top: 28px'
+});
+// Niedrige Fenster: Profil etwas dichter, damit es ohne Scrollen in die Mappe passt
+if (short) Object.assign(V, {
+helloH1: V.helloH1 + '; font-size: ' + (vh < 720 ? 52 : 62) + 'px; line-height: 1.1',
+helloSmall: V.helloSmall + '; font-size: ' + (vh < 720 ? 52 : 62) + 'px; line-height: 1.1',
+aboutGrid: V.aboutGrid + '; gap: 16px',
+widgetGrid: V.widgetGrid + '; gap: 12px',
+wAbout: V.wAbout + '; gap: 12px; padding: 20px 22px',
+wFocus: V.wFocus + '; gap: 10px; padding: 18px 20px',
+wYears: V.wYears + '; gap: 8px; padding: 16px 20px',
+wBigOn: V.wBigOn + '; font-size: ' + (vh < 720 ? 26 : 30) + 'px',
+liW: V.liW + '; font-size: 15px; line-height: 1.45',
+list: V.list + '; gap: 4px',
+focusRowW: V.focusRowW + '; font-size: 15px',
+yearsSvg: V.yearsSvg + '; height: ' + (vh < 720 ? 48 : 60) + 'px'
+});
+// Sehr niedrige Fenster (unter 720 px): Ränder der Mappe und die Überschrift noch etwas knapper
+if (vh < 720) Object.assign(V, {
+helloH1: V.helloH1 + '; font-size: 46px',
+helloSmall: V.helloSmall + '; font-size: 46px',
+folderWrap: V.folderWrap + '; padding: 8px',
+folderTab: V.folderTab + '; padding-top: 12px; padding-bottom: 8px',
+tabsOnFrame: V.tabsOnFrame + '; padding-bottom: 8px',
+sheet: V.sheet + '; padding: 14px 20px'
 });
 }
 PAPER.mark(theme);

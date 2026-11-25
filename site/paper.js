@@ -1,18 +1,17 @@
 /*
- * paper.js – drittes Design "Paper" (Spike) und der Theme-Wechsel light → dark → paper.
+ * paper.js – Designs "Paper" und "Outline" (Spike) und der Theme-Wechsel light → dark → paper → outline.
  *
- * Elegant-modern auf ungestrichenem Papier: Greige-Grund mit Körnung, weiche
- * Farbverläufe aus Oliv, Lime und Rosa, Weinrot als Schrift- und Akzentfarbe,
- * Schneidemarken an den Ecken, Büroklammer, Anhänger-Etikett mit Loch und
- * mattes Pergament. Große Überschriften in Pinyon Script, Titel in Tenor Sans, Text in Inter.
+ * Elegant-modern auf ungestrichenem Papier: Greige-Grund mit Körnung, ein Horizont-Verlauf
+ * aus Oliv, Walnuss und Nebelblau nach den Maison-Noyer-Drucken, Weinrot als Schrift- und
+ * Akzentfarbe, Büroklammer und mattes Pergament. Große Überschriften in Pinyon Script, Titel in Tenor Sans, Text in Inter.
  * Gespeichert wird unter "fiona-theme".
  */
 (function () {
   'use strict';
 
   var KEY = 'fiona-theme';
-  var ORDER = ['light', 'dark', 'paper'];
-  var LABEL = { light: 'Switch to dark mode', dark: 'Switch to paper mode', paper: 'Switch to light mode' };
+  var ORDER = ['light', 'dark', 'paper', 'outline'];
+  var LABEL = { light: 'Switch to dark mode', dark: 'Switch to paper mode', paper: 'Switch to outline mode', outline: 'Switch to light mode' };
 
   var c = {
     wine: '#6C143B',      // Überschriften, aktive Elemente
@@ -73,19 +72,8 @@
     'html[data-paper]{scrollbar-color:' + c.muted + ' ' + c.ground + '}';
   var styled = false;
 
-  // Schneidemarken: kleine Winkel in allen vier Ecken (als Hintergrund-Ebenen)
-  function crop(inset, len, col) {
-    var g = 'linear-gradient(' + col + ', ' + col + ')', i = inset + 'px', L = len + 'px';
-    return [
-      g + ' left ' + i + ' top ' + i + ' / ' + L + ' 1px no-repeat', g + ' left ' + i + ' top ' + i + ' / 1px ' + L + ' no-repeat',
-      g + ' right ' + i + ' top ' + i + ' / ' + L + ' 1px no-repeat', g + ' right ' + i + ' top ' + i + ' / 1px ' + L + ' no-repeat',
-      g + ' left ' + i + ' bottom ' + i + ' / ' + L + ' 1px no-repeat', g + ' left ' + i + ' bottom ' + i + ' / 1px ' + L + ' no-repeat',
-      g + ' right ' + i + ' bottom ' + i + ' / ' + L + ' 1px no-repeat', g + ' right ' + i + ' bottom ' + i + ' / 1px ' + L + ' no-repeat'
-    ].join(', ');
-  }
-
   var P = {
-    c: c, f: f, ease: ease, shadow: shadow, lift: lift, bloom: bloom, crop: crop, horizon: horizon,
+    c: c, f: f, ease: ease, shadow: shadow, lift: lift, bloom: bloom, horizon: horizon,
 
     theme: function (props) {
       if (props && props.dark) return 'dark';
@@ -101,7 +89,7 @@
     mark: function (th) {
       try {
         if (!styled) { var s = document.createElement('style'); s.textContent = CSS; document.head.appendChild(s); styled = true; }
-        if (th === 'paper') document.documentElement.setAttribute('data-paper', ''); else document.documentElement.removeAttribute('data-paper');
+        if (th === 'paper' || th === 'outline') document.documentElement.setAttribute('data-paper', ''); else document.documentElement.removeAttribute('data-paper');
       } catch (e) {}
     },
 
@@ -138,10 +126,32 @@
     // Tech-Tags: Papierfarben nach Kategorie
     tag: function (k) {
       var m = { mint: [c.lime, c.oliveInk], blue: ['#D3DCE0', c.ink], orange: [c.pink, c.wine], pink: [c.pink, c.wine], lilac: [c.sand, c.ink], yellow: [c.lime, c.oliveInk] }[k] || [c.sand, c.ink];
-      return 'position: relative; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: ' + m[0] + '; color: ' + m[1] + '; font: 500 13px/1 ' + f.text;
+      return 'cursor: default; user-select: none; -webkit-user-select: none; position: relative; overflow: hidden; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: ' + m[0] + '; color: ' + m[1] + '; font: 500 13px/1 ' + f.text;
     }
   };
   P.tabBar = 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 4px; border-radius: 999px; background: ' + c.paper + '; box-shadow: ' + lift;
+
+  // Viertes Theme "outline": Paper mit braun umrandetem Projekt-Label und filigraner Navigation –
+  // durchsichtig, feine Haarlinie, dünne Schrift, die Auswahl nur leicht hinterlegt. ink 'light' für
+  // Kopfzeilen auf dem dunklen Oliv (Work, About), 'walnut' auf hellem Grund (Imprint). Die Tab-Leiste
+  // am Handy liegt unten auf hellem Grund und ist immer in Walnuss.
+  P.isPaper = function (th) { return th === 'paper' || th === 'outline'; };
+  P.outlineUi = function (ink) {
+    var light = ink === 'light';
+    var line = light ? 'rgba(250,248,244,0.5)' : 'rgba(91,46,31,0.5)', col = light ? c.paper : c.walnut;
+    var pill = P.pill + '; min-height: 40px; padding: 0 20px; font-weight: 400; letter-spacing: 0.02em; color: ' + col;
+    var tab = P.tabBtn + '; font-weight: 400; letter-spacing: 0.02em; color: ' + c.walnut;
+    return {
+      nav: 'display: flex; gap: 2px; padding: 3px; border-radius: 999px; border: 1px solid ' + line + '; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none',
+      pill: pill,
+      pillActive: pill + '; background: ' + (light ? 'rgba(250,248,244,0.18)' : 'rgba(91,46,31,0.10)'),
+      iconBtn: P.iconBtn + '; border: 1px solid ' + line + '; background: transparent; box-shadow: none',
+      iconInk: col, iconW: '1.3',
+      tabBar: P.tabBar + '; padding: 3px; border: 1px solid ' + c.walnut + '; background: rgba(236,232,225,0.35); box-shadow: none; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)',
+      tabBtn: tab,
+      tabBtnActive: tab + '; background: rgba(91,46,31,0.12)'
+    };
+  };
 
   window.PAPER = P;
 })();
