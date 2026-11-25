@@ -18,7 +18,7 @@ A developer who also cares about the details of the interface: the site itself i
 ## Capabilities and Constraints
 - Static pages served by nginx in Docker; no framework. Pages keep the design-canvas format (`{{holes}}`, `<sc-if>`, `<sc-for>`, `class Component extends DCLogic`) rendered by `site/support.js`; styles are inline strings computed in each page's `renderVals()`.
 - Strict CSP: scripts only from self, styles inline or Google Fonts, fonts from Google Fonts.
-- One design ("Outline", paper look), no theme switch. Shared colours, fonts and styles live in `site/paper.js` (global `PAPER`). The standalone design-system page still has its own light/dark toggle (`site/design-system.js`).
+- One design (paper look), no theme switch. Shared colours, fonts and styles live in `site/paper.js` (global `PAPER`). The standalone design-system page (`site/design-system.html`) shows colours, type, logo and building blocks and has its own EN/DE toggle (`site/design-system.js`).
 - Content is English and German, switched by the globe button (English first, choice kept in localStorage `fiona-lang`). Each page keeps its texts as `L(english, german)` in `renderVals()` (`tx`), shared nav/footer words in `PAPER.words()`. German addresses visitors with "du". Imprint/Privacy text is German in both languages.
 
 ## Brand Commitments

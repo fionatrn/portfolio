@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=36"></script>
+<script src="/paper.js?v=37"></script>
 <script src="/support.js?v=3"></script>
 </head>
 <body>
@@ -221,10 +221,10 @@ const sheetMode = mob || vw < 1100;
 this._sheet = sheetMode;
 const active = this.state.active ?? 10;
 const t = PAPER.t, C = PAPER.c, F = PAPER.f;
-// Navigation und Icons filigran (PAPER.outlineUi), hell auf dem dunklen Oliv oben
-const O = PAPER.outlineUi('light');
+// Navigation und Icons filigran (PAPER.ui), hell auf dem dunklen Oliv oben
+const O = PAPER.ui('light');
 // Projekt-Label: Weinrot auf dem hellen Nebelblau (Desktop); am Handy liegt es noch im dunklen Beerenrot-Übergang, dort hell
-const outlineInk = mob ? C.paper : C.wine;
+const labelInk = mob ? C.paper : C.wine;
 // Sprache: alle sichtbaren Texte und Projektangaben auf Englisch oder Deutsch (L(englisch, deutsch))
 const de = PAPER.useLang(this) === 'de', L = (en, dt) => de ? dt : en, w = PAPER.words(de);
 const P = [
@@ -234,7 +234,7 @@ const P = [
   part: L('Every push to main builds a multi-arch image, smoke-tests it and rolls it out automatically via GitOps (GitHub Actions → GHCR → Portainer).',
     'Jeder Push auf main baut ein Multi-Arch-Image, prüft es mit einem Smoke-Test und rollt es per GitOps automatisch aus (GitHub Actions → GHCR → Portainer).'),
   tech: ['HTML & CSS', 'JavaScript', 'nginx', 'Docker', 'GitHub Actions'],
-  img: '/projects/website-hero-dark.webp', shots: ['/projects/website-branding.webp', '/projects/website-components.jpg'],
+  img: '/projects/website-design.jpg', shots: ['/projects/website-work.jpg', '/projects/website-logos.jpg'],
   links: [{ label: L('Design system', 'Designsystem'), url: '/design-system' }, { label: L('Source on GitHub', 'Quellcode auf GitHub'), url: 'https://github.com/fionatrn/portfolio' }],
   g: 'linear-gradient(180deg, #2A3A33 0%, #141416 100%)' },
 { t: L('Bunny figure', 'Hasenfigur'), c: L('Creative coding', 'Creative Coding'), y: '2026', team: 'Solo', role: L('Modelling in code & 3D printing', 'Modellierung in Code & 3D-Druck'),
@@ -338,10 +338,10 @@ links: (P[pi].links || [{ label: L('Live demo', 'Live-Demo'), url: '#' }, { labe
 hasLinks: (P[pi].links || [1]).length > 0,
 linkRow: 'display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 ' + F.text + '; color: ' + C.pink + '; background: ' + C.wine,
 // Titel des aktuellen Projekts: umrandetes Label, Jahr und Kategorie über dem Titel
-infoStyle: 'display: flex; align-items: center; justify-content: center; cursor: pointer; font: inherit; color: inherit; padding: ' + (mob ? '10px 26px' : '14px 40px') + '; border-radius: 999px; border: 1.5px solid ' + outlineInk + '; background: transparent',
+infoStyle: 'display: flex; align-items: center; justify-content: center; cursor: pointer; font: inherit; color: inherit; padding: ' + (mob ? '10px 26px' : '14px 40px') + '; border-radius: 999px; border: 1.5px solid ' + labelInk + '; background: transparent',
 infoInner: 'display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; text-align: center',
-metaStyle: 'font: 500 ' + (mob ? 13 : 14) + 'px/1.4 ' + F.text + '; letter-spacing: 0.04em; color: ' + outlineInk,
-titleStyle: 'font: 400 ' + (mob ? 26 : 36) + 'px/1.2 ' + F.display + '; color: ' + outlineInk + '; min-width: ' + (mob ? 150 : 260) + 'px',
+metaStyle: 'font: 500 ' + (mob ? 13 : 14) + 'px/1.4 ' + F.text + '; letter-spacing: 0.04em; color: ' + labelInk,
+titleStyle: 'font: 400 ' + (mob ? 26 : 36) + 'px/1.2 ' + F.display + '; color: ' + labelInk + '; min-width: ' + (mob ? 150 : 260) + 'px',
 // Erster Bildschirm (Kopf und Karten-Rad): am Handy genau so hoch wie das Fenster, darunter folgen die About-Karten.
 // Am Desktop ohne eigene Box, Kopf und Rad liegen wie bisher direkt in der Seite.
 screen: mob ? 'display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh' : 'display: contents',

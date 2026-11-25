@@ -1,5 +1,5 @@
 /*
- * paper.js – das Design der Seite ("Outline"): Farben, Schriften und gemeinsame Styles für Work, About und Imprint.
+ * paper.js – das Design der Seite: Farben, Schriften und gemeinsame Styles für Work, About und Imprint.
  *
  * Elegant-modern auf ungestrichenem Papier: Greige-Grund mit Körnung, ein Horizont-Verlauf
  * aus Oliv, Beerenrot und Nebelblau nach den Maison-Noyer-Drucken, Weinrot als Schrift- und
@@ -125,7 +125,7 @@
     // Schlichte Navigation: zwei Wörter ohne Pille und Rahmen, das aktuelle mit feiner Linie darunter,
     // das andere gedämpft. ink 'light' für Kopfzeilen auf dem dunklen Oliv (Work, About), 'walnut' auf
     // hellem Grund (Imprint). Die Tab-Leiste am Handy liegt unten auf hellem Grund und ist immer in Walnuss.
-    outlineUi: function (ink) {
+    ui: function (ink) {
       var col = ink === 'light' ? c.paper : c.walnut;
       // Mindesthöhe 44px bleibt als Trefferfläche, sichtbar ist nur das Wort.
       // Tenor Sans wie die Titel; das gedämpfte Wort bei 0.75 bleibt auf dem Oliv lesbar
@@ -179,7 +179,7 @@
       ? { work: 'Projekte', about: 'Über mich', about1: 'Ü', about2: 'ber mich', about1Style: 'font-family: ' + f.text, home: 'fiona – Startseite', mainNav: 'Hauptnavigation', imprint: 'Impressum', privacy: 'Datenschutz' }
       : { work: 'Work', about: 'About', about1: 'A', about2: 'bout', about1Style: '', home: 'fiona – home', mainNav: 'Main navigation', imprint: 'Imprint', privacy: 'Privacy' };
   };
-  // Werte für den Sprach-Button einer Seite (comp: die Seiten-Komponente, O: PAPER.outlineUi(...))
+  // Werte für den Sprach-Button einer Seite (comp: die Seiten-Komponente, O: PAPER.ui(...))
   P.langUi = function (comp, O, mob) {
     var l = P.useLang(comp), de = l === 'de';
     return {

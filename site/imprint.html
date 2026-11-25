@@ -12,7 +12,7 @@
 <meta name="description" content="Portfolio of Fiona Tran – full-stack developer and computer science student.">
 <meta name="robots" content="noindex">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script src="/paper.js?v=36"></script>
+<script src="/paper.js?v=37"></script>
 <script src="/support.js?v=3"></script>
 </head>
 <body>
@@ -95,7 +95,7 @@ const cmp = !mob && vw < 1000;
 const side = mob ? 20 : cmp ? 24 : 48;
 const t = PAPER.t, C = PAPER.c, F = PAPER.f;
 // Filigrane Navigation, hier auf hellem Grund in Walnuss
-const O = PAPER.outlineUi('walnut');
+const O = PAPER.ui('walnut');
 // Sprache: Navigation, Überschriften und Footer; die Rechtstexte selbst stehen immer auf Deutsch
 const w = PAPER.words(PAPER.useLang(this) === 'de');
 try { document.title = 'Fiona Tran — ' + w.imprint; } catch (e) {}
