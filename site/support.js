@@ -9,6 +9,11 @@
  * Diese Datei rendert das Template mit den Werten aus renderVals(),
  * gleicht das DOM bei jedem setState() minimal ab (damit CSS-Transitions
  * erhalten bleiben) und ruft componentDidMount / componentDidUpdate auf.
+ *
+ * DC.embed(url, element, props) hängt die Komponente einer anderen Seite in ein
+ * Element dieser Seite (am Handy: die About-Karten unter dem Karten-Rad auf Work).
+ * Das Element trägt data-dc-island; sein Inhalt gehört dann der eingebetteten
+ * Komponente und wird vom Abgleich der Seite nicht angefasst.
  */
 (function () {
   'use strict';
@@ -178,6 +183,7 @@
       if ('text' in vn) { if (el.data !== vn.text) el.data = vn.text; continue; }
       patchAttrs(el, vn);
       patchEvents(el, vn);
+      if ('data-dc-island' in vn.attrs) continue; // Inhalt gehört einer eingebetteten Komponente
       patchKids(el, vn.kids);
     }
     while (parent.childNodes.length > i) parent.removeChild(parent.lastChild);
@@ -195,28 +201,29 @@
     if (this.__render) this.__render();
   };
 
-  function boot() {
-    var host = document.querySelector('x-dc');
-    var script = document.querySelector('script[type="text/x-dc"]');
-    if (!host || !script) return;
-
-    // Liegt der Inhalt in einem <template>, parst der Browser ihn inert
-    // (keine Konsolenfehler für Attribute wie height="{{logoH}}").
-    var src = host;
-    for (var c = host.firstElementChild; c; c = c.nextElementSibling) {
-      if (c.localName === 'template') { src = c.content; break; }
-    }
-
-    // Head-Inhalte aus <helmet> übernehmen.
+  // Head-Inhalte aus <helmet> übernehmen. Was es schon gibt (gleicher Link,
+  // gleicher Style-Text), wird beim Einbetten nicht doppelt eingehängt.
+  function takeHelmet(src) {
     var helmet = src.querySelector('helmet');
-    if (helmet) {
-      while (helmet.firstChild) {
-        var n = helmet.firstChild;
-        helmet.removeChild(n);
-        if (n.nodeType === 1) document.head.appendChild(document.importNode(n, true));
-      }
-      helmet.parentNode.removeChild(helmet);
+    if (!helmet) return;
+    var styles = Array.prototype.map.call(document.head.querySelectorAll('style'), function (x) { return x.textContent; });
+    while (helmet.firstChild) {
+      var n = helmet.firstChild;
+      helmet.removeChild(n);
+      if (n.nodeType !== 1) continue;
+      if (n.localName === 'link' && document.head.querySelector('link[href="' + n.getAttribute('href') + '"]')) continue;
+      if (n.localName === 'style' && styles.indexOf(n.textContent) >= 0) continue;
+      document.head.appendChild(document.importNode(n, true));
     }
+    helmet.parentNode.removeChild(helmet);
+  }
+
+  // Template (src: <x-dc> oder sein <template>-Inhalt) mit dem Skript der Seite
+  // in mount rendern. opts.props ergänzt die Standard-Props, opts.island: eingebettet
+  // (dann bestimmt die Seite die Farbe von html/body, nicht die eingebettete Komponente).
+  function mountDC(src, script, mount, opts) {
+    opts = opts || {};
+    takeHelmet(src);
 
     // Template einsammeln und aus dem Dokument nehmen.
     // In ein eigenes, unsichtbares Dokument, damit der Browser die
@@ -224,24 +231,20 @@
     var inert = document.implementation.createHTMLDocument('');
     var tpl = inert.createElement('div');
     while (src.firstChild) { tpl.appendChild(inert.importNode(src.firstChild, true)); src.removeChild(src.firstChild); }
-    var mount = document.createElement('div');
-    mount.id = 'dc-root';
-    mount.style.display = 'contents';
-    host.parentNode.replaceChild(mount, host);
-    var hide = document.getElementById('dc-hide');
-    if (hide) hide.parentNode.removeChild(hide);
 
-    // Props: Standardwerte aus data-props.
+    // Props: Standardwerte aus data-props, dazu opts.props.
     var props = {};
     try {
       var spec = JSON.parse(script.getAttribute('data-props') || '{}');
       for (var key in spec) if (key[0] !== '$' && spec[key] && 'default' in spec[key]) props[key] = spec[key]['default'];
     } catch (e) {}
+    if (opts.props) for (var pk in opts.props) props[pk] = opts.props[pk];
 
     var Component = new Function('DCLogic', script.textContent + '\n;return Component;')(DCLogic);
     var comp = new Component(props);
     if (!comp.state) comp.state = {};
     if (!comp.props) comp.props = props;
+    comp.__root = mount; // eigener Wurzelknoten, für Abfragen nur im eigenen Teil der Seite
 
     // Seitenfarbe auf <html>/<body> und theme-color übertragen. Safari (iPhone)
     // färbt damit die Bereiche hinter Statusleiste und Adressleiste sowie das
@@ -249,6 +252,7 @@
     // obersten Elements (letzte Ebene von "background"), nur bei Änderung.
     var lastBg = '';
     function syncPageColor() {
+      if (opts.island) return;
       var first = mount.firstElementChild;
       var bg = first && first.style ? first.style.backgroundColor : '';
       if (!bg || bg === lastBg) return;
@@ -279,9 +283,49 @@
     render();
     mounted = true;
     if (comp.componentDidMount) comp.componentDidMount();
+    return comp;
+  }
+
+  // Liegt der Inhalt in einem <template>, parst der Browser ihn inert
+  // (keine Konsolenfehler für Attribute wie height="{{logoH}}").
+  function templateOf(host) {
+    for (var c = host.firstElementChild; c; c = c.nextElementSibling) {
+      if (c.localName === 'template') return c.content;
+    }
+    return host;
+  }
+
+  function boot() {
+    var host = document.querySelector('x-dc');
+    var script = document.querySelector('script[type="text/x-dc"]');
+    if (!host || !script) return;
+    var src = templateOf(host);
+    var mount = document.createElement('div');
+    mount.id = 'dc-root';
+    mount.style.display = 'contents';
+    host.parentNode.replaceChild(mount, host);
+    var hide = document.getElementById('dc-hide');
+    if (hide) hide.parentNode.removeChild(hide);
+    mountDC(src, script, mount, {});
+  }
+
+  // Seite unter url laden und ihre Komponente in el einhängen (el braucht data-dc-island).
+  // Liefert ein Promise mit der Komponente.
+  function embed(url, el, props) {
+    return fetch(url, { credentials: 'same-origin' }).then(function (r) {
+      if (!r.ok) throw new Error('embed ' + r.status);
+      return r.text();
+    }).then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var host = doc.querySelector('x-dc');
+      var script = doc.querySelector('script[type="text/x-dc"]');
+      if (!host || !script) throw new Error('embed: no component');
+      return mountDC(templateOf(host), script, el, { props: props, island: true });
+    });
   }
 
   window.DCLogic = DCLogic;
+  window.DC = { embed: embed };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
