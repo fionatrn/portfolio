@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=18"></script>
+<script src="/paper.js?v=21"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
@@ -75,7 +75,7 @@ a{color:inherit;text-decoration:none}
 </sc-if>
 <button class="hov" data-on-click="{{toggleDark}}" aria-label="{{darkLabel}}" style="{{iconBtn}}">
 <sc-if value="{{isOutline}}" hint-placeholder-val="{{ false }}">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{paperIconInk}}" stroke-width="{{paperIconW}}" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+<svg aria-hidden="true" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{paperIconInk}}" stroke-width="{{paperIconW}}" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
 </sc-if>
 <sc-if value="{{isPaperOnly}}" hint-placeholder-val="{{ false }}">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{paperIconInk}}" stroke-width="{{paperIconW}}" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5" stroke-dasharray="1.6 2.2"></circle></svg>
@@ -369,9 +369,9 @@ V.closeBtn = V.iconBtn; // Schließen-Button der Projektansicht, standardmäßig
 // Paper (Spike): Papier-Look über die fertigen Styles legen – spätere Angaben im style-Attribut gewinnen
 if (paper) {
 const C = PAPER.c, F = PAPER.f;
-const labelOutline = outline, O = outline ? PAPER.outlineUi('light') : null; // Outline-Theme: braunes Label, filigrane Navigation
-// Outline-Label: Walnuss auf dem hellen Nebelblau (Desktop); am Handy liegt es noch im dunklen Walnuss-Übergang, dort hell
-const outlineInk = mob ? C.paper : C.walnut;
+const labelOutline = outline, O = outline ? PAPER.outlineUi('light') : null; // Outline-Theme: umrandetes Label in Weinrot, filigrane Navigation
+// Outline-Label: Weinrot auf dem hellen Nebelblau (Desktop); am Handy liegt es noch im dunklen Walnuss-Übergang, dort hell
+const outlineInk = mob ? C.paper : C.wine;
 Object.assign(V, {
 clipStyle: PAPER.clip(sheetMode ? 'left: 30px; top: 52px' : 'left: 44px; top: 60px', sheetMode ? 56 : 70, -6),
 bgGrain: PAPER.grain,
@@ -396,9 +396,10 @@ tab: O ? O.tabBtn : PAPER.tabBtn,
 // Titel des aktuellen Projekts: Anordnung wie in Hell und Dunkel (Pille, Jahr und Kategorie über
 // dem Titel), im Paper-Look: Papier-Pille wie die Navigation, Titel in Pinyon Script
 // Outline-Theme: brauner Rand, braune Schrift, durchsichtiger Hintergrund; sonst Papier-Pille
-infoStyle: V.infoStyle + (labelOutline ? '; border: 1.5px solid ' + outlineInk + '; background: transparent; box-shadow: none' : '; border: 0; background: ' + C.paper + '; box-shadow: ' + PAPER.shadow) + '; backdrop-filter: none; -webkit-backdrop-filter: none',
-metaStyle: 'font: 500 ' + (mob ? 13 : 14) + 'px/1.4 ' + F.text + '; letter-spacing: 0.04em; color: ' + (labelOutline ? outlineInk : C.muted), // gut lesbar, nicht zu klein
-titleStyle: 'font: 400 ' + (mob ? 26 : 32) + 'px/1.2 ' + F.display + '; color: ' + (labelOutline ? outlineInk : C.wine) + '; min-width: ' + (mob ? 150 : 220) + 'px',
+infoStyle: V.infoStyle + (labelOutline ? '; padding: ' + (mob ? '12px 30px' : '18px 48px') + '; border: 1.5px solid ' + outlineInk + '; background: transparent; box-shadow: none' : '; border: 0; background: ' + C.paper + '; box-shadow: ' + PAPER.shadow) + '; backdrop-filter: none; -webkit-backdrop-filter: none',
+metaStyle: 'font: 500 ' + (labelOutline ? (mob ? 14 : 16) : mob ? 13 : 14) + 'px/1.4 ' + F.text + '; letter-spacing: 0.04em; color: ' + (labelOutline ? outlineInk : C.muted), // gut lesbar, nicht zu klein
+// Outline-Theme: das Label größer (Titel 42px, Meta 16px, mehr Innenabstand)
+titleStyle: 'font: 400 ' + (labelOutline ? (mob ? 30 : 42) : mob ? 26 : 32) + 'px/1.2 ' + F.display + '; color: ' + (labelOutline ? outlineInk : C.wine) + '; min-width: ' + (labelOutline ? (mob ? 170 : 300) : mob ? 150 : 220) + 'px',
 // Projektansicht mit mehr Luft: größere Ränder und Abstände zwischen allen Blöcken
 detailInner: V.detailInner + '; background: ' + C.paper + '; border-radius: ' + (sheetMode ? '20px 20px 0 0' : '22px') + '; box-shadow: 0 30px 70px rgba(60,40,45,0.22); gap: ' + (mob ? 32 : 44) + 'px; padding: ' + (sheetMode ? '8px ' + (mob ? 24 : 40) + 'px 64px' : '24px 48px 56px'),
 // Text und Infospalte gleich breit

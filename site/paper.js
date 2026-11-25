@@ -131,21 +131,24 @@
   };
   P.tabBar = 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 4px; border-radius: 999px; background: ' + c.paper + '; box-shadow: ' + lift;
 
-  // Viertes Theme "outline": Paper mit braun umrandetem Projekt-Label und filigraner Navigation –
-  // durchsichtig, feine Haarlinie, dünne Schrift, die Auswahl nur leicht hinterlegt. ink 'light' für
-  // Kopfzeilen auf dem dunklen Oliv (Work, About), 'walnut' auf hellem Grund (Imprint). Die Tab-Leiste
-  // am Handy liegt unten auf hellem Grund und ist immer in Walnuss.
+  // Viertes Theme "outline": Paper mit weinrot umrandetem Projekt-Label und schlichter Navigation –
+  // zwei Wörter ohne Pille und Rahmen, das aktuelle mit feiner Linie darunter, das andere gedämpft;
+  // der Theme-Button ist nur die Sonne. ink 'light' für Kopfzeilen auf dem dunklen Oliv (Work, About),
+  // 'walnut' auf hellem Grund (Imprint). Die Tab-Leiste am Handy liegt unten auf hellem Grund und ist
+  // immer in Walnuss.
   P.isPaper = function (th) { return th === 'paper' || th === 'outline'; };
   P.outlineUi = function (ink) {
     var light = ink === 'light';
-    var line = light ? 'rgba(250,248,244,0.5)' : 'rgba(91,46,31,0.5)', col = light ? c.paper : c.walnut;
-    var pill = P.pill + '; min-height: 40px; padding: 0 20px; font-weight: 400; letter-spacing: 0.02em; color: ' + col;
+    var col = light ? c.paper : c.walnut;
+    // Mindesthöhe 44px bleibt als Trefferfläche, sichtbar ist nur das Wort
+    // Tenor Sans wie die Titel; das gedämpfte Wort bei 0.75 bleibt auf dem Oliv lesbar
+    var word = 'display: inline-flex; align-items: center; flex: none; min-height: 44px; padding: 0; border: 0; border-radius: 0; cursor: pointer; background: transparent; color: ' + col + '; font: 400 18px/1 ' + f.display + '; letter-spacing: 0.06em; transition: opacity 160ms ' + ease;
     var tab = P.tabBtn + '; font-weight: 400; letter-spacing: 0.02em; color: ' + c.walnut;
     return {
-      nav: 'display: flex; gap: 2px; padding: 3px; border-radius: 999px; border: 1px solid ' + line + '; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none',
-      pill: pill,
-      pillActive: pill + '; background: ' + (light ? 'rgba(250,248,244,0.18)' : 'rgba(91,46,31,0.10)'),
-      iconBtn: P.iconBtn + '; border: 1px solid ' + line + '; background: transparent; box-shadow: none',
+      nav: 'display: flex; gap: 36px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none',
+      pill: word + '; opacity: 0.75',
+      pillActive: word + '; opacity: 1; background: linear-gradient(currentColor, currentColor) no-repeat left bottom 7px / 100% 1px',
+      iconBtn: P.iconBtn + '; border: 0; background: transparent; box-shadow: none',
       iconInk: col, iconW: '1.3',
       tabBar: P.tabBar + '; padding: 3px; border: 1px solid ' + c.walnut + '; background: rgba(236,232,225,0.35); box-shadow: none; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)',
       tabBtn: tab,

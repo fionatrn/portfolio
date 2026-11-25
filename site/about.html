@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=18"></script>
+<script src="/paper.js?v=21"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
@@ -48,6 +48,10 @@ a{color:inherit;text-decoration:none}
 .js-anim .reveal:nth-child(3){transition-delay:0.16s}
 .js-anim .reveal:nth-child(4){transition-delay:0.24s}
 .js-anim .reveal.no-tr{transition:none!important}
+/* Outline-Theme: Hohlkehlen am aktiven Ordner-Reiter, damit er weich ins Blatt ausläuft (Farbe und Radius per --flare/--fr) */
+[data-flare=right]::after,[data-flare=both]::after,[data-flare=both]::before{content:"";position:absolute;bottom:0;width:var(--fr);height:var(--fr);pointer-events:none}
+[data-flare=right]::after,[data-flare=both]::after{right:calc(var(--fr) * -1);background:radial-gradient(circle at 100% 0,rgba(250,248,244,0) calc(var(--fr) - 0.5px),var(--flare) var(--fr))}
+[data-flare=both]::before{left:calc(var(--fr) * -1);background:radial-gradient(circle at 0 0,rgba(250,248,244,0) calc(var(--fr) - 0.5px),var(--flare) var(--fr))}
 /* CV: nur die Karten blenden ein, ruhig von oben nach unten; Überschriften und Button stehen schon */
 /* Handy: unter der letzten CV-Zeile keine Trennlinie (darunter folgt nur der Download-Button) */
 [data-panel="cv"]>.reveal:nth-last-child(2){border-bottom:0!important}
@@ -88,7 +92,7 @@ a{color:inherit;text-decoration:none}
 </sc-if>
 <button class="hov" data-on-click="{{toggleDark}}" aria-label="{{darkLabel}}" style="{{iconBtn}}">
 <sc-if value="{{isOutline}}" hint-placeholder-val="{{ false }}">
-<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{paperIconInk}}" stroke-width="{{paperIconW}}" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+<svg aria-hidden="true" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{paperIconInk}}" stroke-width="{{paperIconW}}" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
 </sc-if>
 <sc-if value="{{isPaperOnly}}" hint-placeholder-val="{{ false }}">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{paperIconInk}}" stroke-width="{{paperIconW}}" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5" stroke-dasharray="1.6 2.2"></circle></svg>
@@ -107,7 +111,7 @@ a{color:inherit;text-decoration:none}
 <div style="{{bodyGrid}}">
 <sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
 <div aria-hidden="true" style="{{bgLayer}}">
-<div style="display: flex; align-items: flex-end; min-height: 56px">
+<div style="{{bgTabRow}}">
 <div style="{{bgTab}}"><span style="{{tabTitle}}; visibility: hidden">Fiona Tran</span></div>
 <div style="{{bgConn}}"></div>
 </div>
@@ -126,7 +130,7 @@ a{color:inherit;text-decoration:none}
 <div role="tablist" aria-label="Sections" style="{{tabsOnFrame}}">
 <span aria-hidden="true" style="{{tabInd}}"></span>
 <sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4">
-<button role="tab" aria-selected="{{tb.sel}}" data-on-click="{{tb.pick}}" style="{{tb.styleFrame}}">{{tb.label}}</button>
+<button role="tab" aria-selected="{{tb.sel}}" data-flare="{{tb.flare}}" data-on-click="{{tb.pick}}" style="{{tb.styleFrame}}">{{tb.label}}</button>
 </sc-for>
 </div>
 </sc-if>
@@ -323,7 +327,7 @@ const DG = { '0': ['01110', '10001', '10011', '10101', '11001', '10001', '01110'
 let yD = '';
 yN.split('').forEach((ch, i) => { (DG[ch] || DG['0']).forEach((row, r) => row.split('').forEach((b, c) => { if (b === '1') { const cx = i * 62 + c * 10 + 5, cy = r * 10 + 5; yD += 'M' + (cx - 3.6) + ' ' + cy + 'a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0 -7.2 0'; } })); });
 const T = [['about', 'Profile'], ['tools', 'Tech & tools'], ['cv', 'CV'], ['contact', 'Contact']];
-const tabs = T.map(([k, l]) => ({ label: l, sel: tab === k ? 'true' : 'false', pick: (e) => { this.setState({ tab: k, tabFrom: tab }); if (mob && e && e.currentTarget && e.currentTarget.closest) { const s = e.currentTarget.closest('[data-sheet]'); if (s && s.getBoundingClientRect().top < 0) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
+const tabs = T.map(([k, l]) => ({ label: l, sel: tab === k ? 'true' : 'false', flare: 'none', pick: (e) => { this.setState({ tab: k, tabFrom: tab }); if (mob && e && e.currentTarget && e.currentTarget.closest) { const s = e.currentTarget.closest('[data-sheet]'); if (s && s.getBoundingClientRect().top < 0) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
 styleFrame: pillBase + 'position: relative; z-index: 1; width: ' + tw + 'px; padding: 0; background: transparent; font-size: ' + (cmp ? 14 : 15) + 'px; transition: color 0.3s; color: ' + (tab === k ? t.bg : t.frameInk) }));
 const card = (rad) => mob ? 'box-sizing: border-box; padding: 28px 22px 32px; border-radius: ' + rad + '; background: ' + t.sheet + '; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.9') + ')' + (dark ? '' : ', 0 16px 32px rgba(20,20,40,0.10)') + '; ' : '';
 const pv = (k) => mob ? '' : '; grid-area: 1 / 1; min-width: 0; ' + (tab === k ? 'visibility: visible; opacity: 1' : 'visibility: hidden; opacity: 0; pointer-events: none; height: 0; overflow: hidden'); // versteckte Reiter zählen nicht zur Höhe
@@ -361,6 +365,7 @@ bodyGrid: 'display: grid; grid-template-columns: minmax(0, 1fr)' + (mob ? '' : '
 fgLayer: 'grid-area: 1 / 1; position: relative; min-width: 0; display: flex; flex-direction: column',
 bgLayer: 'grid-area: 1 / 1; display: flex; flex-direction: column; pointer-events: none; opacity: ' + (dark ? 0.07 : 0.6),
 bgTab: 'display: flex; flex-direction: column; padding: ' + (cmp ? '16px 22px 12px' : '18px 28px 12px') + '; background: #FFFFFF; border-radius: ' + R + 'px ' + R + 'px 0 0',
+bgTabRow: 'display: flex; align-items: flex-end; min-height: 56px',
 bgConn: 'width: ' + R + 'px; height: ' + R + 'px; background: radial-gradient(circle at 100% 0%, rgba(255,255,255,0) ' + (R - 0.5) + 'px, #FFFFFF ' + R + 'px)',
 bgSheet: 'flex: 1; margin-top: -1px; background: #FFFFFF; border-radius: 0 ' + R + 'px ' + R + 'px ' + R + 'px',
 tabTitle: 'font: 700 ' + (mob ? 22 : cmp ? 24 : 28) + 'px/1.1 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; color: ' + t.ink,
@@ -444,13 +449,28 @@ tabNav: O ? O.tabBtn : PAPER.tabBtn,
 folderWrap: mob ? V.folderWrap : V.folderWrap + '; background: ' + C.sand + noBlur + '; box-shadow: ' + PAPER.lift,
 bgLayer: V.bgLayer + '; opacity: 1',
 mBg: V.mBg + '; opacity: 1',
-bgTab: V.bgTab + '; background: ' + C.paper,
+// Outline-Theme: kein Reiter „Fiona Tran“ – die Abschnitts-Reiter rücken nach links an seine Stelle,
+// die Hintergrund-Zeile ist genau so hoch wie die Reiter (46px), damit sie auf dem Blatt sitzen
+bgTab: O ? 'display: none' : V.bgTab + '; background: ' + C.paper,
+bgTabRow: O ? 'min-height: 46px' : V.bgTabRow,
+folderTop: O ? V.folderTop + '; justify-content: flex-start; gap: 0' : V.folderTop,
+folderTab: O ? 'display: none' : V.folderTab,
+connector: O ? 'display: none' : V.connector,
 mTabBg: V.mTabBg + '; background: ' + C.paper,
-bgConn: V.bgConn.replace('rgba(255,255,255,0)', 'rgba(250,248,244,0)').replace('#FFFFFF', C.paper),
+bgConn: O && !mob ? 'display: none' : V.bgConn.replace('rgba(255,255,255,0)', 'rgba(250,248,244,0)').replace('#FFFFFF', C.paper),
 bgSheet: V.bgSheet + '; background: ' + C.paper,
 tabTitle: 'font: 400 ' + (mob ? 30 : 34) + 'px/1.05 ' + F.display + '; letter-spacing: 0.02em; color: ' + C.olive, // Name auf dem Reiter in Oliv
-tabInd: V.tabInd + '; background: ' + C.wine,
-tabs: V.tabs.map((x) => ({ ...x, styleFrame: x.styleFrame + '; font: 500 15px/1 ' + F.text + '; color: ' + (x.sel === 'true' ? C.pink : C.ink) })),
+// Outline-Theme: echte Ordner-Reiter wie „Fiona Tran“ – kleine Papierreiter mit runden oberen Ecken
+// in Tenor Sans. Der aktive ist papierhell und geht nahtlos ins Blatt über, die anderen liegen etwas
+// dunkler und leicht verschattet dahinter. Kein gleitender Indikator; rechts Abstand zur runden
+// Blattecke, damit der Reiter „Contact“ nicht über der Rundung hängt.
+tabInd: O ? V.tabInd + '; display: none' : V.tabInd + '; background: ' + C.wine,
+tabsOnFrame: O ? V.tabsOnFrame + '; align-self: flex-end; gap: ' + R + 'px; padding: 0 ' + (R + 8) + 'px 0 0' : V.tabsOnFrame,
+tabs: V.tabs.map((x, i) => ({ ...x, flare: O && x.sel === 'true' ? (i === 0 ? 'right' : 'both') : 'none', styleFrame: O
+? x.styleFrame + '; width: auto; min-height: 46px; padding: 0 22px; border-radius: ' + R + 'px ' + R + 'px 0 0; font: 400 17px/1 ' + F.display + '; letter-spacing: 0.04em; transition: background 200ms ' + PAPER.ease + ', color 200ms ' + PAPER.ease + (x.sel === 'true'
+? '; z-index: 2; background: ' + C.paper + '; color: ' + C.walnut + '; --flare: ' + C.paper + '; --fr: ' + R + 'px'
+: '; background: #ECE7DF; color: ' + C.muted + '; box-shadow: inset 0 -8px 10px -8px rgba(60,40,45,0.14)')
+: x.styleFrame + '; font: 500 15px/1 ' + F.text + '; color: ' + (x.sel === 'true' ? C.pink : C.ink) })),
 helloH1: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.hero + '; letter-spacing: 0.01em; text-align: center; color: ' + C.wine,
 helloSmall: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.hero + '; letter-spacing: 0.01em; color: ' + C.wine, // so groß wie „Hi, I'm Fiona!“
 photoCard: V.photoCard + '; overflow: visible; border-radius: 20px',
@@ -528,7 +548,7 @@ helloH1: V.helloH1 + '; font-size: 46px',
 helloSmall: V.helloSmall + '; font-size: 46px',
 folderWrap: V.folderWrap + '; padding: 8px',
 folderTab: V.folderTab + '; padding-top: 12px; padding-bottom: 8px',
-tabsOnFrame: V.tabsOnFrame + '; padding-bottom: 8px',
+tabsOnFrame: V.tabsOnFrame + (outline ? '' : '; padding-bottom: 8px'), // Outline: Reiter sitzen direkt auf dem Blatt
 sheet: V.sheet + '; padding: 14px 20px'
 });
 }
