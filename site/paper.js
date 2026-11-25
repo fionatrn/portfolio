@@ -64,9 +64,12 @@
 
   // Eigene Scrollleiste für alle inneren Scrollbereiche: Projektansicht (Dialog) und die Mappe auf About.
   // sb('::x', '::y', '{…}') ergibt '[role=dialog]::x,[data-sheet]::x,[role=dialog]::y,[data-sheet]::y{…}'.
+  // sb('::x{…}') ergibt '[role=dialog]::x,[data-sheet]::x{…}': was vor der Klammer steht, ist ein Selektorteil,
+  // sonst landeten Regeln wie width:16px auf dem Dialog selbst statt auf seiner Leiste.
   var SCROLLERS = ['[role=dialog]', '[data-sheet]'];
   function sb() {
-    var parts = [].slice.call(arguments), body = parts.pop();
+    var parts = [].slice.call(arguments), body = parts.pop(), i = body.indexOf('{');
+    if (i > 0) { parts.push(body.slice(0, i)); body = body.slice(i); }
     if (!parts.length) parts = [''];
     var sel = [];
     parts.forEach(function (p) { SCROLLERS.forEach(function (s) { sel.push(s + p); }); });
@@ -79,15 +82,15 @@
     // Projektansicht und Mappe auf About: schmale Leiste ohne Pfeile, die Spur hält Abstand zu den runden Ecken.
     // scrollbar-color muss hier auf auto, sonst ignoriert Chrome die ::-webkit-scrollbar-Regeln.
     sb('{scrollbar-color:auto}') +
-    // Breite wie eine normale Systemleiste (16px), sichtbarer Griff 10px, mindestens 48px hoch; am Handy 12px (Griff 6px).
-    // Griff im Braungrau, einen Hauch heller als Nebentext; beim Hover/Ziehen der volle Nebentext-Ton.
-    sb('::-webkit-scrollbar{width:16px}') +
-    '@media (max-width:759px){' + sb('::-webkit-scrollbar{width:12px}') + '}' +
+    // Leiste 15px breit, sichtbarer Griff 9px, mindestens 48px hoch; am Handy 11px (Griff 5px).
+    // Griff im Braungrau mit 80 % Deckkraft, also heller als Nebentext; beim Hover/Ziehen der volle Nebentext-Ton.
+    sb('::-webkit-scrollbar{width:15px}') +
+    '@media (max-width:759px){' + sb('::-webkit-scrollbar{width:11px}') + '}' +
     sb('::-webkit-scrollbar-button{display:none;width:0;height:0}') +
     sb('::-webkit-scrollbar-track{background:transparent;margin:24px 0}') +
-    sb('::-webkit-scrollbar-thumb{min-height:48px;background:#7A6E72;background-clip:padding-box;border:3px solid transparent;border-radius:999px}') +
+    sb('::-webkit-scrollbar-thumb{min-height:48px;background:rgba(122,110,114,0.8);background-clip:padding-box;border:3px solid transparent;border-radius:999px}') +
     sb('::-webkit-scrollbar-thumb:hover', '::-webkit-scrollbar-thumb:active', '{background:' + c.muted + ';background-clip:padding-box}') +
-    '@supports not selector(::-webkit-scrollbar){' + sb('{scrollbar-width:auto;scrollbar-color:#7A6E72 transparent}') +
+    '@supports not selector(::-webkit-scrollbar){' + sb('{scrollbar-width:auto;scrollbar-color:rgba(122,110,114,0.8) transparent}') +
       '@media (max-width:759px){' + sb('{scrollbar-width:thin}') + '}}' +
     // "Next project": beim Hover läuft unter dem Text eine feine Linie von links ein und nach rechts wieder aus.
     // .ulink trägt die Linie, .ulinkHost (der Button) löst sie aus; --ul-b: Abstand unter dem Text.
