@@ -412,7 +412,7 @@ lab4: lab(mob ? 'right: 12px; bottom: 12px' : cmp ? 'right: 32px; bottom: 50px' 
 // gemW: Breite des Schriftzugs (Zuschnitt siehe gemBox unten)
 gemW: mob ? 300 : 520,
 h2: 'margin: 0; font: 400 ' + (mob ? 36 : 44) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
-bio: 'margin: 0; max-width: 560px; font: 400 ' + (mob ? 15 : 17) + 'px/1.55 Inter, sans-serif; color: ' + C.muted,
+bio: 'margin: 0; max-width: 560px; font: 400 ' + (mob ? 16 : 17) + 'px/1.55 Inter, sans-serif; color: ' + C.muted,
 widgetGrid: (mob ? '' : 'flex: 1 1 auto; grid-template-rows: minmax(0, 1.15fr) minmax(0, 1fr); ') + 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: ' + (mob ? 12 : 16) + 'px',
 toolsGrid: 'display: grid; grid-template-columns: repeat(' + (mob ? 1 : 2) + ', minmax(0, 1fr)); gap: ' + (mob ? 12 : 16) + 'px',
 // Die Fläche der Identität: Oliv
@@ -476,6 +476,7 @@ wYears: V.wYears + '; gap: 8px; padding: 16px 20px',
 wBigOn: V.wBigOn + '; font-size: ' + (vh < 720 ? 26 : 30) + 'px',
 liW: V.liW + '; font-size: 15px; line-height: 1.45',
 cvWhat: V.cvWhat + '; font-size: 15px; line-height: 1.45', // CV-Einträge so groß wie die Liste im Profil
+bio: V.bio + '; font-size: 15px', // Satz im Kontakt-Reiter so groß wie der CV-Text
 list: V.list + '; gap: 4px',
 focusRowW: V.focusRowW + '; font-size: 15px',
 yearsSvg: V.yearsSvg + '; height: ' + (vh < 720 ? 48 : 60) + 'px'
