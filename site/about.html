@@ -23,14 +23,14 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=7"></script>
+<script src="/paper.js?v=12"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
 <x-dc><template>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Pinyon+Script&amp;family=Italiana&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
 a{color:inherit;text-decoration:none}
@@ -68,7 +68,7 @@ a{color:inherit;text-decoration:none}
 <header style="{{headerStyle}}">
 <a href="Main.dc.html" aria-label="fiona – home" style="display: flex; align-items: center; min-height: 44px">
 <svg role="img" aria-label="fiona" height="{{logoH}}" viewBox="-12 78 764 124" xmlns="http://www.w3.org/2000/svg">
-<g fill="none" stroke="{{t.ink}}" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+<g fill="none" stroke="{{logoInk}}" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
 <path d="M10 190 V120 A30 30 0 0 1 40 90 H190"></path>
 <path d="M10 130 H140"></path>
 <path d="M190 130 V190"></path>
@@ -335,6 +335,7 @@ showAbout: true, showTools: true, showCv: true, showContact: true,
 darkLabel: PAPER.labelFor(theme),
 toggleDark: () => { const nx = PAPER.next(theme); PAPER.save(nx); this.setState({ theme: nx }); },
 logoH: mob ? 16 : 30,
+logoInk: t.ink,
 bgGrain: dark ? 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.08; mix-blend-mode: overlay; pointer-events: none' : 'display: none',
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + (dark ? 'radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416' : t.bg) + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column; transition: background 0.4s',
 glowA: 'position: absolute; width: ' + (mob ? 420 : 900) + 'px; height: ' + (mob ? 420 : 900) + 'px; left: -' + (mob ? 160 : 220) + 'px; top: -' + (mob ? 120 : 260) + 'px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowA + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
@@ -419,7 +420,10 @@ const plab = '; padding: 7px 14px; border-radius: 999px; ' + PAPER.vellum + '; c
 const mcard = (v) => mob ? v + '; border-radius: 18px; background: ' + C.paper + noBlur + '; box-shadow: ' + PAPER.shadow : v;
 Object.assign(V, {
 bgGrain: PAPER.grain,
-rootStyle: V.rootStyle + '; background: ' + PAPER.rootBg,
+// Seitenhintergrund: derselbe Horizont-Verlauf wie auf Work, über die ganze Scrollhöhe
+rootStyle: V.rootStyle + '; background: ' + PAPER.horizon + ', ' + PAPER.rootBg,
+// Logo hell, wenn der Verlauf oben im dunklen Oliv beginnt
+logoInk: C.paper,
 navStyle: PAPER.nav,
 pillActive: PAPER.pill + '; ' + PAPER.pillActive,
 pill: PAPER.pill,
@@ -437,8 +441,8 @@ bgSheet: V.bgSheet + '; background: ' + PAPER.crop(16, 16, 'rgba(108,20,59,0.35)
 tabTitle: 'font: 400 ' + (mob ? 30 : 34) + 'px/1.05 ' + F.display + '; letter-spacing: 0.02em; color: ' + C.wine,
 tabInd: V.tabInd + '; background: ' + C.wine,
 tabs: V.tabs.map((x) => ({ ...x, styleFrame: x.styleFrame + '; font: 500 15px/1 ' + F.text + '; color: ' + (x.sel === 'true' ? C.pink : C.ink) })),
-helloH1: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.display + '; letter-spacing: 0.01em; text-align: center; color: ' + C.wine,
-helloSmall: 'margin: 0; font: 400 ' + (mob ? 44 : 60) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
+helloH1: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.hero + '; letter-spacing: 0.01em; text-align: center; color: ' + C.wine,
+helloSmall: 'margin: 0; font: 400 ' + (mob ? 44 : 60) + 'px/1.05 ' + F.hero + '; letter-spacing: 0.01em; color: ' + C.wine,
 photoCard: V.photoCard + '; overflow: visible; border-radius: 20px',
 photoImg: V.photoImg + '; border-radius: 20px',
 photoClip: PAPER.clip(mob ? 'left: 50%; top: -18px; margin-left: -10px' : 'left: 36px; top: -22px', mob ? 58 : 72, -8),

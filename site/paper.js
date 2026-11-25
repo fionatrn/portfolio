@@ -4,7 +4,7 @@
  * Elegant-modern auf ungestrichenem Papier: Greige-Grund mit Körnung, weiche
  * Farbverläufe aus Oliv, Lime und Rosa, Weinrot als Schrift- und Akzentfarbe,
  * Schneidemarken an den Ecken, Büroklammer, Anhänger-Etikett mit Loch und
- * mattes Pergament. Überschriften in Italiana (nur groß), Text in Inter.
+ * mattes Pergament. Überschriften in Pinyon Script, Text in Inter.
  * Gespeichert wird unter "fiona-theme".
  */
 (function () {
@@ -32,8 +32,12 @@
     line: 'rgba(42,33,37,0.12)'
   };
 
+  // Alle Überschriften in Pinyon Script, wie das „Hi, I'm Fiona!“ in Hell und Dunkel.
+  // display: kleinere Titel (Reiter, Etikett, Zwischenüberschriften)
+  // hero: die großen Überschriften (Hallo, Kontakt, Projekttitel, Imprint)
   var f = {
-    display: 'Italiana, "Times New Roman", serif',
+    display: '"Pinyon Script", cursive',
+    hero: '"Pinyon Script", cursive',
     text: 'Inter, sans-serif'
   };
 
@@ -43,12 +47,26 @@
   // Der Verlauf der Identität: Oliv → Lime → Rosa
   var bloom = 'linear-gradient(180deg, ' + c.olive + ' 0%, #8FA85C 30%, ' + c.lime + ' 55%, #F4D3C8 80%, ' + c.pink + ' 100%)';
 
-  // Horizont für die Startseite: das untere Viertel läuft aus dem Greige über Rosa, Lime und Moos
-  // in Walnuss und endet in Nebelblau – die Farbbänder der Maison-Noyer-Drucke, weich ineinander
-  var horizon = 'linear-gradient(180deg, ' +
-    'rgba(236,232,225,0) 0%, rgba(236,232,225,0) 75%, ' +
-    'rgba(255,204,218,0.45) 81%, rgba(191,212,133,0.55) 87%, ' +
-    'rgba(110,107,36,0.55) 92%, rgba(91,46,31,0.5) 96%, rgba(174,187,193,0.9) 100%)';
+  // Horizont für die Startseite, nach den Maison-Noyer-Drucken: Moos-Oliv, ein breites Walnuss-Feld,
+  // Nebelblau und unten wieder ins Greige. Zwischen den Ankerfarben liegen weich (smoothstep)
+  // gerechnete Zwischenstufen, damit an den Ankern keine Knicke und keine sichtbaren Bänder entstehen.
+  function smoothGradient(stops, steps) {
+    var out = [];
+    for (var i = 0; i < stops.length - 1; i++) {
+      var a = stops[i], b = stops[i + 1];
+      for (var k = 0; k < steps; k++) {
+        var t = k / steps, s = t * t * (3 - 2 * t), col = [];
+        for (var j = 0; j < 4; j++) col.push(a[1][j] + (b[1][j] - a[1][j]) * s);
+        out.push('rgba(' + Math.round(col[0]) + ',' + Math.round(col[1]) + ',' + Math.round(col[2]) + ',' + col[3].toFixed(3) + ') ' + (a[0] + (b[0] - a[0]) * t).toFixed(2) + '%');
+      }
+    }
+    var z = stops[stops.length - 1];
+    out.push('rgba(' + z[1].join(',') + ') ' + z[0] + '%');
+    return 'linear-gradient(180deg, ' + out.join(', ') + ')';
+  }
+  // Beginnt oben schon im Oliv und geht über die ganze Seite
+  var OLIVE = [110, 107, 36, 1], WALNUT = [91, 46, 31, 1], MIST = [150, 166, 176, 1], GREIGE = [236, 232, 225, 1];
+  var horizon = smoothGradient([[0, OLIVE], [8, OLIVE], [40, WALNUT], [56, WALNUT], [80, MIST], [100, GREIGE]], 8);
 
   var CSS ='html[data-paper] ::selection{background:' + c.pink + ';color:' + c.wine + '}' +
     'html[data-paper] :focus-visible{outline:2px solid ' + c.wine + '!important;outline-offset:3px!important}' +
