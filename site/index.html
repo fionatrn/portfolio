@@ -384,7 +384,8 @@ detailInner: 'position: absolute; box-sizing: border-box; overflow-y: auto; disp
 // Büroklammer relativ zum ersten Bild: ragt wie beim Foto auf About knapp ein Drittel über die Oberkante,
 // waagerecht an derselben Stelle wie bisher (früher am Dialog: links 44 px bzw. im Sheet 30 px).
 clipStyle: PAPER.clip('left: ' + ((sheetMode ? 30 : 44) - padR) + 'px; top: ' + (sheetMode ? -17 : -21) + 'px', sheetMode ? 56 : 70, -6),
-sheetTop: 'position: relative; flex: none; display: flex; justify-content: flex-end; align-items: center; min-height: 44px' + (sheetMode ? '; touch-action: none' : ''),
+// Unter dem X bis zum ersten Bild derselbe Abstand wie von der Blattkante zum X (Blockabstand und Leerraum im Button abgezogen)
+sheetTop: 'position: relative; flex: none; display: flex; justify-content: flex-end; align-items: center; min-height: 44px; margin-bottom: ' + (xGap - (mob ? 32 : 44) - closeInset).toFixed(2) + 'px' + (sheetMode ? '; touch-action: none' : ''),
 grabBtn: 'position: absolute; left: 50%; top: -6px; transform: translateX(-50%); width: 96px; height: 36px; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center',
 grabber: 'width: 40px; height: 5px; border-radius: 999px; background: rgba(14,14,16,0.2)',
 closeSize, closeW: O.iconW,
