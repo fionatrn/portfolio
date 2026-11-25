@@ -325,7 +325,7 @@ bgGrain: PAPER.grain,
 // Am Handy ist Work ein Onepager: der Verlauf füllt nur den ersten Bildschirm (Karten-Rad), darunter liegen die
 // About-Karten auf dem Greige, in das der Verlauf ausläuft.
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; ' + (mob ? '' : 'padding-bottom: calc(100lvh - 100dvh); ') + 'overflow: hidden; overflow: clip; background: ' + (mob ? PAPER.horizon + ' center top / 100% 100vh no-repeat, ' + PAPER.rootBg + '; background: ' + PAPER.horizon + ' center top / 100% 100svh no-repeat, ' : PAPER.horizon + ', ') + PAPER.rootBg + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column',
-headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + (cmp ? 24 : 48) + 'px 28px ' + (cmp ? 24 : 28) + 'px'), // Logo links so weit vom Rand wie oben
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : (vh < 860 ? 16 : 28) + 'px ' + (cmp ? 24 : 48) + 'px ' + (vh < 860 ? 16 : 28) + 'px ' + (cmp ? 24 : 28) + 'px'), // Logo links so weit vom Rand wie oben; in niedrigen Fenstern (Laptop) auf allen Seiten gleich flacher
 navStyle: O.nav,
 pillActive: O.pillActive,
 pill: O.pill,

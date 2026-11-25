@@ -106,7 +106,7 @@ t, desktop: !mob, mobile: mob, scriptLogoH: mob ? 50 : 80,
 ...PAPER.langUi(this, O, mob),
 w,
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + C.paper + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column',
-headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + side + 'px 28px ' + (cmp ? 24 : 28) + 'px'), // Logo links so weit vom Rand wie oben
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : (vh < 860 ? 16 : 28) + 'px ' + side + 'px ' + (vh < 860 ? 16 : 28) + 'px ' + (cmp ? 24 : 28) + 'px'), // Logo links so weit vom Rand wie oben; in niedrigen Fenstern (Laptop) auf allen Seiten gleich flacher
 navStyle: O.nav,
 pill: O.pill,
 mainStyle: 'position: relative; z-index: 10; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 8px ' + side + 'px ' + (mob ? '32px' : '24px'),
