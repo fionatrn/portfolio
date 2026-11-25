@@ -4,7 +4,7 @@
  * Elegant-modern auf ungestrichenem Papier: Greige-Grund mit Körnung, weiche
  * Farbverläufe aus Oliv, Lime und Rosa, Weinrot als Schrift- und Akzentfarbe,
  * Schneidemarken an den Ecken, Büroklammer, Anhänger-Etikett mit Loch und
- * mattes Pergament. Überschriften in Pinyon Script, Text in Inter.
+ * mattes Pergament. Große Überschriften in Pinyon Script, Titel in Tenor Sans, Text in Inter.
  * Gespeichert wird unter "fiona-theme".
  */
 (function () {
@@ -32,11 +32,11 @@
     line: 'rgba(42,33,37,0.12)'
   };
 
-  // Alle Überschriften in Pinyon Script, wie das „Hi, I'm Fiona!“ in Hell und Dunkel.
-  // display: kleinere Titel (Reiter, Etikett, Zwischenüberschriften)
-  // hero: die großen Überschriften (Hallo, Kontakt, Projekttitel, Imprint)
+  // Drei Ebenen: hero – die großen Überschriften (Hallo, Kontakt, Projekttitel, Imprint) in Pinyon
+  // Script wie das „Hi, I'm Fiona!“ in Hell und Dunkel; display – kleinere Titel (Reiter, Etikett,
+  // Zwischenüberschriften) in Tenor Sans, serifenlos und edel; text – Fließtext in Inter
   var f = {
-    display: '"Pinyon Script", cursive',
+    display: '"Tenor Sans", Inter, sans-serif',
     hero: '"Pinyon Script", cursive',
     text: 'Inter, sans-serif'
   };
@@ -131,9 +131,6 @@
     tabBtn: 'display: inline-flex; align-items: center; justify-content: center; flex: 1; min-height: 44px; padding: 0 8px; border: 0; border-radius: 999px; font: 500 15px/1 ' + f.text + '; color: ' + c.ink,
     tabBtnActive: 'background: ' + c.wine + '; color: ' + c.pink,
     button: 'display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; min-height: 48px; padding: 0 26px; border: 0; border-radius: 999px; background: ' + c.wine + '; color: ' + c.pink + '; font: 500 15px/1 ' + f.text,
-
-    // Anhänger-Etikett: Papier mit gestanztem Loch links
-    hangTag: 'border: 0; border-radius: 10px; background: radial-gradient(circle at 18px 50%, ' + c.ground + ' 0 5px, rgba(42,33,37,0.18) 5.5px 6.2px, rgba(0,0,0,0) 6.6px), linear-gradient(180deg, ' + c.olive + ' 0%, ' + c.lime + ' 50%, ' + c.pink + ' 100%) left / 36px 100% no-repeat, ' + c.paper + '; box-shadow: ' + shadow + '; backdrop-filter: none; -webkit-backdrop-filter: none',
 
     // Büroklammer (SVG im Template, viewBox 0 0 28 74)
     clip: function (pos, h, rot) { return 'position: absolute; z-index: 4; ' + pos + '; width: auto; height: ' + (h || 64) + 'px; rotate: ' + (rot || 0) + 'deg; pointer-events: none; filter: drop-shadow(1px 2px 1.5px rgba(60,40,45,0.25))'; },

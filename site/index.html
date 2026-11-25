@@ -23,14 +23,14 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=12"></script>
+<script src="/paper.js?v=14"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
 <x-dc><template>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Pinyon+Script&amp;family=Tenor+Sans&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
 a{color:inherit;text-decoration:none}
@@ -102,7 +102,7 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <button class="hov" data-on-click="{{openCur}}" aria-label="Open {{cur.t}}" style="{{infoStyle}}">
-<div style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; text-align: center">
+<div style="{{infoInner}}">
 <span style="{{metaStyle}}">{{cur.y}} · {{cur.c}}</span>
 <span style="{{titleStyle}}">{{cur.t}}</span>
 </div>
@@ -321,6 +321,7 @@ links: (P[pi].links || [{ label: 'Live demo', url: '#' }, { label: 'GitHub', url
 hasLinks: (P[pi].links || [1]).length > 0,
 linkRow: 'display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 18px; border-radius: 16px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; ' + (dark ? 'color: ' + t.ink + '; ' + glass : 'color: ' + t.bg + '; background: ' + t.ink),
 infoStyle: 'display: flex; align-items: center; justify-content: center; cursor: pointer; font: inherit; color: inherit; padding: ' + (mob ? '10px 24px' : '12px 32px') + '; border-radius: 999px; ' + glass,
+infoInner: 'display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; text-align: center',
 metaStyle: 'font: 500 12px/1.4 Inter, sans-serif; letter-spacing: 0.06em; color: ' + t.muted,
 titleStyle: 'font: 700 ' + (mob ? 20 : 24) + 'px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.01em; color: ' + t.ink + '; min-width: ' + (mob ? 150 : 220) + 'px',
 ctaStyle: 'display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; border-radius: 999px; background: ' + t.ink + '; color: ' + t.bg + '; font: 500 15px/1 Inter, sans-serif',
@@ -380,10 +381,11 @@ iconBtn: PAPER.iconBtn,
 tabBar: PAPER.tabBar,
 tabActive: PAPER.tabBtn + '; ' + PAPER.tabBtnActive,
 tab: PAPER.tabBtn,
-// Titel des aktuellen Projekts auf einem Anhänger-Etikett
-infoStyle: V.infoStyle + '; ' + PAPER.hangTag + '; padding: ' + (mob ? '12px 28px 12px 44px' : '14px 44px 16px 56px'),
-metaStyle: PAPER.fine + '; font-size: 11px; color: ' + C.muted,
-titleStyle: 'font: 400 ' + (mob ? 28 : 36) + 'px/1.1 ' + F.display + '; letter-spacing: 0.02em; color: ' + C.wine + '; min-width: ' + (mob ? 150 : 220) + 'px',
+// Titel des aktuellen Projekts: Anordnung wie in Hell und Dunkel (Pille, Jahr und Kategorie über
+// dem Titel), im Paper-Look: Papier-Pille wie die Navigation, Titel in Pinyon Script
+infoStyle: V.infoStyle + '; border: 0; background: ' + C.paper + '; box-shadow: ' + PAPER.shadow + '; backdrop-filter: none; -webkit-backdrop-filter: none',
+metaStyle: 'font: 500 12px/1.4 ' + F.text + '; letter-spacing: 0.06em; color: ' + C.muted,
+titleStyle: 'font: 400 ' + (mob ? 26 : 32) + 'px/1.2 ' + F.display + '; color: ' + C.wine + '; min-width: ' + (mob ? 150 : 220) + 'px',
 detailInner: V.detailInner + '; background: ' + PAPER.crop(14, 14, 'rgba(108,20,59,0.35)') + ', ' + C.paper + '; border-radius: ' + (sheetMode ? '20px 20px 0 0' : '22px') + '; box-shadow: 0 30px 70px rgba(60,40,45,0.22)',
 hero: V.hero + '; border-radius: 16px',
 detailTitle: 'margin: 0; font: 400 ' + (mob ? 40 : 56) + 'px/1.02 ' + F.hero + '; letter-spacing: 0.01em; color: ' + C.wine,
