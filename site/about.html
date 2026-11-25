@@ -442,12 +442,12 @@ tabNav: O.tabBtn
 };
 // Desktop: die Seite schließt mit dem Fenster ab. Die Mappe füllt die Höhe zwischen Kopfzeile und
 // Footer; ist ein Reiter länger, scrollt er in der Mappe statt der ganzen Seite. Bei niedrigen
-// Fenstern (Laptop) werden Kopfzeile und Ränder schmaler. Unter 600 px Höhe scrollt die Seite normal.
+// Fenstern (Laptop) werden die Ränder schmaler; die Kopfzeile bleibt so hoch wie auf Work, damit sie
+// beim Seitenwechsel nicht springt. Unter 600 px Höhe scrollt die Seite normal.
 if (!mob) {
 const short = vh < 860, side = cmp ? 24 : 48;
 Object.assign(V, {
 rootStyle: V.rootStyle + '; height: max(100dvh, 600px)',
-headerStyle: V.headerStyle + (short ? '; padding: 16px ' + side + 'px 16px ' + (cmp ? 24 : 28) + 'px' : ''), // Logo links wie auf den anderen Seiten
 mainStyle: V.mainStyle + '; min-height: 0' + (short ? '; gap: 12px; padding: 4px ' + side + 'px 8px' : ''),
 folderWrap: V.folderWrap + '; flex: 1 1 auto; min-height: 0',
 bodyGrid: V.bodyGrid + '; flex: 1 1 auto; min-height: 0; grid-template-rows: minmax(0, 1fr)',
