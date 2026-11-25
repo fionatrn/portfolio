@@ -216,6 +216,11 @@ const vw = Number(this.props.vw) || (typeof window !== 'undefined' && window.inn
 const vh = Number(this.props.vh) || (typeof window !== 'undefined' && window.innerHeight) || 900;
 const mob = !!this.props.mobile || vw < 760 || (!this.props.vw && vh < 500);
 this._mob = mob;
+// Höhe des ersten Bildschirms am Handy: die sichtbare Fensterhöhe beim Laden (innerHeight, ohne Safaris Leisten).
+// 100svh reicht in Safari auf iOS 26 bis unter die schwebende Leiste, dann sitzen Rad und Label zu tief.
+// Neu gemessen nur, wenn sich die Breite ändert (Drehen), nicht wenn die Leiste beim Scrollen ein- und ausfährt.
+if (this._scrW !== vw) { this._scrW = vw; this._scrH = vh; }
+const scrH = this._scrH;
 const cmp = !mob && vw < 1000;
 const sheetMode = mob || vw < 1100;
 this._sheet = sheetMode;
@@ -344,7 +349,7 @@ metaStyle: 'font: 500 ' + (mob ? 13 : 14) + 'px/1.4 ' + F.text + '; letter-spaci
 titleStyle: 'font: 400 ' + (mob ? 26 : 36) + 'px/1.2 ' + F.display + '; color: ' + labelInk + '; min-width: ' + (mob ? 150 : 260) + 'px',
 // Erster Bildschirm (Kopf und Karten-Rad): am Handy genau so hoch wie das Fenster, darunter folgen die About-Karten.
 // Am Desktop ohne eigene Box, Kopf und Rad liegen wie bisher direkt in der Seite.
-screen: mob ? 'display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh' : 'display: contents',
+screen: mob ? 'display: flex; flex-direction: column; min-height: ' + scrH + 'px' : 'display: contents',
 // Platz für die eingebetteten About-Karten (nur am Handy, siehe _about)
 aboutHost: mob ? 'display: block; position: relative; z-index: 10' : 'display: none',
 sheetMode,
