@@ -149,15 +149,39 @@
   };
 
   // Sprache: Besucher sehen zuerst immer Englisch; wer Deutsch wählt, bekommt es beim nächsten Besuch
-  // wieder (gespeichert unter "fiona-lang"). Die Übersetzung selbst folgt noch – bisher wird nur die Wahl gemerkt.
-  var LANG_KEY = 'fiona-lang';
+  // wieder (gespeichert unter "fiona-lang"). Jede Seite übersetzt ihre Texte selbst (siehe tx in renderVals);
+  // ein Wechsel meldet sich per Ereignis "fiona-lang", damit auch die eingebettete About-Seite am Handy mitzieht.
+  var LANG_KEY = 'fiona-lang', cur = null;
   P.lang = function () {
+    if (cur) return cur;
     try { return window.localStorage.getItem(LANG_KEY) === 'de' ? 'de' : 'en'; } catch (e) { return 'en'; }
   };
-  P.saveLang = function (l) { try { window.localStorage.setItem(LANG_KEY, l); } catch (e) {} };
+  P.saveLang = function (l) {
+    cur = l;
+    try { window.localStorage.setItem(LANG_KEY, l); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('fiona-lang')); } catch (e) {}
+  };
+  // Aktuelle Sprache für eine Seiten-Komponente; meldet sie einmalig für Sprachwechsel an und setzt <html lang>.
+  P.useLang = function (comp) {
+    if (!comp._langL && typeof window !== 'undefined') {
+      comp._langL = function () { comp.setState({ lang: P.lang() }); };
+      try { window.addEventListener('fiona-lang', comp._langL); } catch (e) {}
+    }
+    var l = comp.state.lang || P.lang();
+    try { document.documentElement.lang = l; } catch (e) {}
+    return l;
+  };
+  // Wörter, die auf allen Seiten vorkommen (Navigation, Footer).
+  // about1/about2: der Navigationspunkt in zwei Teilen. Tenor Sans hat sehr kleine, eng stehende Umlautpunkte,
+  // deshalb kommt das Ü von „Über mich“ aus Inter (about1Style), der Rest des Worts bleibt in Tenor Sans.
+  P.words = function (de) {
+    return de
+      ? { work: 'Projekte', about: 'Über mich', about1: 'Ü', about2: 'ber mich', about1Style: 'font-family: ' + f.text, home: 'fiona – Startseite', mainNav: 'Hauptnavigation', imprint: 'Impressum', privacy: 'Datenschutz' }
+      : { work: 'Work', about: 'About', about1: 'A', about2: 'bout', about1Style: '', home: 'fiona – home', mainNav: 'Main navigation', imprint: 'Imprint', privacy: 'Privacy' };
+  };
   // Werte für den Sprach-Button einer Seite (comp: die Seiten-Komponente, O: PAPER.outlineUi(...))
   P.langUi = function (comp, O, mob) {
-    var l = comp.state.lang || P.lang(), de = l === 'de';
+    var l = P.useLang(comp), de = l === 'de';
     return {
       langCode: de ? 'DE' : 'EN',
       langLabel: de ? 'Sprache: Deutsch. Auf Englisch umstellen' : 'Language: English. Switch to German',
