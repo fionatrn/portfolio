@@ -125,8 +125,8 @@ a{color:inherit;text-decoration:none}
 <sc-if value="{{isPaper}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" viewBox="0 0 28 74" style="{{clipStyle}}"><path d="M10 24V54a4.5 4.5 0 0 0 9 0V10a7 7 0 0 0-14 0V58a9 9 0 0 0 18 0V20" fill="none" stroke="#9A9EA4" stroke-width="2.2" stroke-linecap="round"></path></svg></sc-if>
 <div data-sheet-handle="1" style="{{sheetTop}}">
 <sc-if value="{{sheetMode}}" hint-placeholder-val="{{ false }}"><button data-on-click="{{toggleSheet}}" aria-label="{{sheetLabel}}" style="{{grabBtn}}"><span aria-hidden="true" style="{{grabber}}"></span></button></sc-if>
-<button data-on-click="{{close}}" aria-label="Close project" style="{{closeBtn}}">
-<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+<button class="hov" data-on-click="{{close}}" aria-label="Close project" style="{{closeBtn}}">
+<svg aria-hidden="true" width="{{closeSize}}" height="{{closeSize}}" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="{{closeW}}" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
 </button>
 </div>
 <div style="{{hero}}">
@@ -371,6 +371,7 @@ footer: 'position: relative; z-index: 10; display: flex; flex-wrap: wrap; justif
 footLink: 'display: inline-flex; align-items: center; min-height: 44px; color: ' + t.muted + '; text-decoration: underline; text-underline-offset: 3px'
 };
 V.closeBtn = V.iconBtn; // Schließen-Button der Projektansicht, standardmäßig wie der Theme-Button
+V.closeSize = 18; V.closeW = '1.8';
 // Paper (Spike): Papier-Look über die fertigen Styles legen – spätere Angaben im style-Attribut gewinnen
 if (paper) {
 const C = PAPER.c, F = PAPER.f;
@@ -431,7 +432,12 @@ nextArrow: 'flex: none; width: ' + (mob ? 24 : 30) + 'px; height: ' + (mob ? 24 
 if (outline) Object.assign(V, {
 nextCard: 'flex: none; align-self: stretch; display: flex; align-items: center; width: 100%; margin: 0; padding: ' + (mob ? 28 : 36) + 'px 0 8px; border: 0; border-top: 1px solid ' + C.line + '; border-radius: 0; background: transparent; cursor: pointer; text-align: left; color: ' + C.wine,
 nextTitle: 'display: inline-flex; align-items: center; gap: 12px; font: 400 ' + (mob ? 18 : 20) + 'px/1 ' + F.display + '; letter-spacing: 0.04em; color: ' + C.wine,
-nextArrow: 'flex: none; width: 22px; height: 22px'
+nextArrow: 'flex: none; width: 22px; height: 22px',
+// Schließen-X flach wie der Theme-Button im Outline-Theme: keine Papierfläche, kein Schatten, dünne Linie wie die übrigen Icons.
+// Am Desktop so groß wie die Sonne (32px), am Handy 22px. Das X (Pfad 6–18 von 24) samt runder Linienenden
+// schließt rechts bündig mit dem Inhalt ab und hat oben denselben Abstand zur Blattkante wie rechts (Innenabstand + Scrollleiste).
+closeSize: mob ? 22 : 32, closeW: O.iconW,
+closeBtn: O.iconBtn + (() => { const s = mob ? 22 : 32, inset = (44 - s) / 2 + s * 6 / 24 - Number(O.iconW) * s / 48, padT = sheetMode ? 8 : 24, padR = sheetMode ? (mob ? 24 : 40) : 48, bar = vw < 760 ? 12 : 16; return '; margin: ' + (padR + bar - padT - inset).toFixed(2) + 'px ' + (-inset).toFixed(2) + 'px 0 0'; })()
 });
 }
 PAPER.mark(theme);
