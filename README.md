@@ -10,7 +10,7 @@ site/                    the website (served as-is)
   about.html             About – file folder          → /about
   imprint.html           Imprint & privacy            → /imprint
   design-system.html     Design system (static, no runtime) → /design-system
-  design-system.js       light/dark toggle for the design system page
+  design-system.js       EN/DE toggle for the design system page
   support.js             small runtime for the pages (templates, state, DOM patching)
   projects/              images for the project detail views
   icons/, favicon.svg, apple-touch-icon.png, og-image.png
