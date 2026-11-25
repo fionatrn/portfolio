@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=32"></script>
+<script src="/paper.js?v=34"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
@@ -52,6 +52,13 @@ a{color:inherit;text-decoration:none}
 [data-flare=right]::after,[data-flare=both]::after,[data-flare=both]::before{content:"";position:absolute;bottom:0;width:var(--fr);height:var(--fr);pointer-events:none}
 [data-flare=right]::after,[data-flare=both]::after{right:calc(var(--fr) * -1);background:radial-gradient(circle at 100% 0,rgba(250,248,244,0) calc(var(--fr) - 0.5px),var(--flare) var(--fr))}
 [data-flare=both]::before{left:calc(var(--fr) * -1);background:radial-gradient(circle at 0 0,rgba(250,248,244,0) calc(var(--fr) - 0.5px),var(--flare) var(--fr))}
+/* Ordner-Reiter: die nicht gewählten werden beim Hover größer. Sie heben sich 4px aus dem Ordner (ihre Unterkante
+   steckt 6px unter dem Blatt, so wird der Reiter höher) und die Schrift wächst auf 105 %. Die Breite bleibt gleich,
+   sonst schneiden die Hohlkehlen des gewählten Reiters dem Nachbarn unten die Ecke ab. Der gewählte bewegt sich nicht. */
+[role=tab]>span{display:inline-block;transition:transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)}
+[role=tab][aria-selected=false]:hover{transform:translateY(-4px)}
+[role=tab][aria-selected=false]:hover>span{transform:scale(1.05)}
+[role=tab][aria-selected=false]:active{transform:translateY(-1px)}
 /* CV: nur die Karten blenden ein, ruhig von oben nach unten; Überschriften und Button stehen schon */
 /* Handy: unter der letzten CV-Zeile keine Trennlinie (darunter folgt nur der Download-Button) */
 [data-panel="cv"]>.reveal:nth-last-child(2){border-bottom:0!important}
@@ -95,7 +102,7 @@ a{color:inherit;text-decoration:none}
 <sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
 <div role="tablist" aria-label="Sections" style="{{tabsOnFrame}}">
 <sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4">
-<button role="tab" aria-selected="{{tb.sel}}" data-flare="{{tb.flare}}" data-on-click="{{tb.pick}}" style="{{tb.styleFrame}}">{{tb.label}}</button>
+<button role="tab" aria-selected="{{tb.sel}}" data-flare="{{tb.flare}}" data-on-click="{{tb.pick}}" style="{{tb.styleFrame}}"><span>{{tb.label}}</span></button>
 </sc-for>
 </div>
 </sc-if>
@@ -280,7 +287,7 @@ const T = [['about', 'Profile'], ['tools', 'Tech & tools'], ['cv', 'CV'], ['cont
 // reichen 6px unter die Blattkante und werden vom Blatt (mit feinem Kantenschatten) überdeckt.
 const tabs = T.map(([k, l], i) => { const sel = tab === k; return { label: l, sel: sel ? 'true' : 'false', flare: sel ? (i === 0 ? 'right' : 'both') : 'none',
 pick: (e) => { this.setState({ tab: k }); if (mob && e && e.currentTarget && e.currentTarget.closest) { const s = e.currentTarget.closest('[data-sheet]'); if (s && s.getBoundingClientRect().top < 0) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
-styleFrame: 'position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none; min-height: 46px; padding: ' + (sel ? '0 22px' : '0 22px 6px') + '; border: 0; border-radius: ' + R + 'px ' + R + 'px 0 0; cursor: pointer; font: 400 17px/1 ' + F.display + '; letter-spacing: 0.04em; color: ' + C.walnut + '; transition: background 200ms ' + PAPER.ease + ', color 200ms ' + PAPER.ease + (sel
+styleFrame: 'position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none; min-height: 46px; padding: ' + (sel ? '0 22px' : '0 22px 6px') + '; border: 0; border-radius: ' + R + 'px ' + R + 'px 0 0; cursor: pointer; font: 400 17px/1 ' + F.display + '; letter-spacing: 0.04em; color: ' + C.walnut + '; transition: background 200ms ' + PAPER.ease + ', color 200ms ' + PAPER.ease + (sel ? '' : ', transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)') + (sel
 ? '; z-index: 2; background: ' + C.paper + '; --flare: ' + C.paper + '; --fr: ' + R + 'px'
 : '; z-index: 0; margin-bottom: -6px; background: ' + C.mist) }; });
 const pv = (k) => mob ? '' : '; grid-area: 1 / 1; min-width: 0; ' + (tab === k ? 'visibility: visible; opacity: 1' : 'visibility: hidden; opacity: 0; pointer-events: none; height: 0; overflow: hidden'); // versteckte Reiter zählen nicht zur Höhe

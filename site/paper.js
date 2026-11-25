@@ -77,7 +77,16 @@
     '[role=dialog]::-webkit-scrollbar-thumb{min-height:48px;background:#7A6E72;background-clip:padding-box;border:3px solid transparent;border-radius:999px}' +
     '[role=dialog]::-webkit-scrollbar-thumb:hover,[role=dialog]::-webkit-scrollbar-thumb:active{background:' + c.muted + ';background-clip:padding-box}' +
     '@supports not selector(::-webkit-scrollbar){[role=dialog]{scrollbar-width:auto;scrollbar-color:#7A6E72 transparent}}' +
-    '@supports not selector(::-webkit-scrollbar){@media (max-width:759px){[role=dialog]{scrollbar-width:thin}}}';
+    '@supports not selector(::-webkit-scrollbar){@media (max-width:759px){[role=dialog]{scrollbar-width:thin}}}' +
+    // "Next project": beim Hover läuft unter dem Text eine feine Linie von links ein und nach rechts wieder aus.
+    // .ulink trägt die Linie, .ulinkHost (der Button) löst sie aus; --ul-b: Abstand unter dem Text.
+    '.ulink{position:relative}' +
+    '.ulink::after{content:"";position:absolute;left:0;right:0;bottom:var(--ul-b,-6px);height:1px;background:currentColor;pointer-events:none;' +
+      'transform:scaleX(0);transform-origin:right center;transition:transform 280ms ' + ease + '}' +
+    '.ulinkHost:focus-visible .ulink::after{transform:scaleX(1);transform-origin:left center}' +
+    '@media (hover:hover) and (pointer:fine){.ulinkHost:hover .ulink::after{transform:scaleX(1);transform-origin:left center}}' +
+    '@media (prefers-reduced-motion:reduce){.ulink::after{transition:opacity 200ms ease;transform:none;opacity:0}' +
+      '.ulinkHost:hover .ulink::after,.ulinkHost:focus-visible .ulink::after{opacity:1}}';
   var styled = false;
 
   var P = {
