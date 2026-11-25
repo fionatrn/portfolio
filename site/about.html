@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=37"></script>
+<script src="/paper.js?v=38"></script>
 <script src="/support.js?v=3"></script>
 </head>
 <body>
@@ -365,7 +365,7 @@ logoInk: C.paper,
 bgGrain: PAPER.grain,
 // Seitenhintergrund: derselbe Horizont-Verlauf wie auf Work, über die ganze Scrollhöhe
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + PAPER.horizon + ', ' + PAPER.rootBg + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column',
-headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + (cmp ? 24 : 48) + 'px 28px ' + (cmp ? 24 : 28) + 'px'), // Logo links so weit vom Rand wie oben
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : (vh < 860 ? 16 : 28) + 'px ' + (cmp ? 24 : 48) + 'px ' + (vh < 860 ? 16 : 28) + 'px ' + (cmp ? 24 : 28) + 'px'), // Logo links so weit vom Rand wie oben; in niedrigen Fenstern (Laptop) auf allen Seiten gleich flacher
 navStyle: O.nav,
 pillActive: O.pillActive,
 pill: O.pill,
@@ -412,7 +412,7 @@ lab4: lab(mob ? 'right: 12px; bottom: 12px' : cmp ? 'right: 32px; bottom: 50px' 
 // gemW: Breite des Schriftzugs (Zuschnitt siehe gemBox unten)
 gemW: mob ? 300 : 520,
 h2: 'margin: 0; font: 400 ' + (mob ? 36 : 44) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
-bio: 'margin: 0; max-width: 560px; font: 400 ' + (mob ? 15 : 17) + 'px/1.55 Inter, sans-serif; color: ' + C.muted,
+bio: 'margin: 0; max-width: 560px; font: 400 ' + (mob ? 16 : 17) + 'px/1.55 Inter, sans-serif; color: ' + C.muted,
 widgetGrid: (mob ? '' : 'flex: 1 1 auto; grid-template-rows: minmax(0, 1.15fr) minmax(0, 1fr); ') + 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: ' + (mob ? 12 : 16) + 'px',
 toolsGrid: 'display: grid; grid-template-columns: repeat(' + (mob ? 1 : 2) + ', minmax(0, 1fr)); gap: ' + (mob ? 12 : 16) + 'px',
 // Die Fläche der Identität: Oliv
@@ -442,12 +442,12 @@ tabNav: O.tabBtn
 };
 // Desktop: die Seite schließt mit dem Fenster ab. Die Mappe füllt die Höhe zwischen Kopfzeile und
 // Footer; ist ein Reiter länger, scrollt er in der Mappe statt der ganzen Seite. Bei niedrigen
-// Fenstern (Laptop) werden Kopfzeile und Ränder schmaler. Unter 600 px Höhe scrollt die Seite normal.
+// Fenstern (Laptop) werden die Ränder schmaler; die Kopfzeile wird dann auf allen Seiten gleich flacher
+// (siehe headerStyle), damit sie beim Seitenwechsel nicht springt. Unter 600 px Höhe scrollt die Seite normal.
 if (!mob) {
 const short = vh < 860, side = cmp ? 24 : 48;
 Object.assign(V, {
 rootStyle: V.rootStyle + '; height: max(100dvh, 600px)',
-headerStyle: V.headerStyle + (short ? '; padding: 16px ' + side + 'px 16px ' + (cmp ? 24 : 28) + 'px' : ''), // Logo links wie auf den anderen Seiten
 mainStyle: V.mainStyle + '; min-height: 0' + (short ? '; gap: 12px; padding: 4px ' + side + 'px 8px' : ''),
 folderWrap: V.folderWrap + '; flex: 1 1 auto; min-height: 0',
 bodyGrid: V.bodyGrid + '; flex: 1 1 auto; min-height: 0; grid-template-rows: minmax(0, 1fr)',
@@ -475,6 +475,8 @@ wFocus: V.wFocus + '; gap: 10px; padding: 18px 20px',
 wYears: V.wYears + '; gap: 8px; padding: 16px 20px',
 wBigOn: V.wBigOn + '; font-size: ' + (vh < 720 ? 26 : 30) + 'px',
 liW: V.liW + '; font-size: 15px; line-height: 1.45',
+cvWhat: V.cvWhat + '; font-size: 15px; line-height: 1.45', // CV-Einträge so groß wie die Liste im Profil
+bio: V.bio + '; font-size: 15px', // Satz im Kontakt-Reiter so groß wie der CV-Text
 list: V.list + '; gap: 4px',
 focusRowW: V.focusRowW + '; font-size: 15px',
 yearsSvg: V.yearsSvg + '; height: ' + (vh < 720 ? 48 : 60) + 'px'
