@@ -66,8 +66,8 @@
   // Beginnt oben schon im Oliv und geht über die ganze Seite
   var OLIVE = [110, 107, 36, 1], WALNUT = [91, 46, 31, 1], MIST = [150, 166, 176, 1], GREIGE = [236, 232, 225, 1];
   var horizon = smoothGradient([[0, OLIVE], [8, OLIVE], [40, WALNUT], [56, WALNUT], [80, MIST], [100, GREIGE]], 8);
-  // Outline-Theme: derselbe Horizont, das Walnuss-Feld in dunklem Beerenrot (#501425)
-  var BERRY = [80, 20, 37, 1];
+  // Outline-Theme: derselbe Horizont, das Walnuss-Feld in dunklem Beerenrot (#5B1132)
+  var BERRY = [91, 17, 50, 1];
   var horizonOutline = smoothGradient([[0, OLIVE], [8, OLIVE], [40, BERRY], [56, BERRY], [80, MIST], [100, GREIGE]], 8);
 
   var CSS ='html[data-paper] ::selection{background:' + c.pink + ';color:' + c.wine + '}' +

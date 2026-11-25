@@ -427,9 +427,9 @@ nextCard: V.nextCard + '; gap: 8px; padding: 36px 0 8px; border-top: 1px solid '
 nextTitle: 'display: inline-flex; align-items: center; gap: ' + (mob ? 12 : 16) + 'px; font: 400 ' + (mob ? 30 : 38) + 'px/1.1 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
 nextArrow: 'flex: none; width: ' + (mob ? 24 : 30) + 'px; height: ' + (mob ? 24 : 30) + 'px'
 });
-// Outline-Theme: „Next project“ als umrandete Pille wie das Projekt-Label, ohne Projektnamen
+// Outline-Theme: „Next project“ ohne Umrandung, darüber dieselbe Trennlinie wie in der Faktentabelle, über die volle Breite
 if (outline) Object.assign(V, {
-nextCard: 'flex: none; align-self: flex-start; display: inline-flex; align-items: center; margin: ' + (mob ? 8 : 16) + 'px 0 0; padding: 0 ' + (mob ? 24 : 30) + 'px; min-height: ' + (mob ? 48 : 56) + 'px; border: 1.5px solid ' + C.wine + '; border-radius: 999px; background: transparent; cursor: pointer; color: ' + C.wine,
+nextCard: 'flex: none; align-self: stretch; display: flex; align-items: center; width: 100%; margin: 0; padding: ' + (mob ? 28 : 36) + 'px 0 8px; border: 0; border-top: 1px solid ' + C.line + '; border-radius: 0; background: transparent; cursor: pointer; text-align: left; color: ' + C.wine,
 nextTitle: 'display: inline-flex; align-items: center; gap: 12px; font: 400 ' + (mob ? 18 : 20) + 'px/1 ' + F.display + '; letter-spacing: 0.04em; color: ' + C.wine,
 nextArrow: 'flex: none; width: 22px; height: 22px'
 });
