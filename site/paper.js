@@ -72,7 +72,20 @@
 
   var CSS ='html[data-paper] ::selection{background:' + c.pink + ';color:' + c.wine + '}' +
     'html[data-paper] :focus-visible{outline:2px solid ' + c.wine + '!important;outline-offset:3px!important}' +
-    'html[data-paper]{scrollbar-color:' + c.muted + ' ' + c.ground + '}';
+    'html[data-paper]{scrollbar-color:' + c.muted + ' ' + c.ground + '}' +
+    // Projektansicht: schmale Leiste ohne Pfeile, die Spur hält Abstand zu den runden Ecken.
+    // scrollbar-color muss hier auf auto, sonst ignoriert Chrome die ::-webkit-scrollbar-Regeln.
+    'html[data-paper] [role=dialog]{scrollbar-color:auto}' +
+    // Breite wie eine normale Systemleiste (16px), sichtbarer Griff 10px, mindestens 48px hoch; am Handy 12px (Griff 6px).
+    // Griff im Braungrau, einen Hauch heller als Nebentext; beim Hover/Ziehen der volle Nebentext-Ton.
+    'html[data-paper] [role=dialog]::-webkit-scrollbar{width:16px}' +
+    '@media (max-width:759px){html[data-paper] [role=dialog]::-webkit-scrollbar{width:12px}}' +
+    'html[data-paper] [role=dialog]::-webkit-scrollbar-button{display:none;width:0;height:0}' +
+    'html[data-paper] [role=dialog]::-webkit-scrollbar-track{background:transparent;margin:24px 0}' +
+    'html[data-paper] [role=dialog]::-webkit-scrollbar-thumb{min-height:48px;background:#7A6E72;background-clip:padding-box;border:3px solid transparent;border-radius:999px}' +
+    'html[data-paper] [role=dialog]::-webkit-scrollbar-thumb:hover,html[data-paper] [role=dialog]::-webkit-scrollbar-thumb:active{background:' + c.muted + ';background-clip:padding-box}' +
+    '@supports not selector(::-webkit-scrollbar){html[data-paper] [role=dialog]{scrollbar-width:auto;scrollbar-color:#7A6E72 transparent}}' +
+    '@supports not selector(::-webkit-scrollbar){@media (max-width:759px){html[data-paper] [role=dialog]{scrollbar-width:thin}}}';
   var styled = false;
 
   var P = {
