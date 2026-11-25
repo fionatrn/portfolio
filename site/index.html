@@ -203,10 +203,10 @@ const P = [
 const n = P.length;
 this._n = n; this._feat = P.findIndex((p) => p.featured); if (this._feat < 0) this._feat = Math.floor((n - 1) / 2); // Startprojekt in der Mitte: featured, sonst das mittlere
 // Größe des Karten-Rads nach der Fensterhöhe, damit die Seite mit dem Fenster abschließt. Der Rest der Seite braucht
-// am Desktop 362 px (Kopfzeile 136 + Abstand 24 + Projekt-Label 116 + Rand 24 + Footer 62), gerechnet mit 364,
+// am Desktop 342 px (Kopfzeile 136 + Abstand 24 + Projekt-Label 96 + Rand 24 + Footer 62), gerechnet mit 344,
 // am Handy bis zu 500 px. Am Desktop kleiner bis 68 %, wenn das Fenster niedrig ist (Laptop), bis zu 20 % größer,
-// wenn Platz ist. Am Handy nur größer, nie kleiner.
-const ws = mob ? Math.min(1.2, Math.max(1, (vh - 500) / 260)) : Math.min(1.2, Math.max(0.68, (vh - 364) / 460)), wheelH = Math.round((mob ? 260 : 460) * ws);
+// wenn Platz ist. Am Handy nur größer, nie kleiner. Alles zusammen dann auf 90 %, damit die Karten nicht zu wuchtig wirken.
+const ws = 0.9 * (mob ? Math.min(1.2, Math.max(1, (vh - 500) / 260)) : Math.min(1.2, Math.max(0.68, (vh - 344) / 460))), wheelH = Math.round((mob ? 260 : 460) * ws);
 const cw = Math.round((mob ? 96 : 214) * ws), ch = Math.round((mob ? 130 : 288) * ws), RR = Math.round((mob ? 360 : 1100) * ws), step = (mob ? 21 : 14) * Math.PI / 180, yOff = Math.round((mob ? -28 : -56) * ws);
 const norm = () => { clearTimeout(this._norm); this._norm = setTimeout(() => { const a = this.state.active ?? 10; if (a < 2 * n || a >= 3 * n) { this.setState({ active: ((a % n) + n) % n + 2 * n, noAnim: true }); setTimeout(() => this.setState({ noAnim: false }), 60); } }, 650); };
 const posF = this.state.fpos ?? active;
@@ -261,7 +261,7 @@ logoInk: C.paper,
 bgGrain: PAPER.grain,
 // Startseite: Horizont-Verlauf (Oliv, Beerenrot, Nebelblau) über die ganze Seite, unten ins Greige
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + PAPER.horizon + ', ' + PAPER.rootBg + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column',
-headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + (cmp ? 24 : 48) + 'px'),
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + (cmp ? 24 : 48) + 'px 28px ' + (cmp ? 24 : 28) + 'px'), // Logo links so weit vom Rand wie oben
 navStyle: O.nav,
 pillActive: O.pillActive,
 pill: O.pill,
@@ -274,10 +274,10 @@ links: (P[pi].links || [{ label: 'Live demo', url: '#' }, { label: 'GitHub', url
 hasLinks: (P[pi].links || [1]).length > 0,
 linkRow: 'display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 ' + F.text + '; color: ' + C.pink + '; background: ' + C.wine,
 // Titel des aktuellen Projekts: umrandetes Label, Jahr und Kategorie über dem Titel
-infoStyle: 'display: flex; align-items: center; justify-content: center; cursor: pointer; font: inherit; color: inherit; padding: ' + (mob ? '12px 30px' : '18px 48px') + '; border-radius: 999px; border: 1.5px solid ' + outlineInk + '; background: transparent',
+infoStyle: 'display: flex; align-items: center; justify-content: center; cursor: pointer; font: inherit; color: inherit; padding: ' + (mob ? '10px 26px' : '14px 40px') + '; border-radius: 999px; border: 1.5px solid ' + outlineInk + '; background: transparent',
 infoInner: 'display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; text-align: center',
-metaStyle: 'font: 500 ' + (mob ? 14 : 16) + 'px/1.4 ' + F.text + '; letter-spacing: 0.04em; color: ' + outlineInk,
-titleStyle: 'font: 400 ' + (mob ? 30 : 42) + 'px/1.2 ' + F.display + '; color: ' + outlineInk + '; min-width: ' + (mob ? 170 : 300) + 'px',
+metaStyle: 'font: 500 ' + (mob ? 13 : 14) + 'px/1.4 ' + F.text + '; letter-spacing: 0.04em; color: ' + outlineInk,
+titleStyle: 'font: 400 ' + (mob ? 26 : 36) + 'px/1.2 ' + F.display + '; color: ' + outlineInk + '; min-width: ' + (mob ? 150 : 260) + 'px',
 // Tab-Leiste am Handy: liegt unten auf hellem Grund, mit Walnuss-Linie
 tabBar: O.tabBar,
 tabActive: O.tabBtnActive,

@@ -338,7 +338,7 @@ logoInk: C.paper,
 bgGrain: PAPER.grain,
 // Seitenhintergrund: derselbe Horizont-Verlauf wie auf Work, über die ganze Scrollhöhe
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + PAPER.horizon + ', ' + PAPER.rootBg + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column',
-headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + (cmp ? 24 : 48) + 'px'),
+headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + (cmp ? 24 : 48) + 'px 28px ' + (cmp ? 24 : 28) + 'px'), // Logo links so weit vom Rand wie oben
 navStyle: O.nav,
 pillActive: O.pillActive,
 pill: O.pill,
@@ -420,7 +420,7 @@ if (!mob) {
 const short = vh < 860, side = cmp ? 24 : 48;
 Object.assign(V, {
 rootStyle: V.rootStyle + '; height: max(100dvh, 600px)',
-headerStyle: V.headerStyle + (short ? '; padding: 16px ' + side + 'px' : ''),
+headerStyle: V.headerStyle + (short ? '; padding: 16px ' + side + 'px 16px ' + (cmp ? 24 : 28) + 'px' : ''), // Logo links wie auf den anderen Seiten
 mainStyle: V.mainStyle + '; min-height: 0' + (short ? '; gap: 12px; padding: 4px ' + side + 'px 8px' : ''),
 folderWrap: V.folderWrap + '; flex: 1 1 auto; min-height: 0',
 bodyGrid: V.bodyGrid + '; flex: 1 1 auto; min-height: 0; grid-template-rows: minmax(0, 1fr)',
