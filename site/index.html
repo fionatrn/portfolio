@@ -196,10 +196,11 @@ const P = [
 ];
 const n = P.length;
 this._n = n; this._feat = P.findIndex((p) => p.featured); if (this._feat < 0) this._feat = Math.floor((n - 1) / 2); // Startprojekt in der Mitte: featured, sonst das mittlere
-// Größe des Karten-Rads nach der Fensterhöhe (der Rest der Seite braucht am Desktop gut 310 px, am Handy bis zu 500 px),
-// damit die Seite mit dem Fenster abschließt: am Desktop kleiner bis 68 %, wenn das Fenster niedrig ist (Laptop),
-// bis zu 20 % größer, wenn Platz ist. Am Handy nur größer, nie kleiner.
-const ws = mob ? Math.min(1.2, Math.max(1, (vh - 500) / 260)) : Math.min(1.2, Math.max(0.68, (vh - 330) / 460)), wheelH = Math.round((mob ? 260 : 460) * ws);
+// Größe des Karten-Rads nach der Fensterhöhe, damit die Seite mit dem Fenster abschließt. Der Rest der Seite braucht
+// am Desktop 362 px (Kopfzeile 136 + Abstand 24 + Projekt-Label 116 + Rand 24 + Footer 62), gerechnet mit 364,
+// am Handy bis zu 500 px. Am Desktop kleiner bis 68 %, wenn das Fenster niedrig ist (Laptop), bis zu 20 % größer,
+// wenn Platz ist. Am Handy nur größer, nie kleiner.
+const ws = mob ? Math.min(1.2, Math.max(1, (vh - 500) / 260)) : Math.min(1.2, Math.max(0.68, (vh - 364) / 460)), wheelH = Math.round((mob ? 260 : 460) * ws);
 const cw = Math.round((mob ? 96 : 214) * ws), ch = Math.round((mob ? 130 : 288) * ws), RR = Math.round((mob ? 360 : 1100) * ws), step = (mob ? 21 : 14) * Math.PI / 180, yOff = Math.round((mob ? -28 : -56) * ws);
 const norm = () => { clearTimeout(this._norm); this._norm = setTimeout(() => { const a = this.state.active ?? 10; if (a < 2 * n || a >= 3 * n) { this.setState({ active: ((a % n) + n) % n + 2 * n, noAnim: true }); setTimeout(() => this.setState({ noAnim: false }), 60); } }, 650); };
 const posF = this.state.fpos ?? active;
