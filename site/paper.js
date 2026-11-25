@@ -1,17 +1,13 @@
 /*
- * paper.js – Designs "Paper" und "Outline" (Spike) und der Theme-Wechsel light → dark → paper → outline.
+ * paper.js – das Design der Seite ("Outline"): Farben, Schriften und gemeinsame Styles für Work, About und Imprint.
  *
  * Elegant-modern auf ungestrichenem Papier: Greige-Grund mit Körnung, ein Horizont-Verlauf
- * aus Oliv, Walnuss und Nebelblau nach den Maison-Noyer-Drucken, Weinrot als Schrift- und
- * Akzentfarbe, Büroklammer und mattes Pergament. Große Überschriften in Pinyon Script, Titel in Tenor Sans, Text in Inter.
- * Gespeichert wird unter "fiona-theme".
+ * aus Oliv, Beerenrot und Nebelblau nach den Maison-Noyer-Drucken, Weinrot als Schrift- und
+ * Akzentfarbe, Büroklammer und mattes Pergament. Navigation als schlichte Wörter ohne Pille.
+ * Große Überschriften in Pinyon Script, Titel in Tenor Sans, Text in Inter.
  */
 (function () {
   'use strict';
-
-  var KEY = 'fiona-theme';
-  var ORDER = ['light', 'dark', 'paper', 'outline'];
-  var LABEL = { light: 'Switch to dark mode', dark: 'Switch to paper mode', paper: 'Switch to outline mode', outline: 'Switch to light mode' };
 
   var c = {
     wine: '#6C143B',      // Überschriften, aktive Elemente
@@ -24,16 +20,15 @@
     ink: '#2A2125',       // Fließtext (14:1 auf Papier)
     muted: '#62575B',     // Nebentext (6.6:1 auf Papier)
     oliveInk: '#2E4520',  // Schrift auf Lime (7.6:1)
-    // Maison-Noyer-Töne: Walnuss, Moos-Ocker, Nebelblau
+    // Maison-Noyer-Töne: Walnuss und Nebelblau
     walnut: '#5B2E1F',
-    moss: '#6E6B24',
     mist: '#AEBBC1',
     line: 'rgba(42,33,37,0.12)'
   };
 
   // Drei Ebenen: hero – die großen Überschriften (Hallo, Kontakt, Projekttitel, Imprint) in Pinyon
-  // Script wie das „Hi, I'm Fiona!“ in Hell und Dunkel; display – kleinere Titel (Reiter, Etikett,
-  // Zwischenüberschriften) in Tenor Sans, serifenlos und edel; text – Fließtext in Inter
+  // Script; display – kleinere Titel (Reiter, Etikett, Zwischenüberschriften) in Tenor Sans,
+  // serifenlos und edel; text – Fließtext in Inter
   var f = {
     display: '"Tenor Sans", Inter, sans-serif',
     hero: '"Pinyon Script", cursive',
@@ -46,9 +41,9 @@
   // Der Verlauf der Identität: Oliv → Lime → Rosa
   var bloom = 'linear-gradient(180deg, ' + c.olive + ' 0%, #8FA85C 30%, ' + c.lime + ' 55%, #F4D3C8 80%, ' + c.pink + ' 100%)';
 
-  // Horizont für die Startseite, nach den Maison-Noyer-Drucken: Moos-Oliv, ein breites Walnuss-Feld,
-  // Nebelblau und unten wieder ins Greige. Zwischen den Ankerfarben liegen weich (smoothstep)
-  // gerechnete Zwischenstufen, damit an den Ankern keine Knicke und keine sichtbaren Bänder entstehen.
+  // Horizont für Work und About, nach den Maison-Noyer-Drucken: Moos-Oliv, ein breites Feld in dunklem
+  // Beerenrot (#5B1132), Nebelblau und unten wieder ins Greige. Zwischen den Ankerfarben liegen weich
+  // (smoothstep) gerechnete Zwischenstufen, damit an den Ankern keine Knicke und keine sichtbaren Bänder entstehen.
   function smoothGradient(stops, steps) {
     var out = [];
     for (var i = 0; i < stops.length - 1; i++) {
@@ -64,48 +59,34 @@
     return 'linear-gradient(180deg, ' + out.join(', ') + ')';
   }
   // Beginnt oben schon im Oliv und geht über die ganze Seite
-  var OLIVE = [110, 107, 36, 1], WALNUT = [91, 46, 31, 1], MIST = [150, 166, 176, 1], GREIGE = [236, 232, 225, 1];
-  var horizon = smoothGradient([[0, OLIVE], [8, OLIVE], [40, WALNUT], [56, WALNUT], [80, MIST], [100, GREIGE]], 8);
-  // Outline-Theme: derselbe Horizont, das Walnuss-Feld in dunklem Beerenrot (#5B1132)
-  var BERRY = [91, 17, 50, 1];
-  var horizonOutline = smoothGradient([[0, OLIVE], [8, OLIVE], [40, BERRY], [56, BERRY], [80, MIST], [100, GREIGE]], 8);
+  var OLIVE = [110, 107, 36, 1], BERRY = [91, 17, 50, 1], MIST = [150, 166, 176, 1], GREIGE = [236, 232, 225, 1];
+  var horizon = smoothGradient([[0, OLIVE], [8, OLIVE], [40, BERRY], [56, BERRY], [80, MIST], [100, GREIGE]], 8);
 
-  var CSS ='html[data-paper] ::selection{background:' + c.pink + ';color:' + c.wine + '}' +
-    'html[data-paper] :focus-visible{outline:2px solid ' + c.wine + '!important;outline-offset:3px!important}' +
-    'html[data-paper]{scrollbar-color:' + c.muted + ' ' + c.ground + '}' +
+  var CSS = '::selection{background:' + c.pink + ';color:' + c.wine + '}' +
+    ':focus-visible{outline:2px solid ' + c.wine + '!important;outline-offset:3px!important}' +
+    'html{scrollbar-color:' + c.muted + ' ' + c.ground + '}' +
     // Projektansicht: schmale Leiste ohne Pfeile, die Spur hält Abstand zu den runden Ecken.
     // scrollbar-color muss hier auf auto, sonst ignoriert Chrome die ::-webkit-scrollbar-Regeln.
-    'html[data-paper] [role=dialog]{scrollbar-color:auto}' +
+    '[role=dialog]{scrollbar-color:auto}' +
     // Breite wie eine normale Systemleiste (16px), sichtbarer Griff 10px, mindestens 48px hoch; am Handy 12px (Griff 6px).
     // Griff im Braungrau, einen Hauch heller als Nebentext; beim Hover/Ziehen der volle Nebentext-Ton.
-    'html[data-paper] [role=dialog]::-webkit-scrollbar{width:16px}' +
-    '@media (max-width:759px){html[data-paper] [role=dialog]::-webkit-scrollbar{width:12px}}' +
-    'html[data-paper] [role=dialog]::-webkit-scrollbar-button{display:none;width:0;height:0}' +
-    'html[data-paper] [role=dialog]::-webkit-scrollbar-track{background:transparent;margin:24px 0}' +
-    'html[data-paper] [role=dialog]::-webkit-scrollbar-thumb{min-height:48px;background:#7A6E72;background-clip:padding-box;border:3px solid transparent;border-radius:999px}' +
-    'html[data-paper] [role=dialog]::-webkit-scrollbar-thumb:hover,html[data-paper] [role=dialog]::-webkit-scrollbar-thumb:active{background:' + c.muted + ';background-clip:padding-box}' +
-    '@supports not selector(::-webkit-scrollbar){html[data-paper] [role=dialog]{scrollbar-width:auto;scrollbar-color:#7A6E72 transparent}}' +
-    '@supports not selector(::-webkit-scrollbar){@media (max-width:759px){html[data-paper] [role=dialog]{scrollbar-width:thin}}}';
+    '[role=dialog]::-webkit-scrollbar{width:16px}' +
+    '@media (max-width:759px){[role=dialog]::-webkit-scrollbar{width:12px}}' +
+    '[role=dialog]::-webkit-scrollbar-button{display:none;width:0;height:0}' +
+    '[role=dialog]::-webkit-scrollbar-track{background:transparent;margin:24px 0}' +
+    '[role=dialog]::-webkit-scrollbar-thumb{min-height:48px;background:#7A6E72;background-clip:padding-box;border:3px solid transparent;border-radius:999px}' +
+    '[role=dialog]::-webkit-scrollbar-thumb:hover,[role=dialog]::-webkit-scrollbar-thumb:active{background:' + c.muted + ';background-clip:padding-box}' +
+    '@supports not selector(::-webkit-scrollbar){[role=dialog]{scrollbar-width:auto;scrollbar-color:#7A6E72 transparent}}' +
+    '@supports not selector(::-webkit-scrollbar){@media (max-width:759px){[role=dialog]{scrollbar-width:thin}}}';
   var styled = false;
 
   var P = {
-    c: c, f: f, ease: ease, shadow: shadow, lift: lift, bloom: bloom, horizon: horizon, horizonOutline: horizonOutline,
+    c: c, f: f, ease: ease, shadow: shadow, lift: lift, bloom: bloom, horizon: horizon,
 
-    theme: function (props) {
-      if (props && props.dark) return 'dark';
-      try {
-        var s = window.localStorage.getItem(KEY);
-        if (ORDER.indexOf(s) >= 0) return s;
-        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      } catch (e) { return 'light'; }
-    },
-    next: function (th) { return ORDER[(ORDER.indexOf(th) + 1) % ORDER.length]; },
-    save: function (th) { try { window.localStorage.setItem(KEY, th); } catch (e) {} },
-    labelFor: function (th) { return LABEL[th] || LABEL.light; },
-    mark: function (th) {
+    // Globale Regeln (Auswahl, Fokus, Scrollleisten) einmal pro Seite einhängen
+    mark: function () {
       try {
         if (!styled) { var s = document.createElement('style'); s.textContent = CSS; document.head.appendChild(s); styled = true; }
-        if (th === 'paper' || th === 'outline') document.documentElement.setAttribute('data-paper', ''); else document.documentElement.removeAttribute('data-paper');
       } catch (e) {}
     },
 
@@ -113,27 +94,14 @@
     // Papierkörnung über dem Greige
     grain: 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.22; mix-blend-mode: multiply; pointer-events: none',
 
-    t: {
-      bg: c.ground, ink: c.wine, muted: c.muted, // ink: Logo und Icons in Weinrot
-      glass: c.paper, border: 'rgba(42,33,37,0.08)', inner: c.paper,
-      shadow: shadow, cardShadow: lift,
-      glowA: 'rgba(0,0,0,0)', glowB: 'rgba(0,0,0,0)', grain: '0.22', blend: 'multiply',
-      frame: c.sand, frameInk: c.ink, sheet: c.paper, line: c.line,
-      photo: 'linear-gradient(180deg, #DDD6CB 0%, #C9C0B3 100%)', silhouette: '#A39889'
-    },
+    // ink: Logo und Icons in Weinrot
+    t: { bg: c.ground, ink: c.wine, muted: c.muted, photo: 'linear-gradient(180deg, #DDD6CB 0%, #C9C0B3 100%)' },
 
-    sheet: function (r) { return 'background: ' + c.paper + '; border: 0; border-radius: ' + (r == null ? 14 : r) + 'px; box-shadow: ' + shadow; },
     // Mattes Pergament
     vellum: 'background: rgba(250,248,244,0.68); border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 2px rgba(60,40,45,0.08)',
     // Kleine Versal-Zeile (Feingedrucktes), nur für Metadaten
     fine: 'font: 500 12px/1.4 ' + f.text + '; letter-spacing: 0.12em; text-transform: uppercase',
 
-    nav: 'display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: ' + c.paper + '; box-shadow: ' + shadow + '; backdrop-filter: none; -webkit-backdrop-filter: none',
-    pill: 'display: inline-flex; align-items: center; justify-content: center; flex: none; min-height: 44px; padding: 0 22px; border: 0; border-radius: 999px; cursor: pointer; background: transparent; color: ' + c.ink + '; font: 500 15px/1 ' + f.text + '; transition: background 160ms ' + ease + ', color 160ms ' + ease,
-    pillActive: 'background: ' + c.wine + '; color: ' + c.pink,
-    iconBtn: 'display: inline-flex; align-items: center; justify-content: center; justify-self: end; flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 999px; cursor: pointer; background: ' + c.paper + '; box-shadow: ' + shadow + '; backdrop-filter: none; -webkit-backdrop-filter: none',
-    tabBtn: 'display: inline-flex; align-items: center; justify-content: center; flex: 1; min-height: 44px; padding: 0 8px; border: 0; border-radius: 999px; font: 500 15px/1 ' + f.text + '; color: ' + c.ink,
-    tabBtnActive: 'background: ' + c.wine + '; color: ' + c.pink,
     button: 'display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; min-height: 48px; padding: 0 26px; border: 0; border-radius: 999px; background: ' + c.wine + '; color: ' + c.pink + '; font: 500 15px/1 ' + f.text,
 
     // Büroklammer (SVG im Template, viewBox 0 0 28 74)
@@ -143,33 +111,29 @@
     tag: function (k) {
       var m = { mint: [c.lime, c.oliveInk], blue: ['#D3DCE0', c.ink], orange: [c.pink, c.wine], pink: [c.pink, c.wine], lilac: [c.sand, c.ink], yellow: [c.lime, c.oliveInk] }[k] || [c.sand, c.ink];
       return 'cursor: default; user-select: none; -webkit-user-select: none; position: relative; overflow: hidden; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: ' + m[0] + '; color: ' + m[1] + '; font: 500 13px/1 ' + f.text;
-    }
-  };
-  P.tabBar = 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 4px; border-radius: 999px; background: ' + c.paper + '; box-shadow: ' + lift;
+    },
 
-  // Viertes Theme "outline": Paper mit weinrot umrandetem Projekt-Label und schlichter Navigation –
-  // zwei Wörter ohne Pille und Rahmen, das aktuelle mit feiner Linie darunter, das andere gedämpft;
-  // der Theme-Button ist nur die Sonne. ink 'light' für Kopfzeilen auf dem dunklen Oliv (Work, About),
-  // 'walnut' auf hellem Grund (Imprint). Die Tab-Leiste am Handy liegt unten auf hellem Grund und ist
-  // immer in Walnuss.
-  P.isPaper = function (th) { return th === 'paper' || th === 'outline'; };
-  P.outlineUi = function (ink) {
-    var light = ink === 'light';
-    var col = light ? c.paper : c.walnut;
-    // Mindesthöhe 44px bleibt als Trefferfläche, sichtbar ist nur das Wort
-    // Tenor Sans wie die Titel; das gedämpfte Wort bei 0.75 bleibt auf dem Oliv lesbar
-    var word = 'display: inline-flex; align-items: center; flex: none; min-height: 44px; padding: 0; border: 0; border-radius: 0; cursor: pointer; background: transparent; color: ' + col + '; font: 400 18px/1 ' + f.display + '; letter-spacing: 0.06em; transition: opacity 160ms ' + ease;
-    var tab = P.tabBtn + '; font-weight: 400; letter-spacing: 0.02em; color: ' + c.walnut;
-    return {
-      nav: 'display: flex; gap: 36px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none',
-      pill: word + '; opacity: 0.75',
-      pillActive: word + '; opacity: 1; background: linear-gradient(currentColor, currentColor) no-repeat left bottom 7px / 100% 1px',
-      iconBtn: P.iconBtn + '; border: 0; background: transparent; box-shadow: none',
-      iconInk: col, iconW: '1.3',
-      tabBar: P.tabBar + '; padding: 3px; border: 1px solid ' + c.walnut + '; background: rgba(236,232,225,0.35); box-shadow: none; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)',
-      tabBtn: tab,
-      tabBtnActive: tab + '; background: rgba(91,46,31,0.12)'
-    };
+    // Schlichte Navigation: zwei Wörter ohne Pille und Rahmen, das aktuelle mit feiner Linie darunter,
+    // das andere gedämpft. ink 'light' für Kopfzeilen auf dem dunklen Oliv (Work, About), 'walnut' auf
+    // hellem Grund (Imprint). Die Tab-Leiste am Handy liegt unten auf hellem Grund und ist immer in Walnuss.
+    outlineUi: function (ink) {
+      var col = ink === 'light' ? c.paper : c.walnut;
+      // Mindesthöhe 44px bleibt als Trefferfläche, sichtbar ist nur das Wort.
+      // Tenor Sans wie die Titel; das gedämpfte Wort bei 0.75 bleibt auf dem Oliv lesbar
+      var word = 'display: inline-flex; align-items: center; flex: none; min-height: 44px; padding: 0; border: 0; border-radius: 0; cursor: pointer; background: transparent; color: ' + col + '; font: 400 18px/1 ' + f.display + '; letter-spacing: 0.06em; transition: opacity 160ms ' + ease;
+      var tab = 'display: inline-flex; align-items: center; justify-content: center; flex: 1; min-height: 44px; padding: 0 8px; border: 0; border-radius: 999px; font: 400 15px/1 ' + f.text + '; letter-spacing: 0.02em; color: ' + c.walnut;
+      return {
+        nav: 'display: flex; gap: 36px; padding: 0',
+        pill: word + '; opacity: 0.75',
+        pillActive: word + '; opacity: 1; background: linear-gradient(currentColor, currentColor) no-repeat left bottom 7px / 100% 1px',
+        // Icon-Button (Schließen-X der Projektansicht): flach, ohne Fläche und Schatten
+        iconBtn: 'display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 999px; cursor: pointer; background: transparent',
+        iconW: '1.3',
+        tabBar: 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 3px; border: 1px solid ' + c.walnut + '; border-radius: 999px; background: rgba(236,232,225,0.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)',
+        tabBtn: tab,
+        tabBtnActive: tab + '; background: rgba(91,46,31,0.12)'
+      };
+    }
   };
 
   window.PAPER = P;

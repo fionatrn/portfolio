@@ -18,12 +18,12 @@ A developer who also cares about the details of the interface: the site itself i
 ## Capabilities and Constraints
 - Static pages served by nginx in Docker; no framework. Pages keep the design-canvas format (`{{holes}}`, `<sc-if>`, `<sc-for>`, `class Component extends DCLogic`) rendered by `site/support.js`; styles are inline strings computed in each page's `renderVals()`.
 - Strict CSP: scripts only from self, styles inline or Google Fonts, fonts from Google Fonts.
-- Three themes switched by one button (light → dark → paper), stored in localStorage under `fiona-theme`. Paper is a spike on branch `spike/paper-theme`.
+- One design ("Outline", paper look), no theme switch. Shared colours, fonts and styles live in `site/paper.js` (global `PAPER`). The standalone design-system page still has its own light/dark toggle (`site/design-system.js`).
 - Content is English; Imprint/Privacy text is German.
 
 ## Brand Commitments
-- The "fiona" wordmark (rounded stroke logo) stays.
-- Paper theme: elegant-modern with paper elements and textures, after the Maison Noyer identity (braaands.co). Colours #6C143B, #4C6D35, #BFD485, #FFCCDA on a white/beige/greige ground. Body text must be plainly readable; only large headlines may carry character.
+- The "fiona" wordmark appears as the script logo in the header.
+- Design: elegant-modern with paper elements and textures, after the Maison Noyer identity (braaands.co). Colours #6C143B, #4C6D35, #BFD485, #FFCCDA on a white/beige/greige ground. Body text must be plainly readable; only large headlines may carry character.
 
 ## Evidence on Hand
 - Real projects: "My portfolio" (this site) and "Bunny figure" with images in `site/projects/`. Projects 02–07 are placeholders.
