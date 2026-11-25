@@ -209,7 +209,7 @@ a{color:inherit;text-decoration:none}
 <sc-if value="{{showContact}}" hint-placeholder-val="{{ false }}">
 <div data-panel="contact" style="{{secContact}}">
 <div style="display: flex; flex-direction: column; gap: 2px">
-<h2 style="{{helloSmall}}">Contact me</h2>
+<h2 style="margin: 0; line-height: 0"><span data-gems="1" style="{{gemBox}}"><img src="{{gemSrc}}" alt="Contact me" width="1200" height="750" decoding="async" style="{{gemImg}}"></span></h2>
 <p style="{{bio}}">Want to work together or just say hi? I'd love to hear from you.</p>
 </div>
 <a class="hov" href="mailto:hello@fiona-tran.com" style="{{ctaStyle}}; margin-top: 24px">hello@fiona-tran.com</a>
@@ -241,8 +241,32 @@ a{color:inherit;text-decoration:none}
 </template></x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"metric":{"editor":"enum","options":["commits","years"],"default":"years"},"commits":{"editor":"number","default":248},"devSince":{"editor":"number","default":2023},"mobile":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1080}}'>
 class Component extends DCLogic {
-componentDidMount() { this._anim(); }
-componentDidUpdate() { this._anim(); }
+componentDidMount() { this._anim(); this._gems(); }
+componentDidUpdate() { this._anim(); this._gems(); }
+// „Contact me“ aus Schmucksteinen: Das GIF spielt einmal ab (ohne Schleife), sobald der Schriftzug sichtbar wird –
+// am Desktop beim Öffnen des Reiters Contact, am Handy beim Scrollen dorthin. Es wird vorab geladen und als
+// eigene blob-URL eingesetzt, damit es sicher beim ersten Bild beginnt. Bei „weniger Bewegung“, alten Browsern
+// oder einem Ladefehler kommt gleich das Standbild (das letzte Bild des GIFs).
+_gems() {
+try {
+if (this._gemsDone) return;
+const box = document.querySelector('[data-gems]');
+if (!box) return;
+const still = '/images/contact-me.png';
+const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (calm || !('IntersectionObserver' in window) || !window.fetch || !(window.URL && URL.createObjectURL)) { this._gemsDone = true; this.setState({ gemSrc: still }); return; }
+if (!this._gemsGif) this._gemsGif = fetch('/images/contact-me.gif').then((r) => { if (!r.ok) throw new Error('gif'); return r.blob(); });
+if (this._gemsBox === box) return;
+if (this._gemsIo) this._gemsIo.disconnect();
+this._gemsBox = box;
+this._gemsIo = new IntersectionObserver((es) => {
+if (!es.some((e) => e.isIntersecting)) return;
+this._gemsIo.disconnect(); this._gemsDone = true;
+this._gemsGif.then((b) => this.setState({ gemSrc: URL.createObjectURL(b) })).catch(() => this.setState({ gemSrc: still }));
+}, { threshold: 0.6 });
+this._gemsIo.observe(box);
+} catch (err) {}
+}
 _anim() {
 try {
 if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
@@ -357,7 +381,9 @@ lab1: lab(mob ? 'left: 12px; top: 12px' : 'left: 24px; top: 88px'),
 lab2: lab(mob ? 'right: 12px; top: 40px' : cmp ? 'right: 24px; top: 130px' : 'right: 24px; top: 150px'),
 lab3: lab(mob ? 'left: 12px; bottom: 40px' : cmp ? 'left: 32px; bottom: 110px' : 'left: 32px; bottom: 150px'),
 lab4: lab(mob ? 'right: 12px; bottom: 12px' : cmp ? 'right: 32px; bottom: 50px' : 'right: 32px; bottom: 70px'),
-helloSmall: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.hero + '; letter-spacing: 0.01em; color: ' + C.wine, // so groß wie „Hi, I'm Fiona!“
+// „Contact me“ als Schriftzug aus Schmucksteinen statt in Pinyon Script, etwa so groß wie „Hi, I'm Fiona!“.
+// gemW: Breite des Schriftzugs (Zuschnitt siehe gemBox unten)
+gemW: mob ? 300 : 520,
 h2: 'margin: 0; font: 400 ' + (mob ? 36 : 44) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
 bio: 'margin: 0; max-width: 560px; font: 400 ' + (mob ? 15 : 17) + 'px/1.55 Inter, sans-serif; color: ' + C.muted,
 widgetGrid: (mob ? '' : 'flex: 1 1 auto; grid-template-rows: minmax(0, 1.15fr) minmax(0, 1fr); ') + 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: ' + (mob ? 12 : 16) + 'px',
@@ -414,7 +440,7 @@ ctaStyle: V.ctaStyle + '; margin-top: 28px'
 // Niedrige Fenster: Profil etwas dichter, damit es ohne Scrollen in die Mappe passt
 if (short) Object.assign(V, {
 helloH1: V.helloH1 + '; font-size: ' + (vh < 720 ? 52 : 62) + 'px; line-height: 1.1',
-helloSmall: V.helloSmall + '; font-size: ' + (vh < 720 ? 52 : 62) + 'px; line-height: 1.1',
+gemW: vh < 720 ? 380 : 440,
 aboutGrid: V.aboutGrid + '; gap: 16px',
 widgetGrid: V.widgetGrid + '; gap: 12px',
 wAbout: V.wAbout + '; gap: 12px; padding: 20px 22px',
@@ -429,12 +455,18 @@ yearsSvg: V.yearsSvg + '; height: ' + (vh < 720 ? 48 : 60) + 'px'
 // Sehr niedrige Fenster (unter 720 px): Ränder der Mappe und die Überschrift noch etwas knapper
 if (vh < 720) Object.assign(V, {
 helloH1: V.helloH1 + '; font-size: 46px',
-helloSmall: V.helloSmall + '; font-size: 46px',
+gemW: 380,
 folderWrap: V.folderWrap + '; padding: 8px',
 sheet: V.sheet + '; padding: 14px 20px'
 });
 }
 PAPER.mark();
+// Schmuckstein-Schriftzug: Das Bild ist 1200 × 750 px, der Schriftzug liegt im Ausschnitt 1072 × 262 ab (64, 248).
+// Der Rahmen zeigt nur diesen Ausschnitt; sein Hintergrund ist im Bild schon genau der Papierton des Blatts.
+// gemSrc: bis der Abschnitt sichtbar wird ein leeres Pixel, dann das GIF (oder das Standbild, siehe _gems).
+V.gemBox = 'display: block; position: relative; overflow: hidden; width: ' + V.gemW + 'px; max-width: 100%; aspect-ratio: 1072 / 262';
+V.gemImg = 'position: absolute; left: ' + (-64 / 1072 * 100).toFixed(4) + '%; top: ' + (-248 / 262 * 100).toFixed(4) + '%; width: ' + (1200 / 1072 * 100).toFixed(4) + '%; max-width: none; height: auto';
+V.gemSrc = this.state.gemSrc || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 return V;
 }
 }
