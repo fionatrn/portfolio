@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-title-de="Fiona Tran — Designsystem">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -8,357 +8,293 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Fiona">
 <title>Fiona Tran — Design system</title>
-<meta name="description" content="Design system of fiona-tran.com – colours, type, components, spacing and logo.">
+<meta name="description" content="Design system of fiona-tran.com – colours, type, logo and building blocks, designed in Figma and built by hand.">
 <link rel="canonical" href="https://fiona-tran.com/design-system">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:title" content="Fiona Tran – Design system">
-<meta property="og:description" content="Colours, type, components and logo of fiona-tran.com.">
+<meta property="og:description" content="Colours, type, logo and building blocks of fiona-tran.com.">
 <meta property="og:image" content="https://fiona-tran.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:url" content="https://fiona-tran.com/design-system">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#E9E9EC">
-<script src="/design-system.js"></script>
+<meta name="theme-color" content="#6E6B24">
+<script src="/design-system.js?v=2" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Pinyon+Script&amp;family=Tenor+Sans&amp;display=swap" rel="stylesheet">
 <style>
-/* ---------- Tokens ---------- */
+/*
+ * Designsystem-Seite im Design der Website: statisch, ohne Runtime. Farben und Maße wie in paper.js,
+ * die Figma-Datei spiegelt dieselben Tokens als Variablen. Logo und Mini-Icon kommen als Masken
+ * aus /icons/, damit sie jede Farbe annehmen können.
+ */
 :root {
-  --bg: #E9E9EC; --ink: #0E0E10; --muted: #55585F; --surface: rgba(255,255,255,0.6); --line: rgba(14,14,16,0.08);
-  --section-shadow: 0 16px 32px rgba(20,20,40,0.08);
-  --page: radial-gradient(60% 70% at 0% 0%, rgba(159,227,201,0.55) 0%, rgba(159,227,201,0) 65%), radial-gradient(60% 70% at 100% 100%, rgba(242,167,195,0.45) 0%, rgba(242,167,195,0) 65%), #E9E9EC;
-  --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.16) 100%);
-  --glass-shadow: inset 0 0.5px 0 rgba(255,255,255,0.55), inset 0 0 14px rgba(255,255,255,0.2), 0 12px 40px rgba(20,20,40,0.08);
-  --grain: 0;
-  --pad: 48px; --sec-pad: 40px;
-  color-scheme: light;
+  --wine: #6C143B; --olive: #4C6D35; --lime: #BFD485; --pink: #FFCCDA; --berry: #5B1132; --mist: #AEBBC1;
+  --walnut: #5B2E1F; --ground: #ECE8E1; --paper: #FAF8F4; --sand: #E3DED5; --mist-tag: #D3DCE0;
+  --ink: #2A2125; --muted: #62575B; --olive-ink: #2E4520; --line: rgba(42,33,37,0.12);
+  --shadow: 0 1px 2px rgba(60,40,45,0.08), 0 10px 30px rgba(60,40,45,0.10);
+  --lift: 0 2px 4px rgba(60,40,45,0.10), 0 24px 50px rgba(60,40,45,0.16);
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --bloom: linear-gradient(180deg, #4C6D35 0%, #8FA85C 30%, #BFD485 55%, #F4D3C8 80%, #FFCCDA 100%);
+  --horizon: linear-gradient(180deg, rgb(110,107,36) 0%, rgb(110,107,36) 8%, rgb(107,93,38) 16%, rgb(101,62,43) 24%, rgb(94,31,48) 32%, rgb(91,17,50) 40%, rgb(91,17,50) 56%, rgb(100,40,70) 62%, rgb(121,92,113) 68%, rgb(141,143,156) 74%, rgb(150,166,176) 80%, rgb(163,176,184) 85%, rgb(193,199,201) 90%, rgb(223,222,217) 95%, rgb(236,232,225) 100%);
+  --display: "Tenor Sans", Inter, sans-serif; --hero: "Pinyon Script", cursive; --text: Inter, sans-serif;
 }
-[data-theme="dark"] {
-  --bg: #141416; --ink: #F2F2F4; --muted: #A4A7AF; --surface: rgba(255,255,255,0.07); --line: rgba(255,255,255,0.10);
-  --section-shadow: 0 16px 32px rgba(0,0,0,0.22);
-  --page: radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416;
-  --glass-bg: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%);
-  --glass-shadow: inset 0 0.5px 0 rgba(255,255,255,0.14), inset 0 0 14px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.22);
-  --grain: 0.08;
-  color-scheme: dark;
-}
-@media (max-width: 999px) { :root { --pad: 24px; --sec-pad: 32px; } }
-@media (max-width: 759px) { :root { --pad: 16px; --sec-pad: 22px; } }
-
-/* ---------- Basis ---------- */
-*, *::before, *::after { box-sizing: border-box; }
-html { background: var(--bg); }
-body { margin: 0; min-height: 100vh; min-height: 100dvh; background: var(--page); background-attachment: fixed; color: var(--ink); font: 400 16px/1.5 Inter, sans-serif; transition: background 0.4s; overflow-x: clip; }
+* { box-sizing: border-box; }
+html { background: var(--ground); scrollbar-color: var(--muted) var(--ground); }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 400 16px/1.6 var(--text); -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
-.grain-bg { position: fixed; inset: 0; width: 100%; height: 100%; opacity: var(--grain); mix-blend-mode: overlay; pointer-events: none; z-index: 0; }
-.mono { font: 500 13px/1.4 ui-monospace, Menlo, Consolas, monospace; color: var(--muted); }
-.label { font: 600 13px/1.4 Inter, sans-serif; color: var(--muted); letter-spacing: 0.02em; text-transform: uppercase; }
-.name { font: 600 15px/1.3 Inter, sans-serif; color: var(--ink); }
-.note { font: 400 13px/1.4 Inter, sans-serif; color: var(--muted); }
-.glass { background: var(--glass-bg); border: 0; box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(20px) saturate(190%); backdrop-filter: blur(20px) saturate(190%); }
+::selection { background: var(--pink); color: var(--wine); }
+:focus-visible { outline: 2px solid var(--wine) !important; outline-offset: 3px !important; }
+h1, h2, h3, p { margin: 0; }
+
+/* ---------- Kopf: Horizont wie auf Work und About ---------- */
+.top { background: var(--horizon); padding-bottom: 120px; }
+header { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; padding: 28px 48px 28px 28px; }
+.logo { display: flex; align-items: center; min-height: 44px; }
+.logo span { display: block; height: 80px; aspect-ratio: 336 / 177; background: var(--paper); -webkit-mask: url(/icons/logo-script.svg) center / contain no-repeat; mask: url(/icons/logo-script.svg) center / contain no-repeat; }
+nav { display: flex; gap: 36px; }
+nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper); font: 400 18px/1 var(--display); letter-spacing: 0.06em; opacity: 0.75; transition: opacity 160ms var(--ease); }
+nav a:hover { opacity: 1; }
+.lang { justify-self: end; display: inline-flex; align-items: center; gap: 8px; min-width: 44px; min-height: 44px; padding: 0 2px; border: 0; background: transparent; cursor: pointer; color: var(--paper); font: 400 16px/1 var(--display); letter-spacing: 0.08em; }
+.lang svg { width: 32px; height: 32px; }
+.lang span { position: relative; top: 0.0625em; }
+.intro { max-width: 760px; margin: 0 auto; padding: 64px 24px 0; text-align: center; color: var(--paper); }
+.intro h1 { font: 400 104px/1 var(--hero); letter-spacing: 0.01em; }
+.intro .linkrow { margin-top: 32px; background: var(--paper); color: var(--wine); }
+.fine { font: 500 12px/1.4 var(--text); letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* ---------- Blätter ---------- */
+main { max-width: 1160px; margin: -64px auto 0; padding: 0 24px; display: flex; flex-direction: column; gap: 28px; }
+.sheet { background: var(--paper); border-radius: 22px; padding: 44px 48px 48px; box-shadow: var(--shadow); }
+.head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; max-width: 660px; }
+.head h2 { font: 400 36px/1.1 var(--display); letter-spacing: 0.01em; color: var(--wine); }
+.head p { color: var(--muted); }
+.sub { margin: 32px 0 14px; color: var(--muted); }
+.sub:first-of-type { margin-top: 0; }
+
+/* Farben */
+.swatches { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.sw { border-radius: 16px; overflow: hidden; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.sw i { display: block; height: 92px; border-bottom: 1px solid var(--line); }
+.sw div { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px 14px; }
+.sw b { font-weight: 500; font-size: 15px; }
+.sw .fine { color: var(--muted); font-size: 11px; }
+.sw small { font-size: 13px; line-height: 1.4; color: var(--muted); }
+.grads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.swatches + .swatches, .grads { margin-top: 16px; }
+.grad i { display: block; height: 120px; border-radius: 16px; }
+
+/* Schrift */
+.type { display: flex; flex-direction: column; }
+.trow { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--line); }
+.trow:first-child { padding-top: 0; }
+.trow:last-child { border-bottom: 0; padding-bottom: 0; }
+.trow .spec { display: flex; flex-direction: column; gap: 4px; }
+.trow .spec b { font-weight: 500; font-size: 15px; }
+.trow .spec span { font-size: 13px; color: var(--muted); }
+.s-hero { font: 400 72px/1.05 var(--hero); color: var(--wine); }
+.s-display { font: 400 34px/1.2 var(--display); letter-spacing: 0.02em; }
+.s-text { font: 400 17px/1.6 var(--text); max-width: 560px; }
+
+/* Logo */
+.minis { display: flex; flex-wrap: wrap; gap: 28px; padding: 28px; border-radius: 18px; background: #F2EEE8; }
+.wordmark { display: flex; justify-content: center; margin-top: 16px; padding: 44px 28px; border-radius: 18px; background: #F2EEE8; }
+.wordmark span { display: block; height: 96px; aspect-ratio: 336 / 177; background: var(--wine); -webkit-mask: url(/icons/logo-script.svg) center / contain no-repeat; mask: url(/icons/logo-script.svg) center / contain no-repeat; }
+.mini { position: relative; overflow: hidden; width: 96px; aspect-ratio: 1; border-radius: 22.46%; }
+.mini::after { content: ""; position: absolute; inset: 0; background: var(--mk); -webkit-mask: url(/icons/logo-mini-mark.svg) center / 100% 100% no-repeat; mask: url(/icons/logo-mini-mark.svg) center / 100% 100% no-repeat; }
+.m-pink { background: var(--pink); --mk: var(--wine); }
+.m-olive { background: var(--olive); --mk: var(--paper); }
+.m-lime { background: var(--lime); --mk: var(--olive-ink); }
+.m-sand { background: var(--sand); --mk: var(--wine); }
+
+/* Bausteine */
+.specimens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.specimens { cursor: default; user-select: none; -webkit-user-select: none; }
+.spec-card { display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 18px; background: #F2EEE8; min-width: 0; }
+.spec-card > .fine { color: var(--muted); font-size: 11px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 26px; border-radius: 999px; background: var(--wine); color: var(--pink); font: 500 15px/1 var(--text); }
+.linkrow { display: inline-flex; align-self: flex-start; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px 0 26px; border-radius: 999px; background: var(--wine); color: var(--pink); font: 500 15px/1 var(--text); }
+.arrow { display: inline-block; flex: none; width: 1em; height: 1em; vertical-align: -0.125em; }
 .hov { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .hov:hover { transform: scale(1.05); }
 .hov:active { transform: scale(0.97); }
-:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 999px; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.hovS { transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease; }
+@media (hover: hover) and (pointer: fine) { .hovS:hover { background-color: var(--pink); color: var(--wine); transform: scale(1.02); } }
+.hovS:focus-visible { background-color: var(--pink); color: var(--wine); }
+.hovS:active { transform: scale(0.98); transition-duration: 0.16s; }
+.tag { display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; font: 500 13px/1 var(--text); }
+.t-lime { background: var(--lime); color: var(--olive-ink); }
+.t-blue { background: var(--mist-tag); color: var(--ink); }
+.t-pink { background: var(--pink); color: var(--wine); }
+.t-sand { background: var(--sand); color: var(--ink); }
+.chip { display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: 999px; background: var(--paper); color: var(--ink); font: 500 14px/1 var(--text); }
+.social { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); color: var(--ink); font: 500 15px/1 var(--text); }
+.social i { width: 16px; height: 16px; flex: none; background: currentColor; -webkit-mask: url(/icons/github.svg) center / contain no-repeat; mask: url(/icons/github.svg) center / contain no-repeat; }
+.navdemo { display: flex; gap: 36px; padding: 4px 24px; border-radius: 16px; background: var(--olive); }
+.navdemo > span { display: inline-flex; align-items: center; min-height: 44px; color: var(--paper); font: 400 18px/1 var(--display); letter-spacing: 0.06em; opacity: 0.75; }
+.navdemo > span { white-space: nowrap; }
+.navdemo > span.on { opacity: 1; background: linear-gradient(currentColor, currentColor) no-repeat left bottom 7px / 100% 1px; }
+.folderdemo { padding: 14px 16px 16px; border-radius: 16px; background: var(--sand); }
+.folderdemo > i { display: block; height: 40px; background: var(--paper); border-radius: 0 12px 12px 12px; }
+.tabsdemo { display: flex; align-items: flex-end; gap: 12px; }
+.tabsdemo span { display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px 6px; border-radius: 12px 12px 0 0; background: var(--mist); color: var(--walnut); font: 400 17px/1 var(--display); letter-spacing: 0.04em; }
+.tabsdemo span.sel { padding-bottom: 0; background: var(--paper); }
+.label { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; padding: 14px 40px; border-radius: 999px; border: 1.5px solid var(--wine); color: var(--wine); }
+.label small { font: 500 14px/1.4 var(--text); letter-spacing: 0.04em; }
+.label span { font: 400 36px/1.2 var(--display); }
+.vellum-bg { display: flex; flex-wrap: wrap; gap: 10px; padding: 28px 20px; border-radius: 16px; background: var(--bloom); }
+.vellum { padding: 7px 14px; border-radius: 999px; background: rgba(250,248,244,0.68); border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 2px rgba(60,40,45,0.08); font: 500 13px/1.2 var(--text); color: var(--ink); }
+.facts { display: flex; flex-direction: column; gap: 18px; }
+.fact { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.fact .fine { font-size: 11px; color: var(--muted); }
+.fact b { font-weight: 500; }
 
-/* ---------- Kopf, Fuß, Navigation ---------- */
-.site-header { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; padding: 28px var(--pad); }
-.logo { display: flex; align-items: center; min-height: 44px; color: var(--ink); }
-.logo svg { height: 30px; width: auto; }
-.nav { display: flex; gap: 4px; padding: 4px; border-radius: 999px; }
-.pill { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: var(--ink); }
-.icon-btn { justify-self: end; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border-radius: 999px; cursor: pointer; color: var(--ink); }
-.icon-btn .sun, [data-theme="dark"] .icon-btn .moon { display: none; }
-[data-theme="dark"] .icon-btn .sun { display: block; }
-.tabbar { display: none; }
-.site-footer { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 16px; padding: 8px var(--pad) 28px; font: 400 13px/1.4 Inter, sans-serif; color: var(--muted); }
-.site-footer a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 3px; }
-@media (max-width: 759px) {
-  .site-header { grid-template-columns: minmax(0, 1fr) auto; padding: calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px; }
-  .site-header .nav { display: none; }
-  .logo svg { height: 16px; }
-  .tabbar { position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; gap: 4px; padding: 4px; border-radius: 999px; }
-  .tabbar .pill { flex: 1; padding: 0 8px; }
-  .site-footer { padding-bottom: 120px; }
+footer { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 16px; padding: 40px 24px 28px; font: 400 13px/1.4 var(--text); color: var(--muted); }
+footer a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Schmale Fenster und Handy ---------- */
+@media (max-width: 999px) {
+  .specimens { grid-template-columns: minmax(0, 1fr); }
 }
-
-/* ---------- Seite ---------- */
-main { position: relative; z-index: 1; width: 100%; max-width: 1340px; margin: 0 auto; padding: 16px var(--pad) 40px; display: flex; flex-direction: column; gap: 40px; }
-.intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; }
-.intro h1 { margin: 0; font: 700 64px/1.05 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.03em; }
-section.card { display: flex; flex-direction: column; gap: 28px; padding: var(--sec-pad); border-radius: 32px; background: var(--surface); box-shadow: var(--section-shadow); }
-.sec-head { display: flex; flex-direction: column; gap: 6px; }
-.sec-head h2 { margin: 0; font: 700 32px/1.15 "M PLUS Rounded 1c", Inter, sans-serif; letter-spacing: -0.02em; }
-.sec-head p { margin: 0; color: var(--muted); max-width: 820px; }
 @media (max-width: 759px) {
-  main { gap: 24px; padding-top: 8px; }
-  .intro h1 { font-size: 40px; }
-  section.card { gap: 22px; border-radius: 28px; }
-  .sec-head h2 { font-size: 26px; }
+  header { grid-template-columns: minmax(0, 1fr) auto; padding: calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px; }
+  nav { display: none; }
+  .logo span { height: 50px; }
+  .lang svg { width: 22px; height: 22px; }
+  .top { padding-bottom: 96px; }
+  .intro { padding-top: 40px; }
+  .intro h1 { font-size: 64px; }
+  main { padding: 0 12px; gap: 20px; }
+  .sheet { padding: 28px 22px 32px; border-radius: 18px; }
+  .head { margin-bottom: 24px; }
+  .head h2 { font-size: 30px; }
+  .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .grads { grid-template-columns: minmax(0, 1fr); }
+  .wordmark { padding: 32px 20px; }
+  .wordmark span { height: 72px; }
+  .trow { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .s-hero { font-size: 56px; }
+  .s-display { font-size: 28px; }
+  .minis { gap: 16px; padding: 20px; }
+  .mini { width: 60px; }
+  .spec-card { padding: 20px; }
+  .label { padding: 10px 26px; }
+  .label small { font-size: 13px; }
+  .label span { font-size: 26px; }
 }
-
-/* Farben */
-.swatches { display: grid; grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr)); gap: 20px; }
-.swatches.three { --cols: 3; }
-.swatches.four { --cols: 4; }
-.swatches.two { --cols: 2; max-width: 50%; }
-@media (max-width: 999px) { .swatches.four.two { --cols: 2; max-width: none; } }
-@media (max-width: 999px) { .swatches, .swatches.four { --cols: 3; } }
-@media (max-width: 759px) { .swatches, .swatches.four { --cols: 2; gap: 16px 12px; } .chip { height: 72px; border-radius: 16px; } }
-.swatch { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.chip { height: 96px; border-radius: 20px; box-shadow: inset 0 0 0 1px var(--line); }
-.swatch-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
-.bg-light { background: radial-gradient(60% 70% at 0% 0%, rgba(159,227,201,0.55) 0%, rgba(159,227,201,0) 65%), radial-gradient(60% 70% at 100% 100%, rgba(242,167,195,0.45) 0%, rgba(242,167,195,0) 65%), #E9E9EC; color: #0E0E10; }
-.grain { position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: overlay; pointer-events: none; }
-
-/* Widgets */
-.widgets { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); gap: 20px; }
-.widget { position: relative; overflow: hidden; height: 160px; display: flex; flex-direction: column; justify-content: flex-end; padding: 18px; border-radius: 28px; filter: saturate(0.78) brightness(1.04); }
-.widget span { position: relative; font: 600 15px/1.3 Inter, sans-serif; color: #FFFFFF; }
-@media (max-width: 759px) { .widgets { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .widget { height: 120px; padding: 14px; border-radius: 22px; } }
-
-/* Schriften */
-.type-row { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 32px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.type-row:last-child { border-bottom: 0; }
-.sample { font-size: var(--d); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.spec { display: flex; flex-direction: column; gap: 2px; }
-.f-script { font-family: "Pinyon Script", cursive; font-weight: 400; }
-.f-round { font-family: "M PLUS Rounded 1c", Inter, sans-serif; font-weight: 700; }
-.f-round5 { font-family: "M PLUS Rounded 1c", Inter, sans-serif; font-weight: 500; }
-.f-inter4 { font-family: Inter, sans-serif; font-weight: 400; }
-.f-inter5 { font-family: Inter, sans-serif; font-weight: 500; }
-.f-inter6 { font-family: Inter, sans-serif; font-weight: 600; }
-@media (max-width: 759px) {
-  .type-row { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 16px 0; }
-  .sample { font-size: var(--m, var(--d)); white-space: normal; }
+@media (prefers-reduced-motion: reduce) {
+  .hov, .hovS { transition: none; }
+  .hov:hover, .hov:active, .hovS:hover, .hovS:active { transform: none; }
 }
-
-/* Komponenten: zwei feste Bühnen (hell und dunkel), unabhängig vom Seiten-Theme */
-.stages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-@media (max-width: 999px) { .stages { grid-template-columns: minmax(0, 1fr); } }
-.stage { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 22px; padding: 32px; border-radius: 28px; min-width: 0; }
-@media (max-width: 759px) { .stage { padding: 22px 18px; gap: 18px; } }
-.stage h3 { margin: 0; font: 700 20px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; }
-.stage.light { --s-ink: #0E0E10; --s-muted: #55585F; --s-on-ink: #E9E9EC; --s-glass: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.16) 100%); --s-glass-shadow: inset 0 0.5px 0 rgba(255,255,255,0.55), inset 0 0 14px rgba(255,255,255,0.2), 0 12px 40px rgba(20,20,40,0.08); --s-card: #FFFFFF; --s-card-border: 1px solid rgba(14,14,16,0.04); --s-card-shadow: 0 1px 2px rgba(20,20,40,0.05), 0 6px 18px rgba(20,20,40,0.06); --s-row: #0E0E10; --s-row-ink: #E9E9EC; --s-row-shadow: none; background: radial-gradient(60% 70% at 0% 0%, rgba(159,227,201,0.55) 0%, rgba(159,227,201,0) 65%), radial-gradient(60% 70% at 100% 100%, rgba(242,167,195,0.45) 0%, rgba(242,167,195,0) 65%), #E9E9EC; color: #0E0E10; }
-.stage.dark { --s-ink: #F2F2F4; --s-muted: #A4A7AF; --s-on-ink: #141416; --s-glass: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%); --s-glass-shadow: inset 0 0.5px 0 rgba(255,255,255,0.14), inset 0 0 14px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.22); --s-card: rgba(255,255,255,0.08); --s-card-border: 1px solid rgba(255,255,255,0.10); --s-card-shadow: 0 1px 2px rgba(20,20,40,0.2), 0 6px 18px rgba(20,20,40,0.18); --s-row: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%); --s-row-ink: #F2F2F4; --s-row-shadow: inset 0 0.5px 0 rgba(255,255,255,0.14), inset 0 0 14px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.22); background: radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416; color: #F2F2F4; }
-.stage .label { color: var(--s-muted); }
-.s-glass { background: var(--s-glass); box-shadow: var(--s-glass-shadow); -webkit-backdrop-filter: blur(20px) saturate(190%); backdrop-filter: blur(20px) saturate(190%); }
-.s-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.s-nav { display: flex; gap: 4px; padding: 4px; border-radius: 999px; }
-.s-pill { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: var(--s-ink); white-space: nowrap; }
-.s-pill.on { background: var(--s-ink); color: var(--s-on-ink); }
-.s-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; color: var(--s-ink); }
-.s-project { align-self: flex-start; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 32px; border-radius: 999px; }
-.s-project small { font: 500 12px/1.4 Inter, sans-serif; letter-spacing: 0.06em; color: var(--s-muted); }
-.s-project strong { min-width: 200px; text-align: center; font: 700 24px/1.2 "M PLUS Rounded 1c", Inter, sans-serif; color: var(--s-ink); }
-.s-cta { display: inline-flex; align-items: center; min-height: 48px; padding: 0 28px; border-radius: 999px; background: var(--s-ink); color: var(--s-on-ink); font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; }
-.s-ghost { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: var(--s-ink); background: var(--s-card); border: var(--s-card-border); box-shadow: var(--s-card-shadow); }
-.s-link { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 0 18px; border-radius: 16px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: var(--s-row-ink); background: var(--s-row); box-shadow: var(--s-row-shadow); }
-.s-techs { display: flex; gap: 8px; flex-wrap: wrap; }
-.tech { position: relative; overflow: hidden; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; font: 500 13px/1 "M PLUS Rounded 1c", Inter, sans-serif; color: #1A1A1E; box-shadow: 0 0 14px 1px var(--glow), inset 0 0 12px rgba(255,255,255,0.35); }
-.tech span { position: relative; }
-.t-mint { --glow: rgba(127,214,176,0.55); background: radial-gradient(120% 160% at 50% 50%, #7FD6B0 0%, #A6E6C8 40%, #CDF3E0 75%, #E8FBF2 100%); }
-.t-blue { --glow: rgba(127,168,242,0.55); background: radial-gradient(120% 160% at 50% 50%, #7FA8F2 0%, #A4C2F6 40%, #C9DBFA 75%, #E6EFFD 100%); }
-.t-orange { --glow: rgba(247,162,107,0.55); background: radial-gradient(120% 160% at 50% 50%, #F7A26B 0%, #FBBE93 40%, #FDD9BE 75%, #FFEDE0 100%); }
-.t-pink { --glow: rgba(242,141,180,0.55); background: radial-gradient(120% 160% at 50% 50%, #F28DB4 0%, #F7AECB 40%, #FBCFE0 75%, #FFE8F1 100%); }
-.t-lilac { --glow: rgba(174,151,232,0.55); background: radial-gradient(120% 160% at 50% 50%, #AE97E8 0%, #C6B5F0 40%, #DDD2F7 75%, #F0EBFC 100%); }
-.s-cv { display: flex; flex-wrap: wrap; gap: 4px 24px; align-items: baseline; padding: 14px 20px; border-radius: 18px; background: var(--s-card); border: var(--s-card-border); box-shadow: var(--s-card-shadow); }
-.s-cv span:first-child { min-width: 140px; font: 500 14px/1.4 Inter, sans-serif; color: var(--s-muted); }
-.s-cv span:last-child { font: 500 17px/1.4 Inter, sans-serif; color: var(--s-ink); }
-.s-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 999px; align-self: flex-start; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
-.s-tabs::-webkit-scrollbar { display: none; }
-.s-tabs .s-pill { width: 112px; padding: 0; flex: none; }
-@media (max-width: 759px) {
-  .s-project { padding: 10px 24px; }
-  .s-project strong { min-width: 150px; font-size: 20px; }
-  .s-cv { flex-direction: column; gap: 4px; }
-  .s-cv span:last-child { font-size: 16px; }
-  .s-tabs .s-pill { width: auto; padding: 0 14px; font-size: 14px; }
-}
-
-/* Form, Abstände, Breakpoints */
-.radii, .spaces { display: flex; gap: 32px 40px; flex-wrap: wrap; align-items: flex-end; }
-.radius { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; max-width: 160px; }
-.radius div { background: var(--ink); }
-.space { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
-.space div { border-radius: 4px; background: #9FE3C9; }
-.bp-row { display: grid; grid-template-columns: 180px 160px minmax(0, 1fr); gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.bp-row:last-child { border-bottom: 0; }
-.bp-row .name { line-height: 1.4; }
-.bp-row p { margin: 0; font: 400 15px/1.5 Inter, sans-serif; }
-@media (max-width: 759px) {
-  .radii { gap: 20px 24px; }
-  .spaces { gap: 16px 12px; }
-  .bp-row { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; }
-  .bp-row p { grid-column: 1 / -1; color: var(--muted); }
-}
-
-/* Logo & Favicon */
-.logos { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 20px; }
-.logo-tile { display: flex; align-items: center; justify-content: center; height: 180px; border-radius: 24px; padding: 20px; }
-.logo-tile svg.mark { height: 48px; width: auto; max-width: 100%; }
-.lt-white { background: #FFFFFF; color: #0E0E10; box-shadow: inset 0 0 0 1px var(--line); }
-.lt-dark { background: #141416; color: #F2F2F4; }
-@media (max-width: 999px) { .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); } .logos .lt-fav { grid-column: 1 / -1; } }
-@media (max-width: 759px) { .logos { grid-template-columns: minmax(0, 1fr); } .logo-tile { height: 140px; } .logo-tile svg.mark { height: 36px; } }
 </style>
 </head>
 <body>
-<svg aria-hidden="true" width="0" height="0" style="position: absolute"><filter id="grainS"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter><symbol id="mark" viewBox="-12 78 764 124"><g fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><path d="M10 190 V120 A30 30 0 0 1 40 90 H190"></path><path d="M10 130 H140"></path><path d="M190 130 V190"></path><g transform="translate(90 0)"><rect x="150" y="130" width="130" height="60" rx="30"></rect><path d="M330 190 V160 A30 30 0 0 1 360 130 H430 A30 30 0 0 1 460 160 V190"></path><path d="M640 130 V190 H540 A30 30 0 0 1 510 160 A30 30 0 0 1 540 130 Z"></path></g></g></symbol></svg>
-<svg class="grain-bg" aria-hidden="true"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg>
 
-<header class="site-header">
-  <a class="logo" href="/" aria-label="fiona – home"><svg role="img" aria-label="fiona" viewBox="0 0 764 124"><use href="#mark"></use></svg></a>
-  <nav class="nav glass" aria-label="Main navigation"><a class="pill hov" href="/">Work</a><a class="pill hov" href="/about">About</a></nav>
-  <button id="theme-toggle" class="icon-btn glass hov" type="button" aria-label="Switch to dark mode">
-    <svg class="moon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
-    <svg class="sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
-  </button>
-</header>
+<div class="top">
+  <header>
+    <a class="logo" href="/" aria-label="fiona – home" data-de-label="fiona – Startseite"><span></span></a>
+    <nav aria-label="Main navigation" data-de-label="Hauptnavigation">
+      <a href="/" data-de="Projekte">Work</a>
+      <a href="/about" data-de="Über mich">About</a>
+    </nav>
+    <button id="lang-toggle" class="lang hov" type="button" aria-label="Language: English. Switch to German">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M4.6 7.5h14.8M4.6 16.5h14.8"></path><path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9z"></path></svg>
+      <span id="lang-code">EN</span>
+    </button>
+  </header>
+  <div class="intro">
+    <h1 data-de="Designsystem">Design system</h1>
+    <a class="linkrow hovS" href="https://www.figma.com/design/vWv3rd4VmohrwW65bLUyCt" target="_blank" rel="noopener"><span data-de="In Figma ansehen">View in Figma</span><svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></a>
+  </div>
+</div>
 
 <main>
-  <div class="intro">
-    <h1>Design system</h1>
-  </div>
 
-  <!-- Farben -->
-  <section class="card" aria-labelledby="colours">
-    <div class="sec-head"><h2 id="colours">Colours</h2><p>A neutral base in light and dark, plus two pastel accents for the glow and the favicon.</p></div>
-    <span class="label">Light mode</span>
-    <div class="swatches three">
-      <div class="swatch"><div class="chip" style="background: #E9E9EC"></div><div class="swatch-text"><span class="name">Background</span><span class="mono">#E9E9EC</span><span class="note">Page, under the mint and rosé glow</span></div></div>
-      <div class="swatch"><div class="chip" style="background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), #E9E9EC"></div><div class="swatch-text"><span class="name">Surface</span><span class="mono">rgba(255,255,255,0.6)</span><span class="note">Folder, cards, project detail (solid: #F4F4F6)</span></div></div>
-      <div class="swatch"><div class="chip" style="background: #0E0E10"></div><div class="swatch-text"><span class="name">Ink</span><span class="mono">#0E0E10</span><span class="note">Text, active pills, CTA · secondary text #55585F</span></div></div>
+  <section class="sheet" aria-labelledby="colour">
+    <div class="head">
+      <h2 id="colour" data-de="Farben">Colour</h2>
     </div>
-    <span class="label">Dark mode</span>
-    <div class="swatches three">
-      <div class="swatch"><div class="chip" style="background: #141416"></div><div class="swatch-text"><span class="name">Background</span><span class="mono">#141416</span><span class="note">Page, under the mint and rosé glow</span></div></div>
-      <div class="swatch"><div class="chip" style="background: linear-gradient(rgba(255,255,255,0.07), rgba(255,255,255,0.07)), #141416"></div><div class="swatch-text"><span class="name">Surface</span><span class="mono">rgba(255,255,255,0.07)</span><span class="note">Folder, cards, project detail (solid: #1E1E21)</span></div></div>
-      <div class="swatch"><div class="chip" style="background: #F2F2F4"></div><div class="swatch-text"><span class="name">Ink</span><span class="mono">#F2F2F4</span><span class="note">Text, active pills · secondary text #A4A7AF</span></div></div>
+    <div class="swatches">
+      <div class="sw"><i style="background: #6C143B"></i><div><b>Wine</b><span class="fine">#6C143B</span></div></div>
+      <div class="sw"><i style="background: #4C6D35"></i><div><b>Olive</b><span class="fine">#4C6D35</span></div></div>
+      <div class="sw"><i style="background: #BFD485"></i><div><b>Lime</b><span class="fine">#BFD485</span></div></div>
+      <div class="sw"><i style="background: #FFCCDA"></i><div><b>Pink</b><span class="fine">#FFCCDA</span></div></div>
+      <div class="sw"><i style="background: #AEBBC1"></i><div><b>Mist</b><span class="fine">#AEBBC1</span></div></div>
     </div>
-    <span class="label">Accents</span>
-    <div class="swatches four two">
-      <div class="swatch"><div class="chip" style="background: #9FE3C9"></div><div class="swatch-text"><span class="name">Mint</span><span class="mono">#9FE3C9</span><span class="note">Glow top left (light 55 %, dark 22 %), favicon</span></div></div>
-      <div class="swatch"><div class="chip" style="background: #F2A7C3"></div><div class="swatch-text"><span class="name">Rosé</span><span class="mono">#F2A7C3</span><span class="note">Glow bottom right (light 45 %, dark 18 %), favicon</span></div></div>
+    <div class="swatches">
+      <div class="sw"><i style="background: #ECE8E1"></i><div><b>Ground</b><span class="fine">#ECE8E1</span></div></div>
+      <div class="sw"><i style="background: #FAF8F4"></i><div><b>Paper</b><span class="fine">#FAF8F4</span></div></div>
+      <div class="sw"><i style="background: #2A2125"></i><div><b>Ink</b><span class="fine">#2A2125</span></div></div>
+      <div class="sw"><i style="background: #62575B"></i><div><b>Muted</b><span class="fine">#62575B</span></div></div>
+      <div class="sw"><i style="background: #2E4520"></i><div><b>Olive ink</b><span class="fine">#2E4520</span></div></div>
+    </div>
+    <div class="grads">
+      <div class="grad"><i style="background: var(--horizon)"></i></div>
+      <div class="grad"><i style="background: var(--bloom)"></i></div>
     </div>
   </section>
 
-  <!-- Widget-Verläufe -->
-  <section class="card" aria-labelledby="widgets">
-    <div class="sec-head"><h2 id="widgets">Widget gradients</h2><p>Coloured widgets with a gradient, grain, a soft glow and slightly reduced saturation. Radius 28 px.</p></div>
-    <div class="widgets">
-      <div class="widget" style="background: linear-gradient(180deg, #4E3F7A 0%, #8E4F78 55%, #B4545A 100%); box-shadow: 0 0 28px 2px rgba(142,79,120,0.45), inset 0 0 24px rgba(255,255,255,0.14)"><svg class="grain" aria-hidden="true" style="opacity: 0.45"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Profile</span></div>
-      <div class="widget" style="background: radial-gradient(circle at 50% 55%, #0C1411 0%, #1F4034 38%, #3F7A62 72%, #5E9A80 100%); box-shadow: 0 0 28px 2px rgba(63,122,98,0.45), inset 0 0 24px rgba(255,255,255,0.14)"><svg class="grain" aria-hidden="true" style="opacity: 0.45"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Currently into</span></div>
-      <div class="widget" style="background: linear-gradient(180deg, #4A0A10 0%, #8E1A1A 30%, #D2501F 62%, #F59A5E 82%, #FFF1E6 100%); box-shadow: 0 0 28px 2px rgba(210,80,31,0.45), inset 0 0 24px rgba(255,255,255,0.14)"><svg class="grain" aria-hidden="true" style="opacity: 0.45"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Years / sunset</span></div>
-      <div class="widget" style="background: radial-gradient(circle at 50% 55%, #0C1411 0%, #23443A 40%, #4F7D69 75%, #6E9A86 100%); box-shadow: 0 0 28px 2px rgba(79,125,105,0.45), inset 0 0 24px rgba(255,255,255,0.14)"><svg class="grain" aria-hidden="true" style="opacity: 0.45"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Development</span></div>
-      <div class="widget" style="background: linear-gradient(180deg, #0B4F5C 0%, #157F91 45%, #3FAFC6 78%, #8FD6E8 93%, #DDF4FA 100%); box-shadow: 0 0 28px 2px rgba(30,154,174,0.45), inset 0 0 24px rgba(255,255,255,0.14)"><svg class="grain" aria-hidden="true" style="opacity: 0.45"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Backend &amp; cloud</span></div>
-      <div class="widget" style="background: radial-gradient(circle at 74% 66%, #3A44D8 0%, #3A44D8 16%, rgba(58,68,216,0) 42%), linear-gradient(180deg, #B4482A 0%, #C2552F 100%); box-shadow: 0 0 28px 2px rgba(194,85,47,0.45), inset 0 0 24px rgba(255,255,255,0.14)"><svg class="grain" aria-hidden="true" style="opacity: 0.45"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Testing</span></div>
-      <div class="widget" style="background: radial-gradient(circle at 50% 50%, #3A0B26 0%, #8E1F5C 38%, #B24F86 72%, #C86A9C 100%); box-shadow: 0 0 28px 2px rgba(178,79,134,0.45), inset 0 0 24px rgba(255,255,255,0.14)"><svg class="grain" aria-hidden="true" style="opacity: 0.45"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Design</span></div>
+  <section class="sheet" aria-labelledby="type">
+    <div class="head">
+      <h2 id="type" data-de="Schrift">Type</h2>
+    </div>
+    <div class="type">
+      <div class="trow"><div class="spec"><b>Pinyon Script</b></div><p class="s-hero">Hi, I'm Fiona!</p></div>
+      <div class="trow"><div class="spec"><b>Tenor Sans</b></div><p class="s-display" data-de="Von Datenbank bis Detail.">From database to details.</p></div>
+      <div class="trow"><div class="spec"><b>Inter</b></div><p class="s-text" data-de="Fließtext steht in Inter mit 1.6 Zeilenhöhe. Nur große Überschriften dürfen Charakter zeigen – alles andere soll sich ruhig und sicher lesen.">Body text is set in Inter at 1.6 line height. Only large headlines may show character – everything else should read calmly and safely.</p></div>
     </div>
   </section>
 
-  <!-- Schriften: --d = Desktop-Größe, --m = Handy-Größe -->
-  <section class="card" aria-labelledby="type">
-    <div class="sec-head"><h2 id="type">Type</h2><p>Three families: Pinyon Script for two handwritten moments, M PLUS Rounded 1c for headings and everything clickable, Inter for text. Sizes: desktop / mobile – on a phone the samples show the mobile size.</p></div>
-    <div>
-      <div class="type-row"><span class="sample f-script" style="--d: 72px; --m: 48px">Hi, I’m Fiona!</span><div class="spec"><span class="name">Pinyon Script · 72 / 48 px</span><span class="note">Only “Hi, I’m Fiona!” and “Contact me” (59 / 39 px)</span></div></div>
-      <div class="type-row"><span class="sample f-round" style="--d: 36px; --m: 28px">My portfolio</span><div class="spec"><span class="name">M PLUS Rounded 1c 700 · 36 / 28 px</span><span class="note">Title in the project detail</span></div></div>
-      <div class="type-row"><span class="sample f-round" style="--d: 30px; --m: 18px">From database to details.</span><div class="spec"><span class="name">M PLUS Rounded 1c 700 · 30 / 18 px</span><span class="note">Headline in the profile widget</span></div></div>
-      <div class="type-row"><span class="sample f-round" style="--d: 28px; --m: 22px">Fiona Tran</span><div class="spec"><span class="name">M PLUS Rounded 1c 700 · 28 / 24 / 22 px</span><span class="note">Folder tab</span></div></div>
-      <div class="type-row"><span class="sample f-round" style="--d: 26px; --m: 22px">Tech &amp; tools</span><div class="spec"><span class="name">M PLUS Rounded 1c 700 · 26 / 22 px</span><span class="note">Section heading</span></div></div>
-      <div class="type-row"><span class="sample f-round" style="--d: 24px; --m: 20px">My portfolio</span><div class="spec"><span class="name">M PLUS Rounded 1c 700 · 24 / 20 px</span><span class="note">Project pill below the wheel</span></div></div>
-      <div class="type-row"><span class="sample f-round5" style="--d: 15px">Work · About · Download CV</span><div class="spec"><span class="name">M PLUS Rounded 1c 500 · 15 px</span><span class="note">Everything clickable: navigation, buttons, pills</span></div></div>
-      <div class="type-row"><span class="sample f-inter4" style="--d: 18px; --m: 16px">One or two sentences on what the project is.</span><div class="spec"><span class="name">Inter 400 · 18 / 16 px</span><span class="note">Body text</span></div></div>
-      <div class="type-row"><span class="sample f-inter6" style="--d: 15px">Experience</span><div class="spec"><span class="name">Inter 600 · 15 px</span><span class="note">Labels, widget titles</span></div></div>
-      <div class="type-row"><span class="sample f-inter5" style="--d: 12px; letter-spacing: 0.06em">2026 · WEB &amp; DEVOPS</span><div class="spec"><span class="name">Inter 500 · 12 px</span><span class="note">Meta line above the project title</span></div></div>
-      <div class="type-row"><span class="sample f-inter4" style="--d: 13px">© 2026 Fiona Tran · Imprint · Privacy</span><div class="spec"><span class="name">Inter 400 · 13 px</span><span class="note">Footer</span></div></div>
+  <section class="sheet" aria-labelledby="logo">
+    <div class="head">
+      <h2 id="logo">Logo</h2>
     </div>
+    <div class="minis">
+      <div class="mini m-pink" role="img" aria-label="Mini icon, wine on pink" data-de-label="Mini-Icon, Weinrot auf Rosa"></div>
+      <div class="mini m-olive" role="img" aria-label="Mini icon, paper on olive" data-de-label="Mini-Icon, Papier auf Oliv"></div>
+      <div class="mini m-lime" role="img" aria-label="Mini icon, olive on lime" data-de-label="Mini-Icon, Oliv auf Lime"></div>
+      <div class="mini m-sand" role="img" aria-label="Mini icon, wine on sand" data-de-label="Mini-Icon, Weinrot auf Sand"></div>
+    </div>
+    <div class="wordmark"><span role="img" aria-label="fiona"></span></div>
   </section>
 
-  <!-- Komponenten -->
-  <section class="card" aria-labelledby="components">
-    <div class="sec-head"><h2 id="components">Components</h2><p>Glass for navigation and controls: gradient, a fine light edge on top, 20 px blur, 190&nbsp;% saturation, no border. Solid white or dark surfaces for content.</p></div>
-    <div class="stages">
-      <div class="stage light">
-        <h3>Light mode</h3>
-        <span class="label">Navigation · theme toggle</span>
-        <div class="s-row"><div class="s-nav s-glass"><span class="s-pill on">Work</span><span class="s-pill">About</span></div><span class="s-icon s-glass" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span></div>
-        <span class="label">Project pill</span>
-        <div class="s-project s-glass"><small>2026 · Web &amp; DevOps</small><strong>My portfolio</strong></div>
-        <span class="label">Buttons</span>
-        <div class="s-row"><span class="s-cta">Download CV (PDF)</span><span class="s-ghost">GitHub <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; flex: none; width: 1em; height: 1em; vertical-align: -0.125em"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></span></div>
-        <div class="s-link"><span>Source on GitHub</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; flex: none; width: 1em; height: 1em; vertical-align: -0.125em"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></div>
-        <span class="label">Tech pills · mint dev, blue backend, orange testing, pink design, lilac other</span>
-        <div class="s-techs"><span class="tech t-mint"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>TypeScript</span></span><span class="tech t-blue"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>AWS</span></span><span class="tech t-orange"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Playwright</span></span><span class="tech t-pink"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Figma</span></span><span class="tech t-lilac"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Other</span></span></div>
-        <span class="label">CV row</span>
-        <div class="s-cv"><span>Aug 2024 – today</span><span>Dual student – full-stack development</span></div>
-        <span class="label">Folder tabs</span>
-        <div class="s-tabs s-glass"><span class="s-pill on">Profile</span><span class="s-pill">Tech &amp; tools</span><span class="s-pill">CV</span><span class="s-pill">Contact</span></div>
+  <section class="sheet" aria-labelledby="blocks">
+    <div class="head">
+      <h2 id="blocks" data-de="Bausteine">Building blocks</h2>
+    </div>
+    <div class="specimens" aria-hidden="true">
+      <div class="spec-card">
+        <div class="row"><span class="btn hov" data-de="Schreib mir">Contact me</span></div>
+        <span class="linkrow hovS"><span data-de="Quellcode auf GitHub">Source on GitHub</span><svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></span>
+        <div class="row"><span class="social hov"><i aria-hidden="true"></i>GitHub<svg class="arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></span></div>
       </div>
-      <div class="stage dark">
-        <svg class="grain" aria-hidden="true" style="opacity: 0.08"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg>
-        <h3 style="position: relative">Dark mode</h3>
-        <span class="label" style="position: relative">Navigation · theme toggle</span>
-        <div class="s-row" style="position: relative"><div class="s-nav s-glass"><span class="s-pill on">Work</span><span class="s-pill">About</span></div><span class="s-icon s-glass" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg></span></div>
-        <span class="label" style="position: relative">Project pill</span>
-        <div class="s-project s-glass" style="position: relative"><small>2026 · Web &amp; DevOps</small><strong>My portfolio</strong></div>
-        <span class="label" style="position: relative">Buttons</span>
-        <div class="s-row" style="position: relative"><span class="s-cta">Download CV (PDF)</span><span class="s-ghost">GitHub <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; flex: none; width: 1em; height: 1em; vertical-align: -0.125em"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></span></div>
-        <div class="s-link" style="position: relative"><span>Source on GitHub</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; flex: none; width: 1em; height: 1em; vertical-align: -0.125em"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></div>
-        <span class="label" style="position: relative">Tech pills · mint dev, blue backend, orange testing, pink design, lilac other</span>
-        <div class="s-techs" style="position: relative"><span class="tech t-mint"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>TypeScript</span></span><span class="tech t-blue"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>AWS</span></span><span class="tech t-orange"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Playwright</span></span><span class="tech t-pink"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Figma</span></span><span class="tech t-lilac"><svg class="grain" aria-hidden="true" style="opacity: 0.5"><rect width="100%" height="100%" filter="url(#grainS)"></rect></svg><span>Other</span></span></div>
-        <span class="label" style="position: relative">CV row</span>
-        <div class="s-cv" style="position: relative"><span>Aug 2024 – today</span><span>Dual student – full-stack development</span></div>
-        <span class="label" style="position: relative">Folder tabs</span>
-        <div class="s-tabs s-glass" style="position: relative"><span class="s-pill on">Profile</span><span class="s-pill">Tech &amp; tools</span><span class="s-pill">CV</span><span class="s-pill">Contact</span></div>
+      <div class="spec-card">
+        <div class="navdemo"><span class="on" data-de="Projekte">Work</span><span data-de="Über mich">About</span></div>
+        <div class="folderdemo" aria-hidden="true">
+          <div class="tabsdemo"><span class="sel" data-de="Profil">Profile</span><span>CV</span></div>
+          <i></i>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="row"><div class="label"><small>2026 · Web &amp; DevOps</small><span data-de="Mein Portfolio">My portfolio</span></div></div>
+        <div class="facts">
+          <div class="fact"><span class="fine" data-de="Jahr">Year</span><b>2026</b></div>
+          <div class="fact"><span class="fine" data-de="Rolle">Role</span><b data-de="Design, Frontend &amp; Deployment">Design, frontend &amp; deployment</b></div>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="row"><span class="tag t-lime">JavaScript</span><span class="tag t-blue">Docker</span><span class="tag t-pink">Figma</span><span class="tag t-sand" data-de="3D-Druck">3D printing</span></div>
+        <div class="row"><span class="chip">Kotlin</span><span class="chip">TypeScript</span><span class="chip">AWS</span></div>
+        <div class="vellum-bg"><span class="vellum">Full-stack dev ★</span><span class="vellum">Creative coder ★</span></div>
       </div>
     </div>
   </section>
 
-  <!-- Form, Abstände, Breakpoints -->
-  <section class="card" aria-labelledby="shape">
-    <div class="sec-head"><h2 id="shape">Shape, spacing, breakpoints</h2><p>Strongly rounded, lots of air. Windows lower than 500 px also count as mobile.</p></div>
-    <span class="label">Radii</span>
-    <div class="radii">
-      <div class="radius"><div style="border-radius: 999px; width: 120px; height: 48px"></div><span class="name">999 px</span><span class="note">Pills, buttons, navigation</span></div>
-      <div class="radius"><div style="border-radius: 24px; width: 96px; height: 120px"></div><span class="name">14 / 24 px</span><span class="note">Project cards, mobile / desktop</span></div>
-      <div class="radius"><div style="border-radius: 18px; width: 120px; height: 64px"></div><span class="name">18 px</span><span class="note">CV rows; link rows 16 px</span></div>
-      <div class="radius"><div style="border-radius: 28px; width: 120px; height: 96px"></div><span class="name">28 px</span><span class="note">Widgets, mobile cards</span></div>
-      <div class="radius"><div style="border-radius: 32px; width: 120px; height: 96px"></div><span class="name">32 px</span><span class="note">Folder, detail panel</span></div>
-    </div>
-    <span class="label">Spacing (px)</span>
-    <div class="spaces">
-      <div class="space"><div style="width: 4px; height: 4px"></div><span class="mono">4</span></div>
-      <div class="space"><div style="width: 8px; height: 8px"></div><span class="mono">8</span></div>
-      <div class="space"><div style="width: 12px; height: 12px"></div><span class="mono">12</span></div>
-      <div class="space"><div style="width: 16px; height: 16px"></div><span class="mono">16</span></div>
-      <div class="space"><div style="width: 24px; height: 24px"></div><span class="mono">24</span></div>
-      <div class="space"><div style="width: 32px; height: 32px"></div><span class="mono">32</span></div>
-      <div class="space"><div style="width: 48px; height: 48px"></div><span class="mono">48</span></div>
-      <div class="space"><div style="width: 56px; height: 56px"></div><span class="mono">56</span></div>
-    </div>
-    <span class="label">Breakpoints</span>
-    <div>
-      <div class="bp-row"><span class="name">Phone</span><span class="mono">&lt; 760 px</span><p>Bottom bar, small wheel, stacked cards, project as a sheet</p></div>
-      <div class="bp-row"><span class="name">Tablet portrait</span><span class="mono">760 – 999 px</span><p>Compact desktop layout: 24 px margins, narrower tabs, project as a sheet</p></div>
-      <div class="bp-row"><span class="name">Tablet landscape</span><span class="mono">1000 – 1099 px</span><p>Desktop layout, project as a sheet from the bottom</p></div>
-      <div class="bp-row"><span class="name">Desktop</span><span class="mono">≥ 1100 px</span><p>Project panel on the right (45&nbsp;% of the width, 480–900&nbsp;px), 48 px margins, card wheel fades out at the edges</p></div>
-    </div>
-  </section>
-
-  <!-- Logo & Favicon -->
-  <section class="card" aria-labelledby="logo">
-    <div class="sec-head"><h2 id="logo">Logo &amp; favicon</h2><p>The wordmark “fiona” is built from even, rounded strokes (stroke width 20, round caps). Favicon variant B: a mint → rosé gradient with the “f” in ink.</p></div>
-    <div class="logos">
-      <div class="logo-tile lt-white"><svg class="mark" role="img" aria-label="fiona logo on white" viewBox="0 0 764 124"><use href="#mark"></use></svg></div>
-      <div class="logo-tile lt-dark"><svg class="mark" role="img" aria-label="fiona logo on dark" viewBox="0 0 764 124"><use href="#mark"></use></svg></div>
-      <div class="logo-tile lt-fav bg-light"><svg role="img" aria-label="Favicon variant B" width="96" height="96" viewBox="0 0 64 64"><defs><clipPath id="sgclb"><rect width="64" height="64" rx="16"></rect></clipPath><linearGradient id="sglb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FE3C9"></stop><stop offset="1" stop-color="#F2A7C3"></stop></linearGradient></defs><g clip-path="url(#sgclb)"><rect width="64" height="64" fill="url(#sglb)"></rect></g><g transform="translate(10 1.2) scale(0.22)" fill="none" stroke="#0E0E10" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"><path d="M10 190 V120 A30 30 0 0 1 40 90 H190"></path><path d="M10 130 H140"></path></g></svg></div>
-    </div>
-  </section>
 </main>
 
-<footer class="site-footer"><span>© 2026 Fiona Tran</span><a href="/imprint">Imprint</a><a href="/imprint#priv">Privacy</a></footer>
-<nav class="tabbar glass" aria-label="Main navigation (mobile)"><a class="pill" href="/">Work</a><a class="pill" href="/about">About</a></nav>
+<footer><span>© 2026 Fiona Tran</span><a href="/imprint" data-de="Impressum">Imprint</a><a href="/imprint#priv" data-de="Datenschutz">Privacy</a></footer>
+
 </body>
 </html>
