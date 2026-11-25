@@ -472,11 +472,12 @@ tabTitle: 'font: 400 ' + (mob ? 30 : 34) + 'px/1.05 ' + F.display + '; letter-sp
 // reichen 6px unter die Blattkante und werden vom Blatt (mit feinem Kantenschatten) wirklich überdeckt. Kein gleitender Indikator; rechts Abstand zur runden
 // Blattecke, damit der Reiter „Contact“ nicht über der Rundung hängt.
 tabInd: O ? V.tabInd + '; display: none' : V.tabInd + '; background: ' + C.wine,
-tabsOnFrame: O ? V.tabsOnFrame + '; align-self: flex-end; gap: ' + R + 'px; padding: 0 ' + (R + 8) + 'px 0 0' : V.tabsOnFrame,
+// Raster mit gleich breiten Spalten: jeder Reiter so breit wie der breiteste („Tech & tools“)
+tabsOnFrame: O ? V.tabsOnFrame + '; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; align-items: end; align-self: flex-end; gap: ' + R + 'px; padding: 0 ' + (R + 8) + 'px 0 0' : V.tabsOnFrame,
 tabs: V.tabs.map((x, i) => ({ ...x, flare: O && x.sel === 'true' ? (i === 0 ? 'right' : 'both') : 'none', styleFrame: O
 ? x.styleFrame + '; width: auto; min-height: 46px; padding: 0 22px; border-radius: ' + R + 'px ' + R + 'px 0 0; font: 400 17px/1 ' + F.display + '; letter-spacing: 0.04em; transition: background 200ms ' + PAPER.ease + ', color 200ms ' + PAPER.ease + (x.sel === 'true'
 ? '; z-index: 2; background: ' + C.paper + '; color: ' + C.walnut + '; --flare: ' + C.paper + '; --fr: ' + R + 'px'
-: '; z-index: 0; margin-bottom: -6px; padding-bottom: 6px; background: #E9E3DA; color: ' + C.muted)
+: '; z-index: 0; margin-bottom: -6px; padding-bottom: 6px; background: ' + C.mist + '; color: ' + C.walnut)
 : x.styleFrame + '; font: 500 15px/1 ' + F.text + '; color: ' + (x.sel === 'true' ? C.pink : C.ink) })),
 helloH1: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.hero + '; letter-spacing: 0.01em; text-align: center; color: ' + C.wine,
 helloSmall: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.hero + '; letter-spacing: 0.01em; color: ' + C.wine, // so groß wie „Hi, I'm Fiona!“
