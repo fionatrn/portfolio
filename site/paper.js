@@ -1,0 +1,132 @@
+/*
+ * paper.js – drittes Design "Paper" (Spike) und der Theme-Wechsel light → dark → paper.
+ *
+ * Elegant-modern auf ungestrichenem Papier: Greige-Grund mit Körnung, weiche
+ * Farbverläufe aus Oliv, Lime und Rosa, Weinrot als Schrift- und Akzentfarbe,
+ * Schneidemarken an den Ecken, Büroklammer, Anhänger-Etikett mit Loch und
+ * mattes Pergament. Überschriften in Italiana (nur groß), Text in Inter.
+ * Gespeichert wird unter "fiona-theme".
+ */
+(function () {
+  'use strict';
+
+  var KEY = 'fiona-theme';
+  var ORDER = ['light', 'dark', 'paper'];
+  var LABEL = { light: 'Switch to dark mode', dark: 'Switch to paper mode', paper: 'Switch to light mode' };
+
+  var c = {
+    wine: '#6C143B',      // Überschriften, aktive Elemente
+    olive: '#4C6D35',     // Fläche mit weißer Schrift (5.9:1)
+    lime: '#BFD485',
+    pink: '#FFCCDA',
+    ground: '#ECE8E1',    // Greige
+    paper: '#FAF8F4',     // Blatt, weiß-beige
+    sand: '#E3DED5',      // zweite Papierlage
+    ink: '#2A2125',       // Fließtext (14:1 auf Papier)
+    muted: '#62575B',     // Nebentext (6.6:1 auf Papier)
+    oliveInk: '#2E4520',  // Schrift auf Lime (7.6:1)
+    // Maison-Noyer-Töne: Walnuss, Moos-Ocker, Nebelblau
+    walnut: '#5B2E1F',
+    moss: '#6E6B24',
+    mist: '#AEBBC1',
+    line: 'rgba(42,33,37,0.12)'
+  };
+
+  var f = {
+    display: 'Italiana, "Times New Roman", serif',
+    text: 'Inter, sans-serif'
+  };
+
+  var ease = 'cubic-bezier(0.23, 1, 0.32, 1)';
+  var shadow = '0 1px 2px rgba(60,40,45,0.08), 0 10px 30px rgba(60,40,45,0.10)';
+  var lift = '0 2px 4px rgba(60,40,45,0.10), 0 24px 50px rgba(60,40,45,0.16)';
+  // Der Verlauf der Identität: Oliv → Lime → Rosa
+  var bloom = 'linear-gradient(180deg, ' + c.olive + ' 0%, #8FA85C 30%, ' + c.lime + ' 55%, #F4D3C8 80%, ' + c.pink + ' 100%)';
+
+  // Horizont für die Startseite: das untere Viertel läuft aus dem Greige über Rosa, Lime und Moos
+  // in Walnuss und endet in Nebelblau – die Farbbänder der Maison-Noyer-Drucke, weich ineinander
+  var horizon = 'linear-gradient(180deg, ' +
+    'rgba(236,232,225,0) 0%, rgba(236,232,225,0) 75%, ' +
+    'rgba(255,204,218,0.45) 81%, rgba(191,212,133,0.55) 87%, ' +
+    'rgba(110,107,36,0.55) 92%, rgba(91,46,31,0.5) 96%, rgba(174,187,193,0.9) 100%)';
+
+  var CSS ='html[data-paper] ::selection{background:' + c.pink + ';color:' + c.wine + '}' +
+    'html[data-paper] :focus-visible{outline:2px solid ' + c.wine + '!important;outline-offset:3px!important}' +
+    'html[data-paper]{scrollbar-color:' + c.muted + ' ' + c.ground + '}';
+  var styled = false;
+
+  // Schneidemarken: kleine Winkel in allen vier Ecken (als Hintergrund-Ebenen)
+  function crop(inset, len, col) {
+    var g = 'linear-gradient(' + col + ', ' + col + ')', i = inset + 'px', L = len + 'px';
+    return [
+      g + ' left ' + i + ' top ' + i + ' / ' + L + ' 1px no-repeat', g + ' left ' + i + ' top ' + i + ' / 1px ' + L + ' no-repeat',
+      g + ' right ' + i + ' top ' + i + ' / ' + L + ' 1px no-repeat', g + ' right ' + i + ' top ' + i + ' / 1px ' + L + ' no-repeat',
+      g + ' left ' + i + ' bottom ' + i + ' / ' + L + ' 1px no-repeat', g + ' left ' + i + ' bottom ' + i + ' / 1px ' + L + ' no-repeat',
+      g + ' right ' + i + ' bottom ' + i + ' / ' + L + ' 1px no-repeat', g + ' right ' + i + ' bottom ' + i + ' / 1px ' + L + ' no-repeat'
+    ].join(', ');
+  }
+
+  var P = {
+    c: c, f: f, ease: ease, shadow: shadow, lift: lift, bloom: bloom, crop: crop, horizon: horizon,
+
+    theme: function (props) {
+      if (props && props.dark) return 'dark';
+      try {
+        var s = window.localStorage.getItem(KEY);
+        if (ORDER.indexOf(s) >= 0) return s;
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      } catch (e) { return 'light'; }
+    },
+    next: function (th) { return ORDER[(ORDER.indexOf(th) + 1) % ORDER.length]; },
+    save: function (th) { try { window.localStorage.setItem(KEY, th); } catch (e) {} },
+    labelFor: function (th) { return LABEL[th] || LABEL.light; },
+    mark: function (th) {
+      try {
+        if (!styled) { var s = document.createElement('style'); s.textContent = CSS; document.head.appendChild(s); styled = true; }
+        if (th === 'paper') document.documentElement.setAttribute('data-paper', ''); else document.documentElement.removeAttribute('data-paper');
+      } catch (e) {}
+    },
+
+    rootBg: c.ground,
+    // Papierkörnung über dem Greige
+    grain: 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.22; mix-blend-mode: multiply; pointer-events: none',
+
+    t: {
+      bg: c.ground, ink: c.wine, muted: c.muted, // ink: Logo und Icons in Weinrot
+      glass: c.paper, border: 'rgba(42,33,37,0.08)', inner: c.paper,
+      shadow: shadow, cardShadow: lift,
+      glowA: 'rgba(0,0,0,0)', glowB: 'rgba(0,0,0,0)', grain: '0.22', blend: 'multiply',
+      frame: c.sand, frameInk: c.ink, sheet: c.paper, line: c.line,
+      photo: 'linear-gradient(180deg, #DDD6CB 0%, #C9C0B3 100%)', silhouette: '#A39889'
+    },
+
+    sheet: function (r) { return 'background: ' + c.paper + '; border: 0; border-radius: ' + (r == null ? 14 : r) + 'px; box-shadow: ' + shadow; },
+    // Mattes Pergament
+    vellum: 'background: rgba(250,248,244,0.68); border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 2px rgba(60,40,45,0.08)',
+    // Kleine Versal-Zeile (Feingedrucktes), nur für Metadaten
+    fine: 'font: 500 12px/1.4 ' + f.text + '; letter-spacing: 0.12em; text-transform: uppercase',
+
+    nav: 'display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: ' + c.paper + '; box-shadow: ' + shadow + '; backdrop-filter: none; -webkit-backdrop-filter: none',
+    pill: 'display: inline-flex; align-items: center; justify-content: center; flex: none; min-height: 44px; padding: 0 22px; border: 0; border-radius: 999px; cursor: pointer; background: transparent; color: ' + c.ink + '; font: 500 15px/1 ' + f.text + '; transition: background 160ms ' + ease + ', color 160ms ' + ease,
+    pillActive: 'background: ' + c.wine + '; color: ' + c.pink,
+    iconBtn: 'display: inline-flex; align-items: center; justify-content: center; justify-self: end; flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 999px; cursor: pointer; background: ' + c.paper + '; box-shadow: ' + shadow + '; backdrop-filter: none; -webkit-backdrop-filter: none',
+    tabBtn: 'display: inline-flex; align-items: center; justify-content: center; flex: 1; min-height: 44px; padding: 0 8px; border: 0; border-radius: 999px; font: 500 15px/1 ' + f.text + '; color: ' + c.ink,
+    tabBtnActive: 'background: ' + c.wine + '; color: ' + c.pink,
+    button: 'display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; min-height: 48px; padding: 0 26px; border: 0; border-radius: 999px; background: ' + c.wine + '; color: ' + c.pink + '; font: 500 15px/1 ' + f.text,
+
+    // Anhänger-Etikett: Papier mit gestanztem Loch links
+    hangTag: 'border: 0; border-radius: 10px; background: radial-gradient(circle at 18px 50%, ' + c.ground + ' 0 5px, rgba(42,33,37,0.18) 5.5px 6.2px, rgba(0,0,0,0) 6.6px), linear-gradient(180deg, ' + c.olive + ' 0%, ' + c.lime + ' 50%, ' + c.pink + ' 100%) left / 36px 100% no-repeat, ' + c.paper + '; box-shadow: ' + shadow + '; backdrop-filter: none; -webkit-backdrop-filter: none',
+
+    // Büroklammer (SVG im Template, viewBox 0 0 28 74)
+    clip: function (pos, h, rot) { return 'position: absolute; z-index: 4; ' + pos + '; width: auto; height: ' + (h || 64) + 'px; rotate: ' + (rot || 0) + 'deg; pointer-events: none; filter: drop-shadow(1px 2px 1.5px rgba(60,40,45,0.25))'; },
+
+    // Tech-Tags: Papierfarben nach Kategorie
+    tag: function (k) {
+      var m = { mint: [c.lime, c.oliveInk], blue: ['#D3DCE0', c.ink], orange: [c.pink, c.wine], pink: [c.pink, c.wine], lilac: [c.sand, c.ink], yellow: [c.lime, c.oliveInk] }[k] || [c.sand, c.ink];
+      return 'position: relative; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: ' + m[0] + '; color: ' + m[1] + '; font: 500 13px/1 ' + f.text;
+    }
+  };
+  P.tabBar = 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 4px; border-radius: 999px; background: ' + c.paper + '; box-shadow: ' + lift;
+
+  window.PAPER = P;
+})();

@@ -12,13 +12,14 @@
 <meta name="description" content="Portfolio of Fiona Tran – full-stack developer and computer science student.">
 <meta name="robots" content="noindex">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script src="/paper.js?v=7"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
 <x-dc><template>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Italiana&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
 a{color:inherit;text-decoration:none}
@@ -54,17 +55,21 @@ a{color:inherit;text-decoration:none}
 </nav>
 </sc-if>
 <button data-on-click="{{toggleDark}}" aria-label="{{darkLabel}}" style="{{iconBtn}}">
-<sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{isPaper}}" hint-placeholder-val="{{ false }}">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
 </sc-if>
 <sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+</sc-if>
+<sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8.5L19 7.5V21H6z"></path><path d="M14.5 3v4.5H19"></path><path d="M9 12.5h6M9 16.5h4"></path></svg>
 </sc-if>
 </button>
 </header>
 
 <main style="{{mainStyle}}">
 <div style="{{wrap}}">
+<sc-if value="{{isPaper}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" viewBox="0 0 28 74" style="{{clipStyle}}"><path d="M10 24V54a4.5 4.5 0 0 0 9 0V10a7 7 0 0 0-14 0V58a9 9 0 0 0 18 0V20" fill="none" stroke="#9A9EA4" stroke-width="2.2" stroke-linecap="round"></path></svg></sc-if>
 <div style="{{cols}}">
 <section aria-labelledby="imp" style="{{col}}">
 <h1 id="imp" style="{{h1}}">Imprint</h1>
@@ -81,7 +86,7 @@ a{color:inherit;text-decoration:none}
 <div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Hosting und Server-Logfiles</h3><p style="{{body}}">Diese Website wird von Ende Solutions (Linus Ende), Kattowitzer Straße 9, 38440 Wolfsburg, gehostet. Mit dem Hoster besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Der eingehende Datenverkehr wird über einen Server der Hetzner Online GmbH, Industriestraße 25, 91710 Gunzenhausen, weitergeleitet. Beim Aufruf der Seite werden automatisch Ihre IP-Adresse sowie Datum und Uhrzeit des Zugriffs verarbeitet, um die Seite auszuliefern und den sicheren Betrieb zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Die Logfiles werden nach 6 Monaten automatisch gelöscht.</p></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Cloudflare</h3><p style="{{body}}">Zur Auslieferung der Seite und zum Schutz vor Angriffen wird Cloudflare (Cloudflare, Inc., USA) eingesetzt. Dabei werden Verbindungsdaten wie Ihre IP-Adresse verarbeitet, auch in den USA. Cloudflare ist unter dem EU-US Data Privacy Framework zertifiziert (Angemessenheitsbeschluss der EU-Kommission vom 10. Juli 2023). Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.</p></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Schriftarten (Google Fonts)</h3><p style="{{body}}">Diese Website lädt Schriftarten von Google Fonts, einem Dienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Dabei wird Ihre IP-Adresse an Google übermittelt; eine Übermittlung in die USA ist möglich. Google ist unter dem EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (einheitliche Darstellung der Website). Weitere Informationen: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="{{linkInline}}">policies.google.com/privacy</a></p></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Speicherung im Browser</h3><p style="{{body}}">Ihre Auswahl zwischen hellem und dunklem Design wird ausschließlich lokal in Ihrem Browser (Local Storage) gespeichert und nicht an mich übertragen. Das ist für diese Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Sie können den Eintrag jederzeit über die Einstellungen Ihres Browsers löschen.</p></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Speicherung im Browser</h3><p style="{{body}}">Ihre Auswahl des Designs (hell, dunkel oder Papier) wird ausschließlich lokal in Ihrem Browser (Local Storage) gespeichert und nicht an mich übertragen. Das ist für diese Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Sie können den Eintrag jederzeit über die Einstellungen Ihres Browsers löschen.</p></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Kontakt per E-Mail</h3><p style="{{body}}">Wenn Sie mir eine E-Mail schreiben, verarbeite ich Ihre Angaben nur, um Ihre Anfrage zu beantworten (Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO), und lösche sie, sobald sie dafür nicht mehr benötigt werden.</p></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Links zu anderen Plattformen</h3><p style="{{body}}">Die Verweise auf GitHub, LinkedIn, Pinterest und Instagram sind einfache Links. Daten werden erst übertragen, wenn Sie einen Link anklicken; ab dann gilt die Datenschutzerklärung der jeweiligen Plattform.</p></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><h3 style="{{label}}; margin: 0">Keine Cookies, kein Tracking</h3><p style="{{body}}">Diese Website setzt keine Cookies und nutzt keine Analyse- oder Tracking-Dienste.</p></div>
@@ -116,22 +121,22 @@ if (st !== !!this.state.stacked) this.setState({ stacked: st });
 } catch (e) {}
 }
 renderVals() {
-const sysDark = (() => { try { const s = window.localStorage.getItem('fiona-theme'); if (s) return s === 'dark'; return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) { return false; } })();
-const dark = this.state.dark ?? (this.props.dark ? true : sysDark);
+const theme = this.state.theme ?? PAPER.theme(this.props); // light → dark → paper
+const dark = theme === 'dark', paper = theme === 'paper';
 if (!this._rs && typeof window !== 'undefined') { try { this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); } catch (e) {} }
 const vw = Number(this.props.vw) || (typeof window !== 'undefined' && window.innerWidth) || 1440;
 const vh = Number(this.props.vh) || (typeof window !== 'undefined' && window.innerHeight) || 900;
 const mob = !!this.props.mobile || vw < 760 || (!this.props.vw && vh < 500);
 const cmp = !mob && vw < 1000;
 const side = mob ? 20 : cmp ? 24 : 48;
-const t = dark ? { bg: '#141416', ink: '#F2F2F4', muted: '#A4A7AF', glass: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.12)', shadow: '0 12px 40px rgba(0,0,0,0.22)', glowA: 'rgba(0,0,0,0)', glowB: 'rgba(0,0,0,0)', grain: '0.16', blend: 'screen', line: 'rgba(255,255,255,0.14)' }
+const t = paper ? PAPER.t : dark ? { bg: '#141416', ink: '#F2F2F4', muted: '#A4A7AF', glass: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.12)', shadow: '0 12px 40px rgba(0,0,0,0.22)', glowA: 'rgba(0,0,0,0)', glowB: 'rgba(0,0,0,0)', grain: '0.16', blend: 'screen', line: 'rgba(255,255,255,0.14)' }
 : { bg: '#E9E9EC', ink: '#0E0E10', muted: '#55585F', glass: 'rgba(255,255,255,0.55)', border: 'rgba(255,255,255,0.85)', shadow: '0 12px 40px rgba(20,20,40,0.08)', glowA: 'rgba(159,227,201,0.55)', glowB: 'rgba(242,167,195,0.45)', grain: '0.22', blend: 'multiply', line: 'rgba(14,14,16,0.14)' };
 const glass = 'background: ' + (dark ? 'linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.16) 100%)') + '; border: 0; box-shadow: inset 0 0.5px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.55') + '), inset 0 0 14px rgba(255,255,255,' + (dark ? '0.04' : '0.2') + '), ' + t.shadow + '; backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%)';
 const pillBase = 'display: inline-flex; align-items: center; justify-content: center; flex: none; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; border: 0; cursor: pointer; ';
-return {
-t, desktop: !mob, mobile: mob, isDark: dark, isLight: !dark, logoH: mob ? 16 : 30,
-darkLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
-toggleDark: () => { try { window.localStorage.setItem('fiona-theme', dark ? 'light' : 'dark'); } catch (e) {} this.setState({ dark: !dark }); },
+const V = {
+t, desktop: !mob, mobile: mob, isDark: dark, isLight: theme === 'light', isPaper: paper, logoH: mob ? 16 : 30,
+darkLabel: PAPER.labelFor(theme),
+toggleDark: () => { const nx = PAPER.next(theme); PAPER.save(nx); this.setState({ theme: nx }); },
 bgGrain: dark ? 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.08; mix-blend-mode: overlay; pointer-events: none' : 'display: none',
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + (dark ? 'radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416' : t.bg) + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column; transition: background 0.4s',
 glowA: 'position: absolute; width: 900px; height: 900px; left: -220px; top: -260px; border-radius: 50%; background: radial-gradient(circle, ' + t.glowA + ' 0%, rgba(0,0,0,0) 65%); pointer-events: none',
@@ -160,6 +165,31 @@ tabNav: pillBase + 'flex: 1; padding: 0 8px; color: ' + t.ink,
 footer: 'display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 16px; font: 400 13px/1.4 Inter, sans-serif; color: ' + t.muted,
 footLink: 'display: inline-flex; align-items: center; min-height: 44px; color: ' + t.muted + '; text-decoration: underline; text-underline-offset: 3px'
 };
+// Paper (Spike): Impressum als Blatt mit Schneidemarken und Büroklammer auf Greige
+if (paper) {
+const C = PAPER.c, F = PAPER.f;
+Object.assign(V, {
+clipStyle: PAPER.clip(mob ? 'left: 24px; top: -20px' : 'left: 48px; top: -24px', mob ? 58 : 72, -8),
+bgGrain: PAPER.grain,
+rootStyle: V.rootStyle + '; background: ' + PAPER.rootBg,
+navStyle: PAPER.nav,
+pill: PAPER.pill,
+pillActive: PAPER.pill + '; ' + PAPER.pillActive,
+iconBtn: PAPER.iconBtn,
+tabBar: PAPER.tabBar,
+tabNav: PAPER.tabBtn,
+wrap: V.wrap + '; position: relative; flex: 0 0 auto; margin-top: 28px; border-radius: 22px; background: ' + PAPER.crop(mob ? 12 : 18, mob ? 12 : 18, 'rgba(108,20,59,0.35)') + ', ' + C.paper + '; box-shadow: ' + PAPER.lift + '; padding: ' + (mob ? '48px 22px 36px' : '72px clamp(28px, 5vw, 80px) 56px'),
+cols: V.cols + '; border-top: 0; padding-top: 0',
+divider: V.divider.replace(/rgba\([^)]*\)/, C.line),
+h1: 'margin: 0; scroll-margin-top: 32px; font: 400 ' + (mob ? 44 : 56) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
+label: 'font: 600 14px/1.4 ' + F.text + '; color: ' + C.ink,
+body: V.body + '; color: ' + C.ink,
+linkInline: 'color: ' + C.wine + '; text-decoration: underline; text-underline-offset: 3px',
+small: V.small + '; color: ' + C.muted
+});
+}
+PAPER.mark(theme);
+return V;
 }
 }
 </script>

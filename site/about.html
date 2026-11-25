@@ -23,13 +23,14 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
+<script src="/paper.js?v=7"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
 <x-dc><template>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=M+PLUS+Rounded+1c:wght@500;700&amp;family=Pinyon+Script&amp;family=Italiana&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
 a{color:inherit;text-decoration:none}
@@ -86,11 +87,14 @@ a{color:inherit;text-decoration:none}
 </nav>
 </sc-if>
 <button class="hov" data-on-click="{{toggleDark}}" aria-label="{{darkLabel}}" style="{{iconBtn}}">
-<sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{isPaper}}" hint-placeholder-val="{{ false }}">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
 </sc-if>
 <sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+</sc-if>
+<sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.ink}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8.5L19 7.5V21H6z"></path><path d="M14.5 3v4.5H19"></path><path d="M9 12.5h6M9 16.5h4"></path></svg>
 </sc-if>
 </button>
 </header>
@@ -153,6 +157,7 @@ a{color:inherit;text-decoration:none}
 <span class="reveal pop" style="{{lab2}}">UI/UX enthusiast ★</span>
 <span class="reveal pop" style="{{lab3}}">Creative coder ★</span>
 <span class="reveal pop" style="{{lab4}}">Violinist ★</span>
+<sc-if value="{{isPaper}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" viewBox="0 0 28 74" style="{{photoClip}}"><path d="M10 24V54a4.5 4.5 0 0 0 9 0V10a7 7 0 0 0-14 0V58a9 9 0 0 0 18 0V20" fill="none" stroke="#9A9EA4" stroke-width="2.2" stroke-linecap="round"></path></svg></sc-if>
 </div>
 
 <div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 440px; min-width: 0">
@@ -173,14 +178,14 @@ a{color:inherit;text-decoration:none}
 <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
 <span style="{{wLabelW}}">Currently into</span>
 <div style="position: relative; display: flex; flex-direction: column; gap: 10px">
-<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #7CF0B8"></span>Cybersecurity</span>
-<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #FF8AC0"></span>Design</span>
-<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #B9A6FF"></span>Creative coding</span>
+<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: {{dot1}}"></span>Cybersecurity</span>
+<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: {{dot2}}"></span>Design</span>
+<span style="{{focusRowW}}"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: {{dot3}}"></span>Creative coding</span>
 </div>
 </div>
 <div class="reveal tiltR" style="{{wYears}}">
 <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; pointer-events: none"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
-<svg role="img" aria-label="{{yearsAria}}" viewBox="{{yearsVB}}" style="{{yearsSvg}}"><path d="{{yearsD}}" fill="rgba(255,236,244,0.92)"></path></svg>
+<svg role="img" aria-label="{{yearsAria}}" viewBox="{{yearsVB}}" style="{{yearsSvg}}"><path d="{{yearsD}}" fill="{{yearsFill}}"></path></svg>
 <span aria-hidden="true" style="{{yearsCap}}">{{yearsLabel}}</span>
 </div>
 </div>
@@ -274,8 +279,8 @@ this._lastTab = tb;
 } catch (err) {}
 }
 renderVals() {
-const sysDark = (() => { try { const s = window.localStorage.getItem('fiona-theme'); if (s) return s === 'dark'; return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); } catch (e) { return false; } })();
-const dark = this.state.dark ?? (this.props.dark ? true : sysDark);
+const theme = this.state.theme ?? PAPER.theme(this.props); // light → dark → paper
+const dark = theme === 'dark', paper = theme === 'paper';
 if (!this._rs && typeof window !== 'undefined') { try { this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); } catch (e) {} }
 const vw = Number(this.props.vw) || (typeof window !== 'undefined' && window.innerWidth) || 1440;
 const vh = Number(this.props.vh) || (typeof window !== 'undefined' && window.innerHeight) || 900;
@@ -286,7 +291,7 @@ const tab = this.state.tab ?? 'about';
 const archive = false;
 const hfName = 'Pinyon Script';
 const hf = { d: 72, m: 48, w: 400 };
-const t = dark ? {
+const t = paper ? PAPER.t : dark ? {
 bg: '#141416', ink: '#F2F2F4', muted: '#A4A7AF',
 frame: 'rgba(255,255,255,0.06)', frameInk: '#E6E7EA', sheet: 'rgba(255,255,255,0.07)',
 glass: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.12)', inner: 'rgba(255,255,255,0.05)',
@@ -301,7 +306,7 @@ photo: 'radial-gradient(70% 55% at 50% 30%, #EDEDEF 0%, rgba(237,237,239,0) 70%)
 };
 const glass = 'background: ' + (dark ? 'linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.16) 100%)') + '; border: 0; box-shadow: inset 0 0.5px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.55') + '), inset 0 0 14px rgba(255,255,255,' + (dark ? '0.04' : '0.2') + '), ' + t.shadow + '; backdrop-filter: blur(20px) saturate(190%); -webkit-backdrop-filter: blur(20px) saturate(190%)';
 const pillBase = 'display: inline-flex; align-items: center; justify-content: center; flex: none; min-height: 44px; padding: 0 20px; border-radius: 999px; font: 500 15px/1 "M PLUS Rounded 1c", Inter, sans-serif; border: 0; cursor: pointer; ';
-const R = mob ? 24 : 32;
+const R = paper ? (mob ? 10 : 12) : (mob ? 24 : 32);
 const color = (bg, glow) => 'position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 22px; border-radius: 28px; color: #FFFFFF; background: ' + bg + '; box-shadow: 0 0 28px 2px ' + glow + ', inset 0 0 24px rgba(255,255,255,0.14); filter: saturate(0.78) brightness(1.04); ';
 const metric = this.props.metric ?? 'commits';
 const yr = new Date().getFullYear();
@@ -316,7 +321,7 @@ styleFrame: pillBase + 'position: relative; z-index: 1; width: ' + tw + 'px; pad
 const card = (rad) => mob ? 'box-sizing: border-box; padding: 28px 22px 32px; border-radius: ' + rad + '; background: ' + t.sheet + '; backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255,255,255,' + (dark ? '0.14' : '0.9') + ')' + (dark ? '' : ', 0 16px 32px rgba(20,20,40,0.10)') + '; ' : '';
 const pv = (k) => mob ? '' : '; grid-area: 1 / 1; min-width: 0; ' + (tab === k ? 'visibility: visible; opacity: 1' : 'visibility: hidden; opacity: 0; pointer-events: none');
 const lab = (pos) => 'position: absolute; ' + pos + '; padding: 6px 12px; border-radius: 999px; background: ' + (dark ? 'rgba(10,10,12,0.6)' : 'rgba(255,255,255,0.75)') + '; color: ' + t.ink + '; font: 500 13px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; backdrop-filter: blur(10px)';
-return {
+const V = {
 t, tabs, yearsD: yD, yearsNum: yN,
 yearsLabel: metric === 'years' ? 'Years building software' : 'Commits in ' + yr,
 yearsAria: metric === 'years' ? yN + ' years building software' : yN + ' commits on GitHub in ' + yr, yearsVB: '0 0 ' + (yN.length * 62 - 12) + ' 70',
@@ -324,10 +329,11 @@ yearsSvg: 'position: relative; display: block; align-self: center; height: ' + (
 yearsCap: 'position: relative; align-self: center; text-align: center; font: 700 15px/1.3 "M PLUS Rounded 1c", Inter, sans-serif; color: rgba(74,10,16,0.88)',
 wYears: color('linear-gradient(180deg, #4A0A10 0%, #8E1A1A 30%, #D2501F 62%, #F59A5E 82%, #FFF1E6 100%)', 'rgba(210,80,31,0.45)') + (mob ? 'padding: 16px; border-radius: 24px; ' : '') + 'justify-content: space-between',
 helloH1: archive ? 'margin: 0 0 4px; line-height: 0; color: ' + t.ink : 'margin: 0; font: ' + hf.w + ' ' + (mob ? hf.m : hf.d) + 'px/1.2 "' + hfName + '", ' + (hfName === 'M PLUS Rounded 1c' ? 'sans-serif; letter-spacing: -0.03em' : 'cursive') + '; text-align: center; display: block; width: 100%; box-sizing: border-box; padding: 0 6px; white-space: nowrap; color: ' + t.ink,
-desktop: !mob, mobile: mob, isDark: dark, isLight: !dark,
+desktop: !mob, mobile: mob, isDark: dark, isLight: theme === 'light', isPaper: paper,
+dot1: '#7CF0B8', dot2: '#FF8AC0', dot3: '#B9A6FF', yearsFill: 'rgba(255,236,244,0.92)',
 showAbout: true, showTools: true, showCv: true, showContact: true,
-darkLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
-toggleDark: () => { try { window.localStorage.setItem('fiona-theme', dark ? 'light' : 'dark'); } catch (e) {} this.setState({ dark: !dark }); },
+darkLabel: PAPER.labelFor(theme),
+toggleDark: () => { const nx = PAPER.next(theme); PAPER.save(nx); this.setState({ theme: nx }); },
 logoH: mob ? 16 : 30,
 bgGrain: dark ? 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.08; mix-blend-mode: overlay; pointer-events: none' : 'display: none',
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + (dark ? 'radial-gradient(75% 65% at 0% 0%, rgba(159,227,201,0.22) 0%, rgba(159,227,201,0.07) 45%, rgba(159,227,201,0) 75%), radial-gradient(75% 65% at 100% 100%, rgba(242,167,195,0.18) 0%, rgba(242,167,195,0.06) 45%, rgba(242,167,195,0) 75%), #141416' : t.bg) + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column; transition: background 0.4s',
@@ -405,6 +411,65 @@ tabBar: 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env
 tabNavActive: pillBase + 'flex: 1; padding: 0 8px; background: ' + t.ink + '; color: ' + t.bg,
 tabNav: pillBase + 'flex: 1; padding: 0 8px; color: ' + t.ink
 };
+// Paper (Spike): Greige-Mappe, Blatt mit Schneidemarken, Oliv-Lime-Rosa-Verlauf, Büroklammer am Foto, Pergament-Etiketten
+if (paper) {
+const C = PAPER.c, F = PAPER.f, noBlur = '; backdrop-filter: none; -webkit-backdrop-filter: none';
+const card = (bg, fg) => '; border-radius: 18px; color: ' + fg + '; background: ' + bg + '; box-shadow: none; filter: none';
+const plab = '; padding: 7px 14px; border-radius: 999px; ' + PAPER.vellum + '; color: ' + C.ink + '; font: 500 13px/1.2 ' + F.text;
+const mcard = (v) => mob ? v + '; border-radius: 18px; background: ' + C.paper + noBlur + '; box-shadow: ' + PAPER.shadow : v;
+Object.assign(V, {
+bgGrain: PAPER.grain,
+rootStyle: V.rootStyle + '; background: ' + PAPER.rootBg,
+navStyle: PAPER.nav,
+pillActive: PAPER.pill + '; ' + PAPER.pillActive,
+pill: PAPER.pill,
+iconBtn: PAPER.iconBtn,
+tabBar: PAPER.tabBar,
+tabNavActive: PAPER.tabBtn + '; ' + PAPER.tabBtnActive,
+tabNav: PAPER.tabBtn,
+folderWrap: mob ? V.folderWrap : V.folderWrap + '; background: ' + C.sand + noBlur + '; box-shadow: ' + PAPER.lift,
+bgLayer: V.bgLayer + '; opacity: 1',
+mBg: V.mBg + '; opacity: 1',
+bgTab: V.bgTab + '; background: ' + C.paper,
+mTabBg: V.mTabBg + '; background: ' + C.paper,
+bgConn: V.bgConn.replace('rgba(255,255,255,0)', 'rgba(250,248,244,0)').replace('#FFFFFF', C.paper),
+bgSheet: V.bgSheet + '; background: ' + PAPER.crop(16, 16, 'rgba(108,20,59,0.35)') + ', ' + C.paper,
+tabTitle: 'font: 400 ' + (mob ? 30 : 34) + 'px/1.05 ' + F.display + '; letter-spacing: 0.02em; color: ' + C.wine,
+tabInd: V.tabInd + '; background: ' + C.wine,
+tabs: V.tabs.map((x) => ({ ...x, styleFrame: x.styleFrame + '; font: 500 15px/1 ' + F.text + '; color: ' + (x.sel === 'true' ? C.pink : C.ink) })),
+helloH1: 'margin: 0; font: 400 ' + (mob ? 52 : 80) + 'px/1 ' + F.display + '; letter-spacing: 0.01em; text-align: center; color: ' + C.wine,
+helloSmall: 'margin: 0; font: 400 ' + (mob ? 44 : 60) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
+photoCard: V.photoCard + '; overflow: visible; border-radius: 20px',
+photoImg: V.photoImg + '; border-radius: 20px',
+photoClip: PAPER.clip(mob ? 'left: 50%; top: -18px; margin-left: -10px' : 'left: 36px; top: -22px', mob ? 58 : 72, -8),
+lab1: V.lab1 + plab, lab2: V.lab2 + plab, lab3: V.lab3 + plab, lab4: V.lab4 + plab,
+// Die Fläche der Identität: Oliv
+wAbout: V.wAbout + card(C.olive, '#FFFFFF'),
+wBigOn: 'position: relative; font: 400 ' + (mob ? 28 : 42) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: #FFFFFF',
+liW: V.liW + '; color: #FFFFFF',
+wFocus: V.wFocus + card(C.lime, C.oliveInk),
+wLabelW: 'position: relative; ' + PAPER.fine + '; font-size: 11px; color: inherit',
+focusRowW: V.focusRowW + '; color: ' + C.oliveInk,
+dot1: C.wine, dot2: C.olive, dot3: '#FFFFFF',
+// Verlauf Oliv → Lime → Rosa, die Zahl in Weinrot darauf
+wYears: V.wYears + card(PAPER.bloom, C.wine),
+yearsFill: C.wine,
+yearsCap: 'position: relative; align-self: center; text-align: center; font: 500 14px/1.3 ' + F.text + '; color: ' + C.wine,
+wDev: V.wDev + card(C.lime, C.oliveInk), wCloud: V.wCloud + card('#D3DCE0', C.ink), wTest: V.wTest + card(C.pink, C.wine), wDesign: V.wDesign + card(C.olive, '#FFFFFF'),
+chipW: 'position: relative; display: inline-flex; align-items: center; min-height: 32px; padding: 0 14px; border-radius: 999px; background: ' + C.paper + '; color: ' + C.ink + '; font: 500 14px/1 ' + F.text + '; box-shadow: 0 1px 2px rgba(60,40,45,0.10)' + noBlur,
+h2: 'margin: 0; font: 400 ' + (mob ? 36 : 44) + 'px/1.05 ' + F.display + '; letter-spacing: 0.01em; color: ' + C.wine,
+wLabel: PAPER.fine + '; font-size: 11px; color: ' + C.muted,
+cvRow: mob ? V.cvRow + '; border-bottom: 1px solid ' + C.line : V.cvRow + '; border: 0; border-radius: 14px; background: #F2EEE8; box-shadow: none',
+cvYear: V.cvYear + '; color: ' + C.muted + '; font-variant-numeric: tabular-nums',
+cvWhat: V.cvWhat + '; color: ' + C.ink,
+bio: V.bio + '; color: ' + C.muted,
+ctaStyle: PAPER.button,
+social: 'display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: ' + C.paper + '; color: ' + C.ink + '; font: 500 15px/1 ' + F.text + '; border: 1px solid ' + C.line + '; box-shadow: none',
+secTools: mcard(V.secTools), secCv: mcard(V.secCv), secContact: mcard(V.secContact)
+});
+}
+PAPER.mark(theme);
+return V;
 }
 }
 </script>

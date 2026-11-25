@@ -1,0 +1,24 @@
+---
+version: 1
+slug: "site-index-html"
+primary_target: "site/index.html"
+related_targets: ["site/about.html","site/imprint.html"]
+---
+
+# Surface brief: paper theme (Work, About, Imprint)
+
+Scope: the third theme "paper" across `site/index.html`, `site/about.html`, `site/imprint.html` (shared tokens in `site/paper.js`). Mode: Experience (portfolio; the work leads, the interface recedes). Audience: tech recruiters and engineering teams. Constraints: layout, content and behaviour stay as in light/dark; only the material changes. Body text must be readable.
+
+## Direction contract
+
+THESIS: Elegant-modern stationery, after the Maison Noyer identity (croire.bureau): uncoated greige paper, soft colour fields and fine print. Refuses the cream-scrapbook and the cobalt office-supply spikes before it.
+
+OWN-WORLD: Ground greige #ECE8E1 with paper grain; sheets #FAF8F4 with thin wine crop marks in the corners. Colours: wine #6C143B (headlines, active states, buttons with pink #FFCCDA text), olive #4C6D35 field with white text, lime #BFD485, pink #FFCCDA, and the olive→lime→pink gradient as the signature field. Italiana for large headlines only; Inter for all text. A silver paperclip, a hang tag with a punched hole and gradient strip, milky vellum chips over the portrait. Rounded frames (14–22px), pill controls.
+
+STORY: The visitor reads a calm, well-made printed portfolio: projects, profile, stack, CV and contact without hunting.
+
+FIRST VIEWPORT: Work: greige ground, wine wordmark, paper pill nav with wine active state, project cards framed in paper white, the current title on a hang tag below the wheel.
+
+FORM: pinned brief (reference site and four colours given by the user). seed: none (pinned) — "elegant-modern mit paper elementen und texturen … 6C143B, 4C6D35, BFD485, FFCCDA … hintergrund weiß-beige-greige".
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
