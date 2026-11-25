@@ -78,7 +78,7 @@ a{color:inherit;text-decoration:none}
 <sc-for list="{{cards}}" as="c" hint-placeholder-count="7">
 <button tabindex="{{c.tabi}}" aria-hidden="{{c.ah}}" data-on-click="{{c.pick}}" data-on-mouseenter="{{c.enter}}" data-on-mouseleave="{{c.leave}}" aria-label="{{c.label}}" style="{{c.style}}">
 <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg>
-<sc-if value="{{c.showOpen}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="{{c.openChip}}">{{tx.open}} ↗</span></sc-if>
+<sc-if value="{{c.showOpen}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="{{c.openChip}}">{{tx.open}} <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; flex: none; width: 1em; height: 1em; vertical-align: -0.125em"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></span></sc-if>
 </button>
 </sc-for>
 </div>
@@ -129,7 +129,7 @@ a{color:inherit;text-decoration:none}
 <sc-if value="{{hasLinks}}" hint-placeholder-val="{{ true }}">
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="{{detailLabel}}">{{tx.links}}</span>
-<sc-for list="{{links}}" as="lk" hint-placeholder-count="2"><a class="hovS" href="{{lk.url}}" target="_blank" rel="noopener" style="{{linkRow}}"><span>{{lk.label}}</span><span aria-hidden="true">↗</span></a></sc-for>
+<sc-for list="{{links}}" as="lk" hint-placeholder-count="2"><a class="hovS" href="{{lk.url}}" target="_blank" rel="noopener" style="{{linkRow}}"><span>{{lk.label}}</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; flex: none; width: 1em; height: 1em; vertical-align: -0.125em"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></a></sc-for>
 </div>
 </sc-if>
 </div>
