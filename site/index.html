@@ -46,6 +46,9 @@ a{color:inherit;text-decoration:none}
 @media (hover:hover) and (pointer:fine){.hovS:hover{background-color:#FFCCDA!important;color:#6C143B!important;transform:scale(1.02)}}
 .hovS:focus-visible{background-color:#FFCCDA!important;color:#6C143B!important}
 .hovS:active{transform:scale(0.98);transition-duration:0.16s}
+@keyframes zIn{from{opacity:0}to{opacity:1}}
+@keyframes zImg{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: no-preference){.zIn{animation:zIn 0.22s ease both}.zIn>img{animation:zImg 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both}}
 @keyframes fReveal{from{opacity:0;transform:translateY(28px) scale(0.97)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: no-preference){@supports (animation-timeline: view()){[role=dialog] .reveal{animation:fReveal linear both;animation-timeline:view();animation-range:entry 5% entry 60%}}}
 </style>
@@ -108,10 +111,9 @@ a{color:inherit;text-decoration:none}
 </div>
 <div style="position: relative; flex: none">
 <svg aria-hidden="true" viewBox="0 0 28 74" style="{{clipStyle}}"><path d="M10 24V54a4.5 4.5 0 0 0 9 0V10a7 7 0 0 0-14 0V58a9 9 0 0 0 18 0V20" fill="none" stroke="#9A9EA4" stroke-width="2.2" stroke-linecap="round"></path></svg>
-<div style="{{hero}}">
+<button type="button" data-on-click="{{zoomHero}}" disabled="{{noHero}}" aria-label="{{tx.zoom}}" style="{{hero}}">
 <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg>
-
-</div>
+</button>
 </div>
 <div style="{{detailCols}}">
 <div style="{{textCol}}">
@@ -137,13 +139,21 @@ a{color:inherit;text-decoration:none}
 </div>
 </div>
 <div class="reveal" style="{{gallery}}">
-<div style="{{shot1}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></div>
-<div style="{{shot2}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></div>
+<button type="button" data-on-click="{{zoomShot1}}" disabled="{{noShot1}}" aria-label="{{tx.zoom}}" style="{{shot1}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></button>
+<button type="button" data-on-click="{{zoomShot2}}" disabled="{{noShot2}}" aria-label="{{tx.zoom}}" style="{{shot2}}"><svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grain)"></rect></svg></button>
 </div>
 <button class="reveal ulinkHost" data-on-click="{{goNext}}" aria-label="{{tx.next}}: {{nextT}}" style="{{nextCard}}">
 <span style="{{nextTitle}}"><span class="ulink" style="--ul-b: -6px">{{tx.next}}</span><svg aria-hidden="true" viewBox="0 0 24 24" style="{{nextArrow}}"><path d="M3 12h17.5M14 5.5l6.5 6.5-6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
 </button>
 </div>
+</div>
+</sc-if>
+<sc-if value="{{zoomOn}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-label="{{tx.zoomed}}" class="zIn" data-on-click="{{unzoom}}" style="{{zoomWrap}}">
+<img src="{{zoomSrc}}" alt="{{cur.t}}" style="{{zoomImg}}">
+<button type="button" class="hovX" data-zoom-close="1" data-on-click="{{unzoom}}" aria-label="{{tx.zoomClose}}" style="{{zoomClose}}">
+<svg aria-hidden="true" width="{{closeSize}}" height="{{closeSize}}" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="{{closeW}}" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
 </div>
 </sc-if>
 </div>
@@ -153,7 +163,7 @@ class Component extends DCLogic {
 componentDidMount() {
 this._about();
 try { this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); } catch (e) {}
-this._keyH = (e) => { if (e._fionaDone) return; e._fionaDone = true; const tg = e.target; if (tg && tg.closest && (tg.closest('input, textarea, [contenteditable]') || tg.closest('[role=dialog]'))) return; const k = e.key; if (k === 'ArrowRight' || k === 'ArrowLeft') { if (this.state.open && this._sheet) return; e.preventDefault(); if (this._go) this._go((this.state.active ?? 10) + (k === 'ArrowRight' ? 1 : -1)); } else if (k === 'Escape' && this.state.open) { this.setState({ open: false, sheetFull: false }); } };
+this._keyH = (e) => { if (e._fionaDone) return; e._fionaDone = true; if (this.state.zoom && e.key === 'Escape') { e._unzoom = true; this._unzoom(); return; } const tg = e.target; if (tg && tg.closest && (tg.closest('input, textarea, [contenteditable]') || tg.closest('[role=dialog]'))) return; const k = e.key; if (k === 'ArrowRight' || k === 'ArrowLeft') { if (this.state.open && this._sheet) return; e.preventDefault(); if (this._go) this._go((this.state.active ?? 10) + (k === 'ArrowRight' ? 1 : -1)); } else if (k === 'Escape' && this.state.open) { this.setState({ open: false, sheetFull: false }); } };
 try { window.addEventListener('keydown', this._keyH, true); document.addEventListener('keydown', this._keyH, true); } catch (e) {}
 let skip = false;
 try { skip = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) {}
@@ -165,7 +175,14 @@ const ease = (x) => 1 - Math.pow(1 - x, 3);
 const tick = (now) => { if (this._introStop) return; const p = Math.min(1, Math.max(0, (now - start) / dur)); if (p < 1) { this.setState({ fpos: from + (to - from) * ease(p) }); requestAnimationFrame(tick); } else { this.setState({ active: to, fpos: null, spinning: false }); } };
 requestAnimationFrame(tick);
 }
-componentDidUpdate() { this._about(); }
+componentDidUpdate() { this._about(); this._zoomFocus(); }
+// Bild in voller Größe: beim Öffnen Fokus auf das Schließen-X, beim Schließen zurück auf das angeklickte Bild
+_zoomAt(src, e) { if (!src) return; this._zoomFrom = e && e.currentTarget; this.setState({ zoom: src }); }
+_unzoom() { if (this.state.zoom) this.setState({ zoom: null }); }
+_zoomFocus() {
+const z = !!this.state.zoom; if (z === !!this._zoomWas) return; this._zoomWas = z;
+try { if (z) { const b = document.querySelector('[data-zoom-close]'); if (b) b.focus({ preventScroll: true }); } else if (this._zoomFrom && this._zoomFrom.isConnected) { this._zoomFrom.focus({ preventScroll: true }); this._zoomFrom = null; } } catch (e) {}
+}
 // Haptik beim Wischen durchs Karten-Rad: ein kurzer Tick, sobald eine neue Karte in die Mitte rückt, wie bei einem Picker.
 // Android: navigator.vibrate. iPhone (Safari ab iOS 18) kennt vibrate nicht, gibt aber beim Umschalten eines
 // Schalters (<input type=checkbox switch>) einen Haptik-Tick – dafür ein unsichtbares Label, das angeklickt wird.
@@ -292,14 +309,18 @@ const pw = Math.max(480, Math.min(980, Math.round(vw * 0.52)));
 const pi = ((Math.round(posF) % n) + n) % n;
 const cur = { ...P[pi], num: String(pi + 1).padStart(2, '0'), y: P[pi].y || L('[Year]', '[Jahr]'), team: P[pi].team || L('[Solo / team of 4]', '[Solo / Team aus 4]'), role: P[pi].role || L('[e.g. Frontend & API]', '[z. B. Frontend & API]'), demo: P[pi].demo === undefined ? '#' : P[pi].demo, repo: P[pi].repo === undefined ? '#' : P[pi].repo };
 const open = !!(this.state.open ?? (this.props.openDetail ?? false));
+const shot = P[pi].shots || [];
 this._go = (k) => go(k);
 const go = (k) => { const a0 = this.state.active ?? 10; if (a0 < n || a0 >= 4 * n) { const na = ((a0 % n) + n) % n + 2 * n; const dl = k - a0; this.setState({ active: na, noAnim: true }); requestAnimationFrame(() => requestAnimationFrame(() => { this.setState({ active: na + dl, noAnim: false }); norm(); })); return; } this.setState({ active: k }); norm(); };
 // Schließen-X flach wie die übrigen Icons: keine Papierfläche, kein Schatten, dünne Linie.
 // Am Desktop 32px, am Handy 22px. Das X (Pfad 6–18 von 24) samt runder Linienenden schließt rechts bündig
 // mit dem Inhalt ab und hat oben denselben Abstand zur Blattkante wie rechts (Innenabstand + Scrollleiste).
 const closeSize = mob ? 22 : 32, closeInset = (44 - closeSize) / 2 + closeSize * 6 / 24 - Number(O.iconW) * closeSize / 48, padT = sheetMode ? 8 : 24, padR = sheetMode ? (mob ? 24 : 40) : 48, bar = vw < 760 ? 11 : 15; // Breite der Scrollleiste im Dialog (paper.js)
+// Abstand des X zur Blattecke (oben und rechts gleich): am Desktop 40 px, enger als der Innenabstand, damit oben nicht zu viel Luft bleibt;
+// im Bottom-Sheet bündig mit dem Inhalt. Beim Bild in voller Größe sitzt das X am Desktop 48 px von der Fensterecke.
+const xGap = sheetMode ? padR + bar : 40, zGap = 48;
 const V = {
-t, cur, cards, count: String(n).padStart(2, '0'), isOpen: open, close: () => this.setState({ open: false, sheetFull: false, sheetDy: null }),
+t, cur, cards, count: String(n).padStart(2, '0'), isOpen: open, close: () => this.setState({ open: false, sheetFull: false, sheetDy: null, zoom: null }),
 modal: sheetMode ? 'true' : 'false',
 bgClick: (e) => { if (open && !sheetMode && e.target === e.currentTarget) this.setState({ open: false }); },
 toggleSheet: () => this.setState({ sheetFull: !this.state.sheetFull }),
@@ -315,12 +336,13 @@ projects: L('Projects', 'Projekte'),
 wheel: L('Projects – use the arrow keys, scroll, swipe or select a card. Enter opens the centre project.', 'Projekte – mit den Pfeiltasten, durch Scrollen, Wischen oder per Klick auf eine Karte wählen. Enter öffnet das mittlere Projekt.'),
 open: L('Open', 'Öffnen'), openCur: L('Open ' + cur.t, cur.t + ' öffnen'), close: L('Close project', 'Projekt schließen'),
 year: L('Year', 'Jahr'), team: 'Team', role: L('My role', 'Meine Rolle'), built: L('Built with', 'Gebaut mit'), links: 'Links', next: L('Next project', 'Nächstes Projekt'),
+zoom: L('View image full size', 'Bild in voller Größe ansehen'), zoomed: L('Image in full size', 'Bild in voller Größe'), zoomClose: L('Close image', 'Bild schließen'),
 ph1a: L('A ', 'Eine '), ph1b: L('web app', 'Web-App'), ph1c: L(' that … – one or two sentences on what the project is and which problem it solves', ', die … – ein oder zwei Sätze dazu, was das Projekt ist und welches Problem es löst'),
 ph2: L('Your part: what you built yourself, what was tricky and what you learned', 'Dein Anteil: was du selbst gebaut hast, was knifflig war und was du gelernt hast')
 },
 desktop: !mob, mobile: mob, scriptLogoH: mob ? 50 : 80,
 ...PAPER.langUi(this, O, mob),
-onKey: (e) => { const k = e.key; const inDialog = e.target && e.target.closest && e.target.closest('[role=dialog]'); if (k === 'Escape' && open) { this.setState({ open: false, sheetFull: false }); return; } if (inDialog || (open && sheetMode)) return; if (k === 'ArrowRight' || k === 'ArrowLeft') { return; } else if (k === 'Enter' && e.target && e.target.dataset && e.target.dataset.wheel) { this.setState({ open: true }); } },
+onKey: (e) => { const k = e.key; if (e._unzoom) return; if (this.state.zoom) { if (k === 'Escape') this._unzoom(); else if (k === 'Tab') e.preventDefault(); return; } const inDialog = e.target && e.target.closest && e.target.closest('[role=dialog]'); if (k === 'Escape' && open) { this.setState({ open: false, sheetFull: false }); return; } if (inDialog || (open && sheetMode)) return; if (k === 'ArrowRight' || k === 'ArrowLeft') { return; } else if (k === 'Enter' && e.target && e.target.dataset && e.target.dataset.wheel) { this.setState({ open: true }); } },
 onTouchStart: (e) => { const p = e.touches && e.touches[0]; if (!p) return; if (this._raf) cancelAnimationFrame(this._raf); this._raf = null; this._introStop = true; const now = Date.now(); this._tx = p.clientX; this._base = this.state.fpos ?? (this.state.active ?? 10); this._moved = false; this._smp = [[p.clientX, now], [p.clientX, now]]; this._detK = Math.round(this._base); this._audio(); if (this.state.fpos != null) this.setState({ active: Math.round(this._base), spinning: true }); },
 onTouchMove: (e) => { const p = e.touches && e.touches[0]; if (this._tx == null || !p) return; const dx = p.clientX - this._tx; if (!this._moved && Math.abs(dx) < 8) return; this._moved = true; const unit = mob ? 110 : 190; this._smp = [this._smp[1], [p.clientX, Date.now()]]; const f = this._base - dx / unit; this._det(f); this.setState({ spinning: true, fpos: f }); },
 onTouchEnd: (e) => { this._audio(); if (this._tx == null) return; this._tx = null; const cur = this.state.fpos; if (!this._moved || cur == null) { if (this.state.spinning) this.setState({ spinning: false, fpos: null }); return; } this._dragEnd = Date.now(); const unit = mob ? 110 : 190; const [a, b] = this._smp; const v = (b[0] - a[0]) / Math.max(8, b[1] - a[1]); const fresh = Date.now() - b[1] < 80 ? v : 0; let target = Math.round(cur - fresh * 260 / unit); target = Math.max(Math.round(cur) - 6, Math.min(Math.round(cur) + 6, target)); const from = cur, dist = Math.abs(target - from), dur = Math.min(900, 260 + dist * 110); const st = performance.now(); const ease = (x) => 1 - Math.pow(1 - x, 3); const tick = (now) => { const q = Math.min(1, (now - st) / dur); if (q < 1) { const f = from + (target - from) * ease(q); this._det(f); this.setState({ fpos: f }); this._raf = requestAnimationFrame(tick); } else { this._raf = null; this._det(target); this.setState({ active: target, fpos: null, spinning: false }); norm(); } }; this._raf = requestAnimationFrame(tick); },
@@ -366,10 +388,10 @@ sheetTop: 'position: relative; flex: none; display: flex; justify-content: flex-
 grabBtn: 'position: absolute; left: 50%; top: -6px; transform: translateX(-50%); width: 96px; height: 36px; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center',
 grabber: 'width: 40px; height: 5px; border-radius: 999px; background: rgba(14,14,16,0.2)',
 closeSize, closeW: O.iconW,
-closeBtn: O.iconBtn + '; margin: ' + (padR + bar - padT - closeInset).toFixed(2) + 'px ' + (-closeInset).toFixed(2) + 'px 0 0',
+closeBtn: O.iconBtn + '; margin: ' + (xGap - padT - closeInset).toFixed(2) + 'px ' + (xGap - padR - bar - closeInset).toFixed(2) + 'px 0 0',
 strong: 'font-weight: 600; color: ' + C.ink,
 techs: (P[pi].tech || []).map((label) => { const CAT = { java: 'mint', kotlin: 'mint', typescript: 'mint', angular: 'mint', aws: 'blue', dynamodb: 'blue', supabase: 'blue', docker: 'blue', nginx: 'blue', processing: 'mint', '3d printing': 'lilac', 'github actions': 'orange', javascript: 'mint', 'html & css': 'mint', jest: 'orange', playwright: 'orange', figma: 'pink', canva: 'pink', gimp: 'pink', 'clip studio paint': 'pink' }; return { label: de && label === '3D printing' ? '3D-Druck' : label, style: PAPER.tag(CAT[label.replace(/[\[\]]/g, '').trim().toLowerCase()] || 'lilac') }; }),
-hero: 'position: relative; overflow: hidden; flex: none; height: ' + (mob ? 200 : 300) + 'px; border-radius: 16px; background: ' + (P[pi].img ? 'url(' + P[pi].img + ') center / cover no-repeat, ' : '') + P[pi].g,
+hero: 'position: relative; overflow: hidden; flex: none; height: ' + (mob ? 200 : 300) + 'px; border-radius: 16px; background: ' + (P[pi].img ? 'url(' + P[pi].img + ') center / cover no-repeat, ' : '') + P[pi].g + '; display: block; width: 100%; margin: 0; padding: 0; border: 0; font: inherit; cursor: ' + (P[pi].img ? 'zoom-in' : 'default'),
 // Text und Infospalte gleich breit
 detailCols: 'display: flex; flex-wrap: wrap; gap: ' + (mob ? 36 : 44) + 'px',
 textCol: 'display: flex; flex-direction: column; gap: 12px; flex: 1 1 240px; min-width: 0',
@@ -380,9 +402,17 @@ factCard: 'flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column;
 factRow: 'display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid ' + C.line,
 factVal: 'font: 500 16px/1.4 Inter, sans-serif; color: ' + C.ink + '; text-align: right',
 gallery: 'display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: ' + (mob ? 16 : 24) + 'px',
-shot1: 'position: relative; overflow: hidden; height: ' + (mob ? 140 : 200) + 'px; border-radius: 14px; background: ' + (P[pi].shots && P[pi].shots[0] ? 'url(' + P[pi].shots[0] + ') center / cover no-repeat, ' : '') + P[pi].g,
-shot2: 'position: relative; overflow: hidden; height: ' + (mob ? 140 : 200) + 'px; border-radius: 14px; background: ' + (P[pi].shots && P[pi].shots[1] ? 'url(' + P[pi].shots[1] + ') center / cover no-repeat, ' : '') + P[pi].g,
+shot1: 'position: relative; overflow: hidden; height: ' + (mob ? 140 : 200) + 'px; border-radius: 14px; background: ' + (P[pi].shots && P[pi].shots[0] ? 'url(' + P[pi].shots[0] + ') center / cover no-repeat, ' : '') + P[pi].g + '; display: block; width: 100%; margin: 0; padding: 0; border: 0; font: inherit; cursor: ' + (shot[0] ? 'zoom-in' : 'default'),
+shot2: 'position: relative; overflow: hidden; height: ' + (mob ? 140 : 200) + 'px; border-radius: 14px; background: ' + (P[pi].shots && P[pi].shots[1] ? 'url(' + P[pi].shots[1] + ') center / cover no-repeat, ' : '') + P[pi].g + '; display: block; width: 100%; margin: 0; padding: 0; border: 0; font: inherit; cursor: ' + (shot[1] ? 'zoom-in' : 'default'),
 noDesc: !P[pi].desc,
+// Bilder der Projektansicht anklicken: groß auf dunklem Grund, so groß wie das Fenster es zulässt (nie größer als das Original).
+// Klick irgendwohin, das X oder Escape schließt es wieder.
+noHero: !P[pi].img, noShot1: !shot[0], noShot2: !shot[1],
+zoomHero: (e) => this._zoomAt(P[pi].img, e), zoomShot1: (e) => this._zoomAt(shot[0], e), zoomShot2: (e) => this._zoomAt(shot[1], e),
+zoomOn: !!(open && this.state.zoom), zoomSrc: this.state.zoom || '', unzoom: () => this._unzoom(),
+zoomWrap: 'position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 60px) 16px calc(env(safe-area-inset-bottom, 0px) + 60px)' : '72px 80px') + '; background: rgba(12,12,16,0.88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: zoom-out',
+zoomImg: 'display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: ' + (mob ? 10 : 14) + 'px; box-shadow: 0 30px 80px rgba(0,0,0,0.45)',
+zoomClose: O.iconBtn + '; position: absolute; top: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 10px)' : (zGap - closeInset).toFixed(2) + 'px') + '; right: ' + (mob ? 10 : (zGap - closeInset).toFixed(2)) + 'px',
 // „Next project“ als schlichter Link, darüber dieselbe Trennlinie wie in der Faktentabelle; der Name steht im aria-label
 nextT: P[(pi + 1) % n].t,
 goNext: () => go(active + 1),
