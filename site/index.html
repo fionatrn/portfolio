@@ -164,6 +164,39 @@ const tick = (now) => { if (this._introStop) return; const p = Math.min(1, Math.
 requestAnimationFrame(tick);
 }
 componentDidUpdate() { this._about(); }
+// Haptik beim Wischen durchs Karten-Rad: ein kurzer Tick, sobald eine neue Karte in die Mitte rückt, wie bei einem Picker.
+// Android: navigator.vibrate. iPhone (Safari ab iOS 18) kennt vibrate nicht, gibt aber beim Umschalten eines
+// Schalters (<input type=checkbox switch>) einen Haptik-Tick – dafür ein unsichtbares Label, das angeklickt wird.
+// Dazu ein leises Klicken (Web Audio, gefiltertes Rauschen von 8 ms). Audio-Session „ambient“: auf dem iPhone
+// bleibt es im Stumm-Modus still und unterbricht keine Musik, die gerade läuft.
+_det(pos) { const k = Math.round(pos); if (k === this._detK) return; this._detK = k; this._haptic(); }
+// Audio erst bei einer Berührung anlegen bzw. fortsetzen, sonst blockiert der Browser die Wiedergabe
+_audio() {
+try {
+if (!this._ac) {
+const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } catch (e) {}
+const ac = new AC(), sr = ac.sampleRate, len = Math.round(sr * 0.008), buf = ac.createBuffer(1, len, sr), ch = buf.getChannelData(0);
+for (let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (sr * 0.0012));
+const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 3200; bp.Q.value = 0.9;
+const g = ac.createGain(); g.gain.value = 0.35; bp.connect(g); g.connect(ac.destination);
+this._ac = ac; this._clickBuf = buf; this._clickIn = bp;
+}
+if (this._ac.state === 'suspended') this._ac.resume();
+} catch (e) {}
+}
+_click() {
+try { const ac = this._ac; if (!ac || ac.state !== 'running') return; const src = ac.createBufferSource(); src.buffer = this._clickBuf; src.playbackRate.value = 0.94 + Math.random() * 0.12; src.connect(this._clickIn); src.start(); } catch (e) {}
+}
+_haptic() {
+const now = Date.now(); if (now - (this._hapT || 0) < 40) return; this._hapT = now;
+this._click();
+try {
+if (navigator.vibrate) { navigator.vibrate(8); return; }
+if (!this._hapL) { const l = document.createElement('label'), i = document.createElement('input'); l.setAttribute('aria-hidden', 'true'); l.style.display = 'none'; i.type = 'checkbox'; i.setAttribute('switch', ''); i.tabIndex = -1; l.appendChild(i); document.body.appendChild(l); this._hapL = l; }
+this._hapL.click();
+} catch (e) {}
+}
 // Handy-Onepager: die Karten der About-Seite (Profil, Tech & tools, CV, Contact) einmalig unter das Karten-Rad
 // holen. Mit /#about (Weiterleitung von /about am Handy) danach direkt dorthin scrollen.
 // Solange die Projektansicht offen ist, scrollt die Seite dahinter nicht mit.
@@ -281,9 +314,9 @@ ph2: L('Your part: what you built yourself, what was tricky and what you learned
 desktop: !mob, mobile: mob, scriptLogoH: mob ? 50 : 80,
 ...PAPER.langUi(this, O, mob),
 onKey: (e) => { const k = e.key; const inDialog = e.target && e.target.closest && e.target.closest('[role=dialog]'); if (k === 'Escape' && open) { this.setState({ open: false, sheetFull: false }); return; } if (inDialog || (open && sheetMode)) return; if (k === 'ArrowRight' || k === 'ArrowLeft') { return; } else if (k === 'Enter' && e.target && e.target.dataset && e.target.dataset.wheel) { this.setState({ open: true }); } },
-onTouchStart: (e) => { const p = e.touches && e.touches[0]; if (!p) return; if (this._raf) cancelAnimationFrame(this._raf); this._raf = null; this._introStop = true; const now = Date.now(); this._tx = p.clientX; this._base = this.state.fpos ?? (this.state.active ?? 10); this._moved = false; this._smp = [[p.clientX, now], [p.clientX, now]]; if (this.state.fpos != null) this.setState({ active: Math.round(this._base), spinning: true }); },
-onTouchMove: (e) => { const p = e.touches && e.touches[0]; if (this._tx == null || !p) return; const dx = p.clientX - this._tx; if (!this._moved && Math.abs(dx) < 8) return; this._moved = true; const unit = mob ? 110 : 190; this._smp = [this._smp[1], [p.clientX, Date.now()]]; this.setState({ spinning: true, fpos: this._base - dx / unit }); },
-onTouchEnd: (e) => { if (this._tx == null) return; this._tx = null; const cur = this.state.fpos; if (!this._moved || cur == null) { if (this.state.spinning) this.setState({ spinning: false, fpos: null }); return; } this._dragEnd = Date.now(); const unit = mob ? 110 : 190; const [a, b] = this._smp; const v = (b[0] - a[0]) / Math.max(8, b[1] - a[1]); const fresh = Date.now() - b[1] < 80 ? v : 0; let target = Math.round(cur - fresh * 260 / unit); target = Math.max(Math.round(cur) - 6, Math.min(Math.round(cur) + 6, target)); const from = cur, dist = Math.abs(target - from), dur = Math.min(900, 260 + dist * 110); const st = performance.now(); const ease = (x) => 1 - Math.pow(1 - x, 3); const tick = (now) => { const q = Math.min(1, (now - st) / dur); if (q < 1) { this.setState({ fpos: from + (target - from) * ease(q) }); this._raf = requestAnimationFrame(tick); } else { this._raf = null; this.setState({ active: target, fpos: null, spinning: false }); norm(); } }; this._raf = requestAnimationFrame(tick); },
+onTouchStart: (e) => { const p = e.touches && e.touches[0]; if (!p) return; if (this._raf) cancelAnimationFrame(this._raf); this._raf = null; this._introStop = true; const now = Date.now(); this._tx = p.clientX; this._base = this.state.fpos ?? (this.state.active ?? 10); this._moved = false; this._smp = [[p.clientX, now], [p.clientX, now]]; this._detK = Math.round(this._base); this._audio(); if (this.state.fpos != null) this.setState({ active: Math.round(this._base), spinning: true }); },
+onTouchMove: (e) => { const p = e.touches && e.touches[0]; if (this._tx == null || !p) return; const dx = p.clientX - this._tx; if (!this._moved && Math.abs(dx) < 8) return; this._moved = true; const unit = mob ? 110 : 190; this._smp = [this._smp[1], [p.clientX, Date.now()]]; const f = this._base - dx / unit; this._det(f); this.setState({ spinning: true, fpos: f }); },
+onTouchEnd: (e) => { this._audio(); if (this._tx == null) return; this._tx = null; const cur = this.state.fpos; if (!this._moved || cur == null) { if (this.state.spinning) this.setState({ spinning: false, fpos: null }); return; } this._dragEnd = Date.now(); const unit = mob ? 110 : 190; const [a, b] = this._smp; const v = (b[0] - a[0]) / Math.max(8, b[1] - a[1]); const fresh = Date.now() - b[1] < 80 ? v : 0; let target = Math.round(cur - fresh * 260 / unit); target = Math.max(Math.round(cur) - 6, Math.min(Math.round(cur) + 6, target)); const from = cur, dist = Math.abs(target - from), dur = Math.min(900, 260 + dist * 110); const st = performance.now(); const ease = (x) => 1 - Math.pow(1 - x, 3); const tick = (now) => { const q = Math.min(1, (now - st) / dur); if (q < 1) { const f = from + (target - from) * ease(q); this._det(f); this.setState({ fpos: f }); this._raf = requestAnimationFrame(tick); } else { this._raf = null; this._det(target); this.setState({ active: target, fpos: null, spinning: false }); norm(); } }; this._raf = requestAnimationFrame(tick); },
 onWheel: (e) => { const v = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX; if (!v) return; const now = Date.now(); clearTimeout(this._wIdle); this._wIdle = setTimeout(() => { this._wTot = 0; this._wSteps = 0; this._wLast = 0; }, 160); const av = Math.abs(v); const last = this._wLast || 0; this._wLast = av; const tot0 = this._wTot || 0; if ((tot0 !== 0 && Math.sign(v) !== Math.sign(tot0)) || (av > 6 && av > last * 1.8 && now - (this._wLastStep || 0) > 120 && (this._wSteps || 0) > 0)) { this._wTot = 0; this._wSteps = 0; } this._wTot = (this._wTot || 0) + v; const at = Math.abs(this._wTot); const target = at < 30 ? 0 : at < 900 ? 1 : Math.min(6, 2 + Math.floor((at - 900) / 220)); if ((this._wSteps || 0) < target && now - (this._wLastStep || 0) >= 90) { this._wSteps = (this._wSteps || 0) + 1; this._wLastStep = now; go((this.state.active ?? 10) + (this._wTot > 0 ? 1 : -1)); } },
 // Logo hell, weil der Verlauf oben schon im dunklen Oliv beginnt
 logoInk: C.paper,
