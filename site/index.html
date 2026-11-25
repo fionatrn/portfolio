@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Fiona – From database to details.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://fiona-tran.com/og-image.png">
-<script src="/paper.js?v=29"></script>
+<script src="/paper.js?v=30"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
@@ -60,6 +60,7 @@ a{color:inherit;text-decoration:none}
 <a class="hov" href="Ordner.dc.html" style="{{pill}}">About</a>
 </nav>
 </sc-if>
+<button class="hov" data-on-click="{{toggleLang}}" aria-label="{{langLabel}}" style="{{langBtn}}"><svg aria-hidden="true" width="{{langSize}}" height="{{langSize}}" viewBox="0 0 24 24" fill="none" stroke="{{langInk}}" stroke-width="{{langW}}" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M4.6 7.5h14.8M4.6 16.5h14.8"></path><path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9z"></path></svg><span aria-hidden="true">{{langCode}}</span></button>
 </header>
 
 <main data-on-click="{{bgClick}}" style="{{mainStyle}}">
@@ -242,6 +243,7 @@ sheetTouchMove: (e) => { const d = this._sd; const p = e.touches && e.touches[0]
 sheetTouchEnd: () => { const d = this._sd; this._sd = null; if (!d) return; const dy = d.dy, full = !!this.state.sheetFull; if (d.live) { if (dy < -60) this.setState({ sheetFull: true, sheetDy: null }); else if (dy > 60) { if (full) this.setState({ sheetFull: false, sheetDy: null }); else this.setState({ open: false, sheetFull: false, sheetDy: null }); } else this.setState({ sheetDy: null }); } else if (full && d.top <= 0 && dy > 80) this.setState({ sheetFull: false }); },
 sheetLabel: this.state.sheetFull ? 'Collapse project details' : 'Expand project details',
 desktop: !mob, mobile: mob, scriptLogoH: mob ? 50 : 80,
+...PAPER.langUi(this, O, mob),
 onKey: (e) => { const k = e.key; const inDialog = e.target && e.target.closest && e.target.closest('[role=dialog]'); if (k === 'Escape' && open) { this.setState({ open: false, sheetFull: false }); return; } if (inDialog || (open && sheetMode)) return; if (k === 'ArrowRight' || k === 'ArrowLeft') { return; } else if (k === 'Enter' && e.target && e.target.dataset && e.target.dataset.wheel) { this.setState({ open: true }); } },
 onTouchStart: (e) => { const p = e.touches && e.touches[0]; if (!p) return; if (this._raf) cancelAnimationFrame(this._raf); this._raf = null; this._introStop = true; const now = Date.now(); this._tx = p.clientX; this._base = this.state.fpos ?? (this.state.active ?? 10); this._moved = false; this._smp = [[p.clientX, now], [p.clientX, now]]; if (this.state.fpos != null) this.setState({ active: Math.round(this._base), spinning: true }); },
 onTouchMove: (e) => { const p = e.touches && e.touches[0]; if (this._tx == null || !p) return; const dx = p.clientX - this._tx; if (!this._moved && Math.abs(dx) < 8) return; this._moved = true; const unit = mob ? 110 : 190; this._smp = [this._smp[1], [p.clientX, Date.now()]]; this.setState({ spinning: true, fpos: this._base - dx / unit }); },

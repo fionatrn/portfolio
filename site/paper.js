@@ -131,9 +131,30 @@
         iconW: '1.3',
         tabBar: 'position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); display: flex; justify-content: space-between; gap: 4px; padding: 3px; border: 1px solid ' + c.walnut + '; border-radius: 999px; background: rgba(236,232,225,0.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px)',
         tabBtn: tab,
-        tabBtnActive: tab + '; background: rgba(91,46,31,0.12)'
+        tabBtnActive: tab + '; background: rgba(91,46,31,0.12)',
+        ink: col,
+        // Sprachwahl rechts in der Kopfzeile: Globus und Sprachkürzel, flach wie die Navigation
+        langBtn: 'display: inline-flex; align-items: center; justify-content: center; justify-self: end; flex: none; gap: 8px; min-width: 44px; min-height: 44px; padding: 0 2px; border: 0; border-radius: 0; cursor: pointer; background: transparent; color: ' + col + '; font: 400 16px/1 ' + f.display + '; letter-spacing: 0.08em'
       };
     }
+  };
+
+  // Sprache: Besucher sehen zuerst immer Englisch; wer Deutsch wählt, bekommt es beim nächsten Besuch
+  // wieder (gespeichert unter "fiona-lang"). Die Übersetzung selbst folgt noch – bisher wird nur die Wahl gemerkt.
+  var LANG_KEY = 'fiona-lang';
+  P.lang = function () {
+    try { return window.localStorage.getItem(LANG_KEY) === 'de' ? 'de' : 'en'; } catch (e) { return 'en'; }
+  };
+  P.saveLang = function (l) { try { window.localStorage.setItem(LANG_KEY, l); } catch (e) {} };
+  // Werte für den Sprach-Button einer Seite (comp: die Seiten-Komponente, O: PAPER.outlineUi(...))
+  P.langUi = function (comp, O, mob) {
+    var l = comp.state.lang || P.lang(), de = l === 'de';
+    return {
+      langCode: de ? 'DE' : 'EN',
+      langLabel: de ? 'Sprache: Deutsch. Auf Englisch umstellen' : 'Language: English. Switch to German',
+      toggleLang: function () { var nx = de ? 'en' : 'de'; P.saveLang(nx); comp.setState({ lang: nx }); },
+      langBtn: O.langBtn, langInk: O.ink, langW: O.iconW, langSize: mob ? 22 : 26
+    };
   };
 
   window.PAPER = P;

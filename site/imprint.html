@@ -12,7 +12,7 @@
 <meta name="description" content="Portfolio of Fiona Tran – full-stack developer and computer science student.">
 <meta name="robots" content="noindex">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script src="/paper.js?v=29"></script>
+<script src="/paper.js?v=30"></script>
 <script src="/support.js?v=2"></script>
 </head>
 <body>
@@ -41,6 +41,7 @@ a{color:inherit;text-decoration:none}
 <a href="Ordner.dc.html" style="{{pill}}">About</a>
 </nav>
 </sc-if>
+<button class="hov" data-on-click="{{toggleLang}}" aria-label="{{langLabel}}" style="{{langBtn}}"><svg aria-hidden="true" width="{{langSize}}" height="{{langSize}}" viewBox="0 0 24 24" fill="none" stroke="{{langInk}}" stroke-width="{{langW}}" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M4.6 7.5h14.8M4.6 16.5h14.8"></path><path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9z"></path></svg><span aria-hidden="true">{{langCode}}</span></button>
 </header>
 
 <main style="{{mainStyle}}">
@@ -109,6 +110,7 @@ const O = PAPER.outlineUi('walnut');
 // Impressum als Blatt mit Büroklammer auf Greige
 const V = {
 t, desktop: !mob, mobile: mob, scriptLogoH: mob ? 50 : 80,
+...PAPER.langUi(this, O, mob),
 bgGrain: PAPER.grain,
 rootStyle: 'position: relative; box-sizing: border-box; min-height: 100vh; min-height: 100lvh; padding-bottom: calc(100lvh - 100dvh); overflow: hidden; overflow: clip; background: ' + PAPER.rootBg + '; color: ' + t.ink + '; font-family: Inter, sans-serif; display: flex; flex-direction: column',
 headerStyle: 'position: relative; z-index: 20; display: grid; grid-template-columns: ' + (mob ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr) auto minmax(0, 1fr)') + '; align-items: center; gap: 16px; padding: ' + (mob ? 'calc(env(safe-area-inset-top, 0px) + 20px) 20px 8px' : '28px ' + side + 'px'),
