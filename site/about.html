@@ -64,7 +64,7 @@ a{color:inherit;text-decoration:none}
 [data-panel="cv"]>.reveal:nth-last-child(2){border-bottom:0!important}
 .js-anim [data-panel="cv"]>.reveal{transition:opacity 0.45s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1)}
 .js-anim [data-panel="cv"]>.reveal:not(.in){opacity:0;transform:translateY(14px)}
-.js-anim [data-panel="cv"]>.reveal:nth-child(3){transition-delay:0ms}.js-anim [data-panel="cv"]>.reveal:nth-child(4){transition-delay:60ms}.js-anim [data-panel="cv"]>.reveal:nth-child(6){transition-delay:120ms}.js-anim [data-panel="cv"]>.reveal:nth-child(7){transition-delay:180ms}.js-anim [data-panel="cv"]>.reveal:nth-child(9){transition-delay:240ms}.js-anim [data-panel="cv"]>.reveal:nth-child(10){transition-delay:300ms}
+.js-anim [data-panel="cv"]>.reveal:nth-child(3){transition-delay:0ms}.js-anim [data-panel="cv"]>.reveal:nth-child(4){transition-delay:60ms}.js-anim [data-panel="cv"]>.reveal:nth-child(6){transition-delay:120ms}.js-anim [data-panel="cv"]>.reveal:nth-child(8){transition-delay:180ms}.js-anim [data-panel="cv"]>.reveal:nth-child(9){transition-delay:240ms}.js-anim [data-panel="cv"]>.reveal:nth-child(11){transition-delay:300ms}.js-anim [data-panel="cv"]>.reveal:nth-child(12){transition-delay:360ms}
 @media (min-width: 701px){.js-anim .reveal.tiltL:not(.in){transform:translateX(-32px) rotate(-5deg) scale(0.96)}.js-anim .reveal.tiltR:not(.in){transform:translateX(32px) rotate(5deg) scale(0.96)}}
 </style>
 </helmet>
@@ -198,6 +198,8 @@ a{color:inherit;text-decoration:none}
 <span style="{{wLabel}}">Experience</span>
 <div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">Aug 2024 – today</span><span style="{{cvWhat}}">Dual student – full-stack development, Volkswagen AG, Wolfsburg</span></div>
 <div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">Jul 2024</span><span style="{{cvWhat}}">IT internship, Wiewelhove, Ibbenbüren</span></div>
+<span style="{{wLabel}}; margin-top: {{cvGap}}px">Engagement</span>
+<div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">2025 – today</span><span style="{{cvWhat}}">BitShift@School, Volkswagen AG – running robotics workshops with a team of dual students, teaching school students to code through hands-on challenges</span></div>
 <span style="{{wLabel}}; margin-top: {{cvGap}}px">Education</span>
 <div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">2024 – today</span><span style="{{cvWhat}}">B.Sc. Computer Science (dual), Ostfalia University of Applied Sciences, Wolfenbüttel</span></div>
 <div class="reveal" style="{{cvRow}}"><span style="{{cvYear}}">2015 – 2024</span><span style="{{cvWhat}}">Abitur, Gymnasium Oesede, Georgsmarienhütte · 1.1</span></div>
@@ -404,7 +406,7 @@ list: 'margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap
 chips: 'display: flex; flex-wrap: wrap; gap: 6px',
 cvRow: mob ? 'display: flex; flex-direction: column; gap: 4px; padding: 14px 0; border-bottom: 1px solid ' + C.line : 'display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; padding: 14px 20px; border-radius: 14px; background: #F2EEE8',
 cvYear: (mob ? '' : 'min-width: 140px; ') + 'font: 500 ' + (mob ? 13 : 14) + 'px/1.4 Inter, sans-serif; color: ' + C.muted + '; font-variant-numeric: tabular-nums',
-cvWhat: 'font: 500 ' + (mob ? 16 : 17) + 'px/1.4 Inter, sans-serif; color: ' + C.ink,
+cvWhat: (mob ? '' : 'flex: 1 1 320px; min-width: 0; ') + 'font: 500 ' + (mob ? 16 : 17) + 'px/1.4 Inter, sans-serif; color: ' + C.ink, // lange Einträge umbrechen neben dem Datum, nicht darunter
 // Abstand über dem Button größer als zwischen den CV-Abschnitten (Kontakt setzt seinen eigenen margin-top)
 ctaStyle: PAPER.button + '; margin-top: ' + (mob ? 32 : 44) + 'px',
 socialGrid: 'display: flex; flex-wrap: wrap; gap: 10px',
