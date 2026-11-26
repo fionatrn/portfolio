@@ -133,7 +133,7 @@ a{color:inherit;text-decoration:none}
 <div style="{{aboutGrid}}">
 <div class="reveal rise" style="{{photoCard}}">
 <img src="/images/portrait.jpg" alt="{{tx.portrait}}" width="1382" height="1024" decoding="async" style="{{photoImg}}">
-<svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
+<svg aria-hidden="true" style="{{photoGrain}}"><rect width="100%" height="100%" filter="url(#grainO)"></rect></svg>
 <span class="reveal pop" lang="en" style="{{lab1}}">Full-stack dev ★</span>
 <span class="reveal pop" lang="en" style="{{lab2}}">UI/UX enthusiast ★</span>
 <span class="reveal pop" lang="en" style="{{lab3}}">Creative coder ★</span>
@@ -402,6 +402,8 @@ mTabBg: 'display: flex; flex-direction: column; padding: 14px 20px 10px; border-
 aboutGrid: (mob ? 'box-sizing: border-box; padding: 20px 22px 32px; ' : 'flex: 1 1 auto; ') + 'display: flex; flex-wrap: wrap; gap: ' + (mob ? 16 : 24) + 'px; align-items: stretch',
 photoCard: 'position: relative; overflow: visible; flex: 1 1 ' + (mob ? '100%' : '380px') + '; min-height: ' + (mob ? 300 : cmp ? 360 : 520) + 'px; border-radius: 20px; background: ' + t.photo,
 photoImg: 'position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; border-radius: 20px',
+// Körnung über dem Foto mit denselben runden Ecken (die Karte selbst schneidet nicht ab, weil Labels und Büroklammer überstehen)
+photoGrain: 'position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; mix-blend-mode: overlay; clip-path: inset(0 round 20px)',
 photoClip: PAPER.clip(mob ? 'left: 50%; top: -18px; margin-left: -10px' : 'left: 36px; top: -22px', mob ? 58 : 72, -8),
 // Handy: Etiketten in die Ecken, damit sie das Gesicht im Foto nicht verdecken
 lab1: lab(mob ? 'left: 12px; top: 12px' : 'left: 24px; top: 88px'),
