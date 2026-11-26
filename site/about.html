@@ -92,13 +92,6 @@ a{color:inherit;text-decoration:none}
 <main style="{{mainStyle}}">
 <section aria-label="{{tx.file}}" style="{{folderWrap}}">
 <div style="{{bodyGrid}}">
-<sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
-<div aria-hidden="true" style="{{bgLayer}}">
-<div style="{{bgTabRow}}">
-</div>
-<div style="{{bgSheet}}"></div>
-</div>
-</sc-if>
 <div style="{{fgLayer}}">
 <div style="{{folderTop}}">
 <sc-if value="{{desktop}}" hint-placeholder-val="{{ true }}">
@@ -376,9 +369,7 @@ folderWrap: 'width: 100%; max-width: 1240px; box-sizing: border-box; display: fl
 folderTop: mob ? 'display: none' : 'display: flex; align-items: flex-end; justify-content: flex-start',
 bodyGrid: 'display: grid; grid-template-columns: minmax(0, 1fr)' + (mob ? '' : '; flex: 1 0 auto'),
 fgLayer: 'grid-area: 1 / 1; position: relative; min-width: 0; display: flex; flex-direction: column',
-bgLayer: 'grid-area: 1 / 1; display: flex; flex-direction: column; pointer-events: none',
 // Hintergrund-Zeile genau so hoch wie die Reiter (46px), damit sie auf dem Blatt sitzen
-bgTabRow: 'min-height: 46px',
 bgConn: 'width: ' + R + 'px; height: ' + R + 'px; background: radial-gradient(circle at 100% 0%, rgba(250,248,244,0) ' + (R - 0.5) + 'px, ' + C.paper + ' ' + R + 'px)',
 bgSheet: 'flex: 1; margin-top: -1px; background: ' + C.paper + '; border-radius: 0 ' + R + 'px ' + R + 'px ' + R + 'px',
 // Name auf dem Reiter (Handy) in Oliv
